@@ -6,17 +6,17 @@
   <picture>
     <source media="(prefers-color-scheme: dark)" srcset="./.github/banner-dark.jpeg">
     <source media="(prefers-color-scheme: light)" srcset="./.github/banner-light.jpeg">
-    <img alt="Project Banner" src="./.github/banner-light.jpeg" width="350" height="70" style="max-width: 100%;">
+    <img alt="Project Banner" src="./.github/banner-light.jpeg" width="1200" height="160" style="max-width: 100%;">
   </picture>
 </p>
 
-<p align="center">
+<h4 align="center">
   Define your component logic in classes with added type safety.
   <br><br>
   Based on <a href="https://github.com/archtechx/alpine-typescript">archtechx/alpine-typescript</a> with
   <a href="./tsconfigs">tsconfigs</a> from <a href="https://github.com/withastro/astro/tree/main/packages/astro/tsconfigs">astro.js</a>.
   <br>
-</p>
+</h4>
 
 <hr>
 
