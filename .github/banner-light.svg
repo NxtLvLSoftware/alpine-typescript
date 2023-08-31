@@ -1,27 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <svg width="350px" height="160px" viewBox="0 0 350 160" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
-    <title>Group</title>
-    <defs>
-        <radialGradient cx="15.0907348%" cy="-2.30818678%" fx="15.0907348%" fy="-2.30818678%" r="98.9438597%" gradientTransform="translate(0.1509, -0.0231), scale(0.4571, 1), rotate(31.9153), translate(-0.1509, 0.0231)" id="radialGradient-1">
-            <stop stop-color="#C5C5C5" offset="0%"></stop>
-            <stop stop-color="#FFFFFF" offset="100%"></stop>
-        </radialGradient>
-        <rect id="path-2" x="0" y="0" width="350" height="160" rx="72"></rect>
-        <filter x="-10.0%" y="-21.9%" width="120.0%" height="143.8%" filterUnits="objectBoundingBox" id="filter-3">
-            <feMorphology radius="20" operator="erode" in="SourceAlpha" result="shadowSpreadInner1"></feMorphology>
-            <feGaussianBlur stdDeviation="25" in="shadowSpreadInner1" result="shadowBlurInner1"></feGaussianBlur>
-            <feOffset dx="0" dy="0" in="shadowBlurInner1" result="shadowOffsetInner1"></feOffset>
-            <feComposite in="shadowOffsetInner1" in2="SourceAlpha" operator="arithmetic" k2="-1" k3="1" result="shadowInnerInner1"></feComposite>
-            <feColorMatrix values="0 0 0 0 0.0065829512   0 0 0 0 0.0065829512   0 0 0 0 0.0065829512  0 0 0 0.1 0" type="matrix" in="shadowInnerInner1"></feColorMatrix>
-        </filter>
-    </defs>
+    <title>banner-light</title>
     <g id="Light-Banner" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
-        <g id="Group">
-            <g id="background">
-                <use fill="url(#radialGradient-1)" fill-rule="evenodd" xlink:href="#path-2"></use>
-                <use fill="#B7B7B7" fill-rule="evenodd" xlink:href="#path-2"></use>
-                <use fill="black" fill-opacity="1" filter="url(#filter-3)" xlink:href="#path-2"></use>
-            </g>
+        <g id="banner-light">
+            <path d="M79.5092038,-1.37941837e-15 L270.490796,1.37941837e-15 C287.236675,-1.69674963e-15 301.433112,3.341722 313.166445,9.61677734 C324.899779,15.8918327 334.108167,25.1002213 340.383223,36.8335547 C346.658278,48.566888 350,62.7633252 350,79.5092038 L350,80.4907962 C350,97.2366748 346.658278,111.433112 340.383223,123.166445 C334.108167,134.899779 324.899779,144.108167 313.166445,150.383223 C301.433112,156.658278 287.236675,160 270.490796,160 L79.5092038,160 C62.7633252,160 48.566888,156.658278 36.8335547,150.383223 C25.1002213,144.108167 15.8918327,134.899779 9.61677734,123.166445 C3.341722,111.433112 4.43212674e-15,97.2366748 -3.60321695e-15,80.4907962 L9.19612244e-16,79.5092038 C-1.13116642e-15,62.7633252 3.341722,48.566888 9.61677734,36.8335547 C15.8918327,25.1002213 25.1002213,15.8918327 36.8335547,9.61677734 C48.566888,3.341722 62.7633252,1.69674963e-15 79.5092038,-1.37941837e-15 Z" id="background" fill="#B7B7B7"></path>
             <text id="project" font-family="FiraCodeRoman-Medium, Fira Code" font-size="24" font-weight="400" fill="#161616" fill-opacity="0.8">
                 <tspan x="57.3461538" y="72">@nxtlvlsoftware/</tspan>
                 <tspan x="49.9615385" y="101">alpine-typescript</tspan>
