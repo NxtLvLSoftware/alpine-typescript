@@ -1,8 +1,24 @@
-# Alpine.js Typescript components
-#### Define your component logic in classes with added type safety.
+<h1 align="center">
+  Alpine.js Typescript components
+</h1>
 
-Based on [archtechx/alpine-typescript](https://github.com/archtechx/alpine-typescript) with [tsconfigs](tsconfigs)
-from [astro.js](https://github.com/withastro/astro/tree/main/packages/astro/tsconfigs).
+<p align="center">
+  <picture>
+    <source media="(prefers-color-scheme: dark)" srcset="./.github/banner-dark.jpeg">
+    <source media="(prefers-color-scheme: light)" srcset="./.github/banner-light.jpeg">
+    <img alt="Project Banner" src="./.github/banner-light.jpeg" width="350" height="70" style="max-width: 100%;">
+  </picture>
+</p>
+
+<p align="center">
+  Define your component logic in classes with added type safety.
+  <br><br>
+  Based on <a href="https://github.com/archtechx/alpine-typescript">archtechx/alpine-typescript</a> with
+  <a href="./tsconfigs">tsconfigs</a> from <a href="https://github.com/withastro/astro/tree/main/packages/astro/tsconfigs">astro.js</a>.
+  <br>
+</p>
+
+<hr>
 
 * [Installation](#installation)
 * [Usage](#usage)
@@ -15,7 +31,7 @@ from [astro.js](https://github.com/withastro/astro/tree/main/packages/astro/tsco
     * [Issues](#issues)
 * [License](#license-information)
 
-#
+<hr>
 
 ## About
 Text
