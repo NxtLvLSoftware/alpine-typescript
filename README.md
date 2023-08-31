@@ -4,9 +4,9 @@
 
 <p align="center">
   <picture>
-    <source media="(prefers-color-scheme: dark)" srcset="./.github/banner-dark.png">
-    <source media="(prefers-color-scheme: light)" srcset="./.github/banner-light.png">
-    <img alt="Project Banner" src="./.github/banner-light.png" width="350" height="160" style="max-width: 100%;">
+    <source media="(prefers-color-scheme: dark)" srcset="./.github/banner-dark.svg">
+    <source media="(prefers-color-scheme: light)" srcset="./.github/banner-light.svg">
+    <img alt="Project Banner" src="./.github/banner-light.svg" width="350" height="160" style="max-width: 100%;">
   </picture>
 </p>
 
