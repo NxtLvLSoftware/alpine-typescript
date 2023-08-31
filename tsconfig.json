@@ -1,0 +1,16 @@
+{
+  "extends": "./tsconfigs/strictest",
+  "compilerOptions": {
+    "target": "es5",
+    "declaration": true,
+    "noEmit": false,
+    "lib": [
+      "es2017",
+      "dom"
+    ]
+  },
+  "include": [
+    "src/**/*.ts",
+    "index.ts"
+  ]
+}
