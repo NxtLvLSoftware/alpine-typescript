@@ -23,47 +23,57 @@
 
 * [Installation](#installation)
 * [Usage](#usage)
-    * [Setup](#setup)
-    * [Defining Components](#defining-components)
-		* [Generic Objects](#generic-objects)
-		* [Classes](#typescript-classes)
-    * [Using Components](#using-components)
+  * [Setup](#setup)
+  * [Defining Components](#defining-components)
+    * [Generic Objects](#generic-objects)
+    * [Classes](#typescript-classes)
+  * [Using Components](#using-components)
 * [Contributing](#contributing)
-    * [Issues](#issues)
+  * [Issues](#issues)
 * [License](#license-information)
 
 <br /><hr /><br />
 
 ## About
+
 Text
 
 ### Installation
+
 Guide
 
 ### Usage
+
 Text
 
 #### Setup
+
 Guide
 
 #### Defining Components
+
 Guide
 
 ##### Generic Objects
+
 ##### Typescript Classes
 
 #### Using Components
+
 Guide
 
 ## Contributing
 
 #### Issues
-Found a problem with this project? Make sure to open an issue on the [issue tracker](https://github.com/NxtLvLSoftware/alpine-typescript/issues)
+
+Found a problem with this project? Make sure to open an issue on
+the [issue tracker](https://github.com/NxtLvLSoftware/alpine-typescript/issues)
 and we'll do our best to get it sorted!
 
-
 ## License Information
-[`nxtlvlsoftware/alpine-typescript`](https://github.com/NxtLvlSoftware/alpine-typescript) is open-sourced software, freely available to use under the terms of the
+
+[`nxtlvlsoftware/alpine-typescript`](https://github.com/NxtLvlSoftware/alpine-typescript) is open-sourced software,
+freely available to use under the terms of the
 [MIT License](https://www.techtarget.com/whatis/definition/MIT-License-X11-license-or-MIT-X-license).
 
 __A full copy of the license is available [here](../LICENSE).__
