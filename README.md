@@ -1,24 +1,25 @@
-<h1 align="center">
-  Alpine.js Typescript components
-</h1>
-
 <p align="center">
   <picture>
     <source media="(prefers-color-scheme: dark)" srcset="./.github/banner-dark.svg">
     <source media="(prefers-color-scheme: light)" srcset="./.github/banner-light.svg">
-    <img alt="Project Banner" src="./.github/banner-light.svg" width="350" height="160" style="max-width: 100%;">
+    <img alt="Project Banner (@nxtlvlsoftware/alpine-typescript)" src="./.github/banner-light.svg" width="350" height="160" style="max-width: 100%;">
   </picture>
 </p>
 
+<h1 align="center">
+  Alpine.js Typescript components
+</h1>
+
 <h4 align="center">
   Define your component logic in classes with added type safety.
-  <br><br>
+</h4> 
+
+<h6 align="center">
   Based on <a href="https://github.com/archtechx/alpine-typescript">archtechx/alpine-typescript</a> with
   <a href="./tsconfigs">tsconfigs</a> from <a href="https://github.com/withastro/astro/tree/main/packages/astro/tsconfigs">astro.js</a>.
-  <br>
-</h4>
+</h6>
 
-<hr>
+<hr /><br />
 
 * [Installation](#installation)
 * [Usage](#usage)
@@ -31,7 +32,7 @@
     * [Issues](#issues)
 * [License](#license-information)
 
-<hr>
+<br /><hr />
 
 ## About
 Text
