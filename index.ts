@@ -3,8 +3,9 @@
  */
 
 export {
+	type KnownClassConstructor,
 	type KnownConstructor,
-	type Constructor,
+	type AlpineComponentConstructor,
 	type AlpineDataContext,
 	type AlpineData,
 	AlpineComponent
@@ -12,7 +13,6 @@ export {
 
 export {
 	type ComponentList,
-	type ComponentClassList,
 	ComponentStore,
 	transformToAlpineData,
 	makeAlpineConstructor

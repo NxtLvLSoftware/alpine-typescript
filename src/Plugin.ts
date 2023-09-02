@@ -1,31 +1,33 @@
 import type * as Globals from './Global'
 import {
-	type ComponentClassList,
+	type ComponentList,
 	ComponentStore
 } from "./Store";
 
 export namespace AlpineComponents {
 
 	export interface Options {
-		components: ComponentClassList,
+		components: ComponentList,
 		startAlpine: boolean
+		logErrors: boolean;
 	}
 
 	export const defaultOptions: Options = {
-		components: [],
-		startAlpine: true
+		components: {},
+		startAlpine: true,
+		logErrors: false
 	};
 
 	export function bootstrap(
-		alpine: Globals.Alpine = window.Alpine,
-		options: Partial<Options> = defaultOptions
+		options: Partial<Options> = defaultOptions,
+		alpine: Globals.Alpine = window.Alpine
 	): void {
 		const opts: Options = {
 			...defaultOptions,
 			...options
 		};
 
-		window.AlpineComponents = new ComponentStore(alpine, opts.components);
+		window.AlpineComponents = new ComponentStore(alpine, opts.components, opts.logErrors);
 
 		if (opts.startAlpine) {
 			alpine.start();
@@ -40,7 +42,7 @@ export namespace AlpineComponents {
  * @param alpine
  */
 export function componentsPlugin(alpine: Globals.Alpine) {
-	AlpineComponents.bootstrap(alpine, {
+	AlpineComponents.bootstrap({
 		startAlpine: false
-	});
+	}, alpine);
 }

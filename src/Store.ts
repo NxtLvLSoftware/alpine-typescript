@@ -1,43 +1,51 @@
 import type * as Impl from "./Component"
 import type * as Globals from './Global'
 
-import {AlpineComponent} from "./Component";
+import {AlpineComponent, type AlpineComponentConstructor} from "./Component";
 
+/**
+ * @see https://www.w3schools.com/js/js_reserved.asp
+ */
+const ReservedNames = ['abstract', 'arguments', 'await', 'boolean', 'break', 'byte', 'case',
+	'catch', 'char', 'class', 'const', 'continue', 'debugger', 'default', 'delete', 'do', 'double', 'else',
+	'enum', 'eval', 'export', 'extends', 'false', 'final', 'finally', 'float', 'for', 'function', 'goto',
+	'if', 'implements', 'import', 'in', 'instanceof', 'int', 'interface', 'let', 'long', 'native', 'new',
+	'null', 'package', 'private',  'protected', 'public', 'return', 'short', 'static', 'super', 'switch',
+	'this',	'throw', 'throws', 'transient', 'true', 'try', 'typeof', 'var', 'void', 'volatile', 'while',
+	'with', 'yield'];
+
+/**
+ * Type definition for list of named component constructors.
+ */
 export type ComponentList = {
-	[name: string]: Impl.Constructor
+	[name: string]: Impl.KnownConstructor<any>
 };
 
-export type ComponentClassList = {
-	[name: string]: Impl.Constructor
-}|Impl.ComponentType<Impl.AlpineComponent>[];
-
-type ComponentConstructorData<T> = { name: string, constructor: Impl.Constructor<T> };
+/**
+ * Internal type for component registration.
+ */
+type ComponentConstructorData = { name: string, constructor: Impl.AlpineComponentConstructor };
 
 enum RegisterComponentFailure {
 	GenericMustHaveFunctionAsSecond,
 	NameMustBeProvidedForComponentWithNoDefault,
-	UnknownArgumentTypes
+	UnknownArgumentTypes,
+	ReservedName
 }
 
 export class ComponentStore {
 	private initialized: boolean = false;
 
-	private components: ComponentList = {};
+	private components: Record<string, AlpineComponentConstructor> = {};
 
 	constructor(
 		private alpine: Globals.Alpine,
-		components: ComponentClassList = [],
+		components: ComponentList = {},
 		private logErrors: boolean = false
 	) {
-		if (Array.isArray(components)) {
-			components.forEach((component) => {
-				this.register(component);
-			});
-		} else {
-			Object.entries(components).forEach(([name, component]) => {
-				this.register(name, component);
-			});
-		}
+		Object.entries(components).forEach(([name, component]) => {
+			this.register(name, component);
+		});
 
 		window.addEventListener('alpine:init', () => {
 			this.init();
@@ -49,14 +57,16 @@ export class ComponentStore {
 			return;
 		}
 
+		// @ts-ignore
 		this.alpine.Components = this;
+		// @ts-ignore
 		this.alpine.component = this.component;
 
 		document.dispatchEvent(new CustomEvent('alpine-components:init'));
 
 		Object.entries(this.components)
-			.forEach(([name, component]) =>
-				this.registerConstructorAsAlpineData(name, component));
+			.forEach(([name]) =>
+				this.registerConstructorAsAlpineData(name));
 
 		this.initialized = true;
 	}
@@ -71,7 +81,7 @@ export class ComponentStore {
 	 * If registered, returns a callable that accepts the component constructor arguments
 	 * and creates the component object. Returns undefined if not registered.
 	 */
-	component(name: string): Impl.Constructor {
+	component(name: string): Impl.AlpineComponentConstructor {
 		// @ts-ignore
 		return this.components[name];
 	}
@@ -88,7 +98,7 @@ export class ComponentStore {
 	 * @param name The name of the component (registered to alpine for use with x-data.)
 	 * @param component The function that returns component data.
 	 */
-	register(name: string, component: Impl.Constructor): void;
+	register<T>(name: string, component: Impl.KnownConstructor<T>): void;
 
 	/**
 	 * Register a class inheriting from {@link Impl.AlpineComponent} as a component.
@@ -96,22 +106,23 @@ export class ComponentStore {
 	 * @param component The name/symbol of the class to register as a component.
 	 * @param name The name of the component (registered to alpine for use with x-data.)
 	 */
-	register<T extends Impl.AlpineComponent>(component: Impl.ComponentType<T>, name?: string): void;
+	register<T extends Impl.AlpineComponent>(component: Impl.KnownClassConstructor<T>, name?: string): void;
 
 	register<T>(
-		nameOrComponentClass: string|Impl.Constructor<T>|Impl.ComponentType<T>,
-		constructorOrComponentName: string|Impl.Constructor<T> = ''
+		// @ts-expect-error TS3244
+		nameOrComponentClass: string|Impl.KnownConstructor<T>|Impl.KnownClassConstructor<T>,
+		constructorOrComponentName: Impl.KnownConstructor<T>|string = ''
 	): void {
-		let component: ComponentConstructorData<T>;
+		let component: ComponentConstructorData;
 
 		if (typeof nameOrComponentClass === 'string') { // register generic object (normal alpine data)
 			if (typeof constructorOrComponentName === 'string') {
 				this.logRegisterFailure(RegisterComponentFailure.GenericMustHaveFunctionAsSecond);
 				return;
 			}
-			component = ComponentStore.getObjectData(nameOrComponentClass, constructorOrComponentName);
+			component = ComponentStore.getObjectData<T>(nameOrComponentClass, constructorOrComponentName);
 		} else if (typeof nameOrComponentClass === 'function') { // register class as component
-			component = ComponentStore.getClassData(<Impl.ComponentType<Impl.AlpineComponent>>nameOrComponentClass, <string>constructorOrComponentName);
+			component = ComponentStore.getClassData(<Impl.KnownClassConstructor<Impl.AlpineComponent>>nameOrComponentClass, <string>constructorOrComponentName);
 			if (component.name === "") {
 				this.logRegisterFailure(RegisterComponentFailure.NameMustBeProvidedForComponentWithNoDefault);
 			}
@@ -120,35 +131,38 @@ export class ComponentStore {
 			return;
 		}
 
+		if (ReservedNames.includes(component.name)) {
+			this.logRegisterFailure(RegisterComponentFailure.ReservedName);
+		}
+
 		this.components[component.name] = component.constructor;
 
 		if (this.initialized) {
-			this.registerConstructorAsAlpineData(component.name, component.constructor);
+			this.registerConstructorAsAlpineData(component.name);
 		}
 	}
 
-	private registerConstructorAsAlpineData<T>(name: string, constructor: Impl.Constructor<T>): void {
-		this.alpine.data(name, constructor);
+	private registerConstructorAsAlpineData(name: string): void {
+		this.alpine.data(name, this.component(name));
 	}
 
-	private static getObjectData<T extends object>(
+	private static getObjectData<T>(
 		name: string,
-		component: Impl.Constructor<T>
-	): ComponentConstructorData<T> {
+		component: Impl.KnownConstructor<T>
+	): ComponentConstructorData {
 		return {
 			name: name,
-			constructor: (component.prototype instanceof AlpineComponent) ?
+			constructor: <AlpineComponentConstructor>((component.prototype instanceof AlpineComponent) ?
 				// @ts-ignore
-				makeAlpineConstructor<T>(component) : component
+				makeAlpineConstructor<T>(component) : component)
 		};
 	}
 
 	private static getClassData<T extends Impl.AlpineComponent>(
-		component: Impl.ComponentType<T>,
+		component: Impl.KnownClassConstructor<T>,
 		name?: string
-	): ComponentConstructorData<T> {
-		const resolvedName: string = (name !== undefined ? name :
-			(component.defaultName !== undefined ? component.defaultName : component.prototype.name));
+	): ComponentConstructorData {
+		const resolvedName: string = (name !== undefined ? name : component.prototype.name);
 
 		return {
 			name: resolvedName,
@@ -172,11 +186,19 @@ export class ComponentStore {
 			case RegisterComponentFailure.UnknownArgumentTypes:
 				console.error(`Cannot register component with provided argument types. Check Typescript definitions for usage.`);
 				break;
+			case RegisterComponentFailure.ReservedName:
+				console.error(`Cannot register component with name matching a reserved keyword.`)
+				break;
 		}
 	}
 
 }
 
+/**
+ * Copy prototype functions and object properties to an empty object.
+ *
+ * @param instance The object to copy functions and properties from
+ */
 export function transformToAlpineData<T extends AlpineComponent>(instance: T): object {
 	return [
 		...Object.getOwnPropertyNames(Object.getPrototypeOf(instance)), // methods
@@ -189,6 +211,11 @@ export function transformToAlpineData<T extends AlpineComponent>(instance: T): o
 	}, {});
 }
 
-export function makeAlpineConstructor<T extends AlpineComponent>(component: Impl.KnownConstructor<T>): Impl.Constructor<T> {
+/**
+ * Transform a class constructor into an alpine constructor function.
+ *
+ * @param component The class constructor
+ */
+export function makeAlpineConstructor<T extends AlpineComponent>(component: Impl.KnownClassConstructor<T>): Impl.AlpineComponentConstructor {
 	return (...args: any[]) => transformToAlpineData(new component(...args));
 }
