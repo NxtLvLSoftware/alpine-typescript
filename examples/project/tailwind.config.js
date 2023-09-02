@@ -1,10 +1,7 @@
 /** @type {import('tailwindcss').Config} */
 module.exports = {
 	content: [
-		'./src/**/*.html',
-		'./dist/**/*.html'
-	],
-	safelist: [
-		'hidden'
+		'./src/**/*.{html,ts}',
+		'./dist/**/*.{html,ts}'
 	]
 };
