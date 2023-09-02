@@ -12,11 +12,10 @@
 
 <h4 align="center">
   Define your component logic in classes with added type safety.
-</h4> 
+</h4>
 
 <h6 align="center">
-  Based on <a href="https://github.com/archtechx/alpine-typescript">archtechx/alpine-typescript</a> with
-  <a href="./tsconfigs">tsconfigs</a> from <a href="https://github.com/withastro/astro/tree/main/packages/astro/tsconfigs">astro.js</a>.
+  Inspired by <a href="https://github.com/archtechx/alpine-typescript">archtechx/alpine-typescript</a>.
 </h6>
 
 <br /><hr /><br />
@@ -28,7 +27,7 @@
   * [Packages](#in-packages)
     * [Setup](#package-setup)
   * [Defining Components](#defining-components)
-    * [Generic Objects](#generic-objects)
+    * [Any Types](#generic-types)
     * [Classes](#typescript-classes)
   * [Using Components](#using-components)
 * [Contributing](#contributing)
@@ -47,7 +46,7 @@ code, producing useful compilation/transpilation errors before testing.
 
 ### Installation
 ```
-npm install --save @nxtlvlsoftware/alpine-typescript
+$ npm install --save @nxtlvlsoftware/alpine-typescript
 ```
 The package requires manual initialization in the browser as we don't assume a specific use-case:
 
@@ -132,7 +131,7 @@ AlpineComponents.bootstrap({
 ```
 
 Now create a directory for your components, something like `components` and create a new
-Typescript file and add:
+Typescript file `components/MyComponent.ts` containing:
 ```typescript
 import { AlpineComponent } from "@nxtlvlsoftware/alpine-typescript";
 
@@ -151,7 +150,7 @@ export class MyComponent extends AlpineComponent<MyComponent> {
 
 }
 ```
-Now register your new component in the `AlpineComponents.bootstrap()` method call:
+Register your new component in the `AlpineComponents.bootstrap()` method call:
 ```typescript
 import { MyComponent } from './components/MyComponent';
 
@@ -174,7 +173,7 @@ directory and start writing your components.
 
 Manual setup requires a project with `typescript` installed to compile the code to javascript:
 ```
-npm i --save-dev typescript
+$ npm i --save-dev typescript
 ```
 Then add the following scripts to `package.json` for running `tsc`:
 ```json
@@ -184,7 +183,7 @@ Then add the following scripts to `package.json` for running `tsc`:
   }
 ```
 You'll need to tell `tsc` about the target on which the javascript it produces will be
-executed in `tsconfig.json`:
+executed in a `tsconfig.json` file:
 ```json
 {
   "$schema": "https://json.schemastore.org/tsconfig",
@@ -206,7 +205,7 @@ executed in `tsconfig.json`:
 ```
 Now create a `index.ts` file, `src` and `src/components` directories:
 ```
-touch index.ts && mkdir src && mkdir src/components
+$ touch index.ts && mkdir src && mkdir src/components
 ```
 The `index.ts` file doesn't have to be in the root of your package but doing so prevents
 any confusion/indirection caused by defining a custom index path in `package.json`. You'll
@@ -216,7 +215,7 @@ they're available with a simple `import { Type, Type2, Var } from '@org/package-
 For convenient consumption of your components you'll want to define a bootstrap method similar
 to this package:
 ```
-touch src/Plugin.ts
+$ touch src/Plugin.ts
 ```
 Copy the following and change the namespace to the name of your package:
 ```typescript
@@ -306,15 +305,91 @@ Now you can start writing your components. Remember to create the `src/component
 file before running `npm run dev` or `npm run build`.
 
 #### Defining Components
+Alpine itself is very flexible with what it considers a component so this package tries not to impose any
+limitations. The only requirement imposed is the initial state of your component must be returned by some
+kind of constructor function.
 
-Guide
+See Alpine's [x-data documentation](https://alpinejs.dev/globals/alpine-data) for more information.
 
-##### Generic Objects
+##### Generic Types
+Any function that satisfies this type requirement:
+```typescript
+type KnownGenericConstructor<T> = (...args: any[]) => T;
+```
+Will be accepted as a component constructor. The [signature](./src/Store.ts#L101) for registering components of this type is:
+```typescript
+/**
+ * Register a generic object (alpine data) as a component.
+ *
+ * @param name The name of the component (registered to alpine for use with x-data.)
+ * @param component The function that returns component data.
+ */
+register<T>(name: string, component: Impl.KnownConstructor<T>): void;
+```
+
+Inline objects:
+```typescript
+const noArgsComponent = () => {
+  return { i: 'have', no: 'arguments' };
+}
+```
+Or just returning a single value:
+```typescript
+const singleValueComponent = (arg1: boolean = false) => {
+  return arg1 ? 'cond1' : 'cond2';
+}
+```
+
+Both these functions can be registered to Alpine directly with `Alpine.data()` but for packaging and reuse
+they can be registered through this packages API with the `bootstrap()` call:
+```typescript
+AlpineComponents.bootstrap({
+  components: {
+    noArgs: noArgsComponent,
+    singleValue: singleValueComponent
+  }
+});
+```
+Or by listening for the `alpine-components:init` on the `document` global:
+```typescript
+document.addEventListener('alpine-components:init', () => {
+  window.Alpine.Components.register('noArgs', noArgsComponent);
+  window.Alpine.Components.register('singleValue', singleValueComponent);
+});
+```
 
 ##### Typescript Classes
+The main purpose of this package is to use class definitions as Alpine components. Any class
+inheriting from [AlpineComponent](./src/Component#L45) is accepted.
+
+Both register function definitions accept constructor functions for these classes.
+
+Explicit register class constructor [signature](src/Store.ts#L109):
+```typescript
+/**
+ * Register a class inheriting from {@link Impl.AlpineComponent} as a component.
+ *
+ * @param component The name/symbol of the class to register as a component.
+ * @param name The name of the component (registered to alpine for use with x-data.)
+ */
+register<T extends Impl.AlpineComponent>(component: Impl.KnownClassConstructor<T>, name?: string): void;
+```
+If no name is provided it will fall back to the name of the class (prototype name.)
+
+You can also register classes with the generic [signature](./src/Store.ts#L101):
+```typescript
+/**
+ * Register a generic object (alpine data) as a component.
+ *
+ * @param name The name of the component (registered to alpine for use with x-data.)
+ * @param component The function that returns component data.
+ */
+register<T>(name: string, component: Impl.KnownConstructor<T>): void;
+```
+The component parameters prototype is checked for inheritance from the [AlpineComponent](./src/Component#L45)
+class and handled accordingly.
 
 #### Using Components
-
 Guide
 
 ## Contributing
