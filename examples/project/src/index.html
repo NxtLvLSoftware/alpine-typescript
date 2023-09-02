@@ -21,11 +21,13 @@
 	<meta name="theme-color" content="#ffffff">
 </head>
 <body class="bg-white dark:bg-neutral-800 dark:text-white md:text-base text-neutral-800">
-<div class="fixed inset-0 w-full z-10">
+<div
+	x-data="alert(true)"
+	class="fixed inset-0 h-fit w-full z-10"
+>
 	<div class="flex w-fit mx-auto justify-center">
 		<!-- Alert component styles from https://flowbite.com/docs/components/alerts/ -->
 		<div
-			x-data="alert(true)"
 			x-show="alertState"
 			class="flex items-center p-4 text-blue-800 rounded-lg bg-blue-50 dark:bg-gray-800 dark:text-blue-400"
 			role="alert"

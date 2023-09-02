@@ -5,7 +5,6 @@ module.exports = {
 		'./dist/**/*.html'
 	],
 	safelist: [
-		'hidden',
-		'visible'
+		'hidden'
 	]
 };
