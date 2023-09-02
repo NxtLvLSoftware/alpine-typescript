@@ -87,9 +87,8 @@ export namespace MyComponents {
 				makeAlpineConstructor(ToggleComponent)(state));
 		});
 
-		// Allow booting alpine with a single call to our bootstrap function.
-		// This makes the client script a bit simpler as we only have to import
-		// the alpine type and everything just works.
+		// Allow booting alpine and the components package with a single call to our
+		// bootstrap function. This makes the client script a bit simpler.
 		if (opts.bootstrapComponents) {
 			AlpineComponents.bootstrap(opts, alpine);
 		}
@@ -101,11 +100,10 @@ export namespace MyComponents {
 export function myPlugin(alpine: Globals.Alpine): void {
 	// This process is easy if we take the time to define all the types above, just
 	// change some default options and we're good to go.
-	MyComponents.bootstrap(
-		{
-			// can't assume we're the only ones using the component library
-			bootstrapComponents: false,
-			// definitely not the only ones using alpine if we're being used as a plugin here
-			startAlpine: false
-		}, alpine);
+	MyComponents.bootstrap({
+		// can't assume we're the only ones using the component library
+		bootstrapComponents: false,
+		// definitely not the only ones using alpine if we're being used as a plugin here
+		startAlpine: false
+	}, alpine);
 }

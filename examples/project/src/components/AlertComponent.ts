@@ -16,7 +16,6 @@ export class AlertComponent extends AlpineComponent<AlertComponent> {
 
 	init(): void {
 		this.$watch('alertState', (val: boolean) => {
-			console.log('alert state')
 			let el = this.$el;
 			if (val) {
 				el.classList.remove('hidden');

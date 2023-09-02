@@ -18,7 +18,7 @@ export class ToggleComponent extends AlpineComponent<ToggleComponent> {
 
 	init(): void {
 		this.$watch('toggleState', (val: boolean, oldVal: boolean) => {
-			console.log(`Toggle triggered.`, `new value: ${val}, old value: ${oldVal}`);
+			console.log(`Toggle triggered. New value: ${val}, old value: ${oldVal}`);
 
 			// x-on:toggle-[on|off] or @toggle-[on|off] attributes
 			this.$dispatch(`toggle-${val ? 'on' : 'off'}`, {
