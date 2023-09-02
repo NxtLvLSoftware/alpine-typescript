@@ -1,0 +1,36 @@
+{
+  "name": "alpine-typescript-package-example",
+  "type": "module",
+  "version": "0.0.1",
+  "description": "Example Alpine.js components package.",
+  "author": "Jack Noordhuis <me@jacknoordhuis.net>",
+  "license": "MIT",
+  "main": "index.js",
+  "files": [
+    "index.ts",
+    "index.d.ts",
+    "index.js",
+    "src/**/*.ts",
+    "src/**/*.d.ts",
+    "src/**/*.js"
+  ],
+  "scripts": {
+    "build": "tsc -p ./",
+    "dev": "tsc --watch -p ./"
+  },
+  "keywords": [
+    "component",
+    "alpine",
+    "javascript",
+    "typescript",
+    "js",
+    "ts"
+  ],
+  "dependencies": {
+    "@nxtlvlsoftware/alpine-typescript": "file:~/NxtLvlSoftware/Development/typescript/alpine-typescript",
+    "@types/alpinejs": "^3.7.2"
+  },
+  "devDependencies": {
+    "typescript": "^5.1.6"
+  }
+}
