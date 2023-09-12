@@ -82,6 +82,8 @@ jobs:
 
       - name: Add dist files
         run: |
+          git add --force ./*.d.ts
+          git add --force ./*.js
           git add --force ./**/*.d.ts
           git add --force ./**/*.js
 
