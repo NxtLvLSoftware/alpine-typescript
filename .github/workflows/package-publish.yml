@@ -19,12 +19,6 @@ jobs:
       matrix:
         node-version: [18]
 
-    env:
-      is_latest: ${{ github.ref == 'refs/heads/dist' }}
-
-    outputs:
-      is_latest: ${{ env.is_latest }}
-
     steps:
       - uses: actions/checkout@v4
 
@@ -33,14 +27,14 @@ jobs:
         with:
           node-version: ${{ matrix.node-version }}
 
-      - name: Publish $env:GITHUB_REF_NAME to npm registry
+      - name: Publish ${{ env.GITHUB_REF_NAME }} to npm registry
         run: |
-          npm publish --access public --tag $env:GITHUB_REF_NAME
+          npm publish --access public --tag ${{ env.GITHUB_REF_NAME }}
         env:
           NPM_AUTH_TOKEN: ${{ secrets.NPM_AUTH_TOKEN }}
 
       - name: Publish latest to npm registry
-        if: ${{ env.is_latest }}
+        if: ${{ github.ref == 'refs/heads/dist' }}
         run: |
           npm publish --access public --tag latest
         env:
