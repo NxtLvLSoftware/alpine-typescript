@@ -20,7 +20,7 @@ jobs:
         node-version: [18]
 
     env:
-      tag: ${{ env.GITHUB_REF_NAME }}
+      tag: ${{ GITHUB_REF_NAME }}
       is_latest: ${{ github.ref == 'refs/heads/dist' }}
 
     outputs:
