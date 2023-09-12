@@ -33,10 +33,3 @@ jobs:
           npm publish --access public --tag ${{ github.ref_name }}
         env:
           NODE_AUTH_TOKEN: ${{ secrets.NPM_AUTH_TOKEN }}
-
-      - name: Publish latest to npm registry
-        if: ${{ github.ref == 'refs/heads/dist' }}
-        run: |
-          npm publish --access public --tag latest
-        env:
-          NODE_AUTH_TOKEN: ${{ secrets.NPM_AUTH_TOKEN }}
