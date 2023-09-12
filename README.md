@@ -1,9 +1,9 @@
 <p align="center">
-  <picture>
-    <source media="(prefers-color-scheme: dark)" srcset="./.github/banner-dark.svg">
-    <source media="(prefers-color-scheme: light)" srcset="./.github/banner-light.svg">
-    <img alt="Project Banner (@nxtlvlsoftware/alpine-typescript)" src="./.github/banner-light.svg" width="350" height="160" style="max-width: 100%;">
-  </picture>
+  <a href="https://nxtlvlsoftware.github.io/alpine-typescript/"><picture>
+    <source media="(prefers-color-scheme: dark)" srcset="https://raw.githubusercontent.com/NxtLvLSoftware/alpine-typescript/dist/.github/banner-dark.svg">
+    <source media="(prefers-color-scheme: light)" srcset="https://raw.githubusercontent.com/NxtLvLSoftware/alpine-typescript/dist/.github/banner-light.svg">
+    <img alt="Project Banner (@nxtlvlsoftware/alpine-typescript)" src="https://raw.githubusercontent.com/NxtLvLSoftware/alpine-typescript/dist/.github/.github/banner-light.svg" width="350" height="160" style="max-width: 100%;">
+  </picture></a>
 </p>
 
 <h1 align="center">
@@ -309,7 +309,7 @@ Alpine itself is very flexible with what it considers a component so this packag
 limitations. The only requirement imposed is the initial state of your component must be returned by some
 kind of constructor function.
 
-See Alpine's [x-data documentation](https://alpinejs.dev/globals/alpine-data) for more information.
+See Alpine's [Alpine.data() documentation](https://alpinejs.dev/globals/alpine-data) for more information.
 
 ##### Generic Types
 Any function that satisfies this type requirement:
@@ -396,8 +396,7 @@ Guide
 
 #### Issues
 
-Found a problem with this project? Make sure to open an issue on
-the [issue tracker](https://github.com/NxtLvLSoftware/alpine-typescript/issues)
+Found a problem with this project? Make sure to open an issue on the [issue tracker](https://github.com/NxtLvLSoftware/alpine-typescript/issues)
 and we'll do our best to get it sorted!
 
 ## License Information
@@ -406,7 +405,7 @@ and we'll do our best to get it sorted!
 freely available to use under the terms of the
 [MIT License](https://www.techtarget.com/whatis/definition/MIT-License-X11-license-or-MIT-X-license).
 
-__A full copy of the license is available [here](../LICENSE).__
+__A full copy of the license is available [here](https://github.com/NxtLvlSoftware/alpine-typescript/blob/dev/LICENSE).__
 
 > THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
 > IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,

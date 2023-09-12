@@ -1,0 +1,11 @@
+{
+  "navigationLinks": {
+    "GitHub": "https://github.com/NxtLvlSoftware/alpine-typescript",
+    "Twitter": "https://twitter.com/NxtLvlSoftware"
+  },
+  "sidebarLinks": {
+    "GitHub": "https://github.com/NxtLvlSoftware/alpine-typescript",
+    "Twitter": "https://twitter.com/NxtLvlSoftware",
+    "Home": "/index.html"
+  }
+}

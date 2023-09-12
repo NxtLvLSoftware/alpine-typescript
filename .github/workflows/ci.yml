@@ -1,0 +1,89 @@
+name: CI
+
+on:
+  push:
+    branches: [dev, dist]
+
+permissions:
+  contents: read
+
+env:
+  GITHUB_ACTIONS: true
+
+jobs:
+  test:
+    runs-on: ubuntu-latest
+    timeout-minutes: 5
+
+    strategy:
+      fail-fast: true
+      matrix:
+        node-version: [18]
+
+    steps:
+      - uses: actions/checkout@v3
+
+      - name: Use Node.js ${{ matrix.node-version }}
+        uses: actions/setup-node@v3
+        with:
+          node-version: ${{ matrix.node-version }}
+
+      - name: Cache node_modules
+        uses: actions/cache@v3
+        with:
+          path: node_modules
+          key: ${{ runner.os }}}-${{ matrix.node-version }}-node_modules-${{ hashFiles('package.json') }}
+
+      - name: Install dependencies
+        run: npm install
+
+      - name: Build alpine-typescript
+        run: npm run build
+
+  stage:
+    name: Stage changes as pull request
+    needs: [test]
+    runs-on: ubuntu-latest
+    timeout-minutes: 5
+
+    strategy:
+      fail-fast: true
+      matrix:
+        node-version: [18]
+
+    if: github.ref == 'refs/heads/dev'
+    steps:
+      - run: 'echo "Staging dev changes"'
+      - uses: actions/checkout@v3
+        with:
+          ref: dist
+
+      - name: Reset branch
+        run: |
+          git fetch origin dev:dev
+          git reset --hard dev
+
+      - name: Use Node.js ${{ matrix.node-version }}
+        uses: actions/setup-node@v3
+        with:
+          node-version: ${{ matrix.node-version }}
+
+      - name: Cache node_modules
+        uses: actions/cache@v3
+        with:
+          path: node_modules
+          key: ${{ runner.os }}}-${{ matrix.node-version }}-node_modules-${{ hashFiles('package.json') }}
+
+      - name: Install dependencies
+        run: npm install
+
+      - name: Build alpine-typescript
+        run: npm run build-ci
+
+      - name: Create Pull Request
+        uses: peter-evans/create-pull-request@v5
+        with:
+          token: ${{ secrets.STAGE_DEPLOY_KEY }}
+          title: Merge dev changes to dist
+          branch: dev-to-dist
+          assignees: JackNoordhuis

@@ -6,14 +6,17 @@
   "files": [
     "README.md",
     "LICENSE",
-    "src/*",
-    "index.ts",
+    "src/**/*.d.ts",
+    "src/**/*.js",
     "index.d.ts",
     "index.js"
   ],
   "scripts": {
-    "build": "tsc -p ./",
-    "dev": "tsc --watch -p ./"
+    "build": "tsc --inlineSources --removeComments -p ./",
+    "build-ci": "tsc --pretty false --inlineSourceMap --removeComments --listEmittedFiles -p ./",
+    "dev": "tsc --watch -p ./",
+    "docs": "npx typedoc --out docs-build --cacheBust index.ts",
+    "docs-ci": "npx typedoc --gitRemote dist --out docs-build --cacheBust index.ts"
   },
   "keywords": [
     "alpine",
@@ -27,6 +30,7 @@
     "@types/alpinejs": "^3.7.2"
   },
   "devDependencies": {
+    "typedoc": "^0.25.1",
     "typescript": "^5.1.6"
   }
 }
