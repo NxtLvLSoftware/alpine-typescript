@@ -1,0 +1,48 @@
+name: Publish Package
+
+on:
+  push:
+    branches: [dist]
+    tags: [*]
+
+permissions:
+  contents: read
+
+jobs:
+  publish:
+    name: Publish to npm registry
+    runs-on: ubuntu-latest
+    timeout-minutes: 5
+
+    strategy:
+      matrix:
+        node-version: [18]
+
+    env:
+      tag: ${{ github.ref##*/ }}
+      is_latest: ${{ github.ref == 'refs/heads/dist' }}
+
+    outputs:
+      tag: ${{ env.tag }}
+      is_latest: ${{ env.is_latest }}
+
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Use Node.js ${{ matrix.node-version }}
+        uses: actions/setup-node@v3
+        with:
+          node-version: ${{ matrix.node-version }}
+
+      - name: Publish ${{ env.tag }} to npm registry
+        run: |
+          npm publish --access public --tag ${{ env.tag }}
+        env:
+          NODE_AUTH_TOKEN: ${{ secrets.NPM_AUTH_TOKEN }}
+
+      - name: Publish latest to npm registry
+        if: ${{ env.is_latest }}
+        run: |
+          npm publish --access public --tag latest
+        env:
+          NODE_AUTH_TOKEN: ${{ secrets.NPM_AUTH_TOKEN }}
