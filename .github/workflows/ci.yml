@@ -80,10 +80,16 @@ jobs:
       - name: Build alpine-typescript
         run: npm run build-ci
 
+      - name: Add dist files
+        run: |
+          git add --force ./**/*.d.ts
+          git add --force ./**/*.js
+
       - name: Create Pull Request
         uses: peter-evans/create-pull-request@v5
         with:
           token: ${{ secrets.STAGE_DEPLOY_KEY }}
           title: Merge dev changes to dist
           branch: dev-to-dist
+          commit-message: '[create-pull-request] update tsc build dist files'
           assignees: JackNoordhuis

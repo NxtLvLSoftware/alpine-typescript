@@ -12,7 +12,7 @@
     "index.js"
   ],
   "scripts": {
-    "build": "tsc --inlineSources --removeComments -p ./",
+    "build": "tsc --inlineSourceMap --removeComments -p ./",
     "build-ci": "tsc --pretty false --inlineSourceMap --removeComments --listEmittedFiles -p ./",
     "dev": "tsc --watch -p ./",
     "docs": "npx typedoc --out docs-build --cacheBust index.ts",
