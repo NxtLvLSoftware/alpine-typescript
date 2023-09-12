@@ -33,9 +33,9 @@ jobs:
         with:
           node-version: ${{ matrix.node-version }}
 
-      - name: Publish ${{ GITHUB_REF_NAME }} to npm registry
+      - name: Publish $env:GITHUB_REF_NAME to npm registry
         run: |
-          npm publish --access public --tag ${{ GITHUB_REF_NAME }}
+          npm publish --access public --tag $env:GITHUB_REF_NAME
         env:
           NPM_AUTH_TOKEN: ${{ secrets.NPM_AUTH_TOKEN }}
 
