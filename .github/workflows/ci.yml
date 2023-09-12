@@ -91,4 +91,5 @@ jobs:
           token: ${{ secrets.STAGE_DEPLOY_KEY }}
           title: Merge dev changes to dist
           branch: dev-to-dist
+          commit-message: '[create-pull-request] update tsc build dist files'
           assignees: JackNoordhuis
