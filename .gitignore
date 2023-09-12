@@ -2,6 +2,7 @@
 package-lock.json
 /node_modules
 .github/**/node_modules
+docs-build/
 
 ## Make sure tsc output isn't included in development branches
 *.d.ts

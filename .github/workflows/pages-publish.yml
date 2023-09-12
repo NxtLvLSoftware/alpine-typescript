@@ -1,0 +1,67 @@
+name: Publish Pages
+
+on:
+  push:
+    branches: [dist]
+
+permissions:
+  contents: write
+
+env:
+  GITHUB_ACTIONS: true
+
+jobs:
+  build:
+    name: Generate site
+    runs-on: ubuntu-latest
+    timeout-minutes: 5
+
+    strategy:
+      fail-fast: true
+      matrix:
+        node-version: [18]
+
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Cache node_modules
+        uses: actions/cache@v3
+        with:
+          path: node_modules
+          key: ${{ runner.os }}}-${{ matrix.node-version }}-node_modules-${{ hashFiles('package.json') }}
+
+      - name: Install dependencies
+        run: npm install
+
+      - name: Build alpine-typescript
+        run: npm run docs-ci
+
+      - name: Fix permissions
+        run: |
+          chmod -c -R +rX "./docs-build" | while read line; do
+            echo "::warning title=Invalid file permissions automatically fixed::$line"
+          done
+
+      - uses: actions/upload-pages-artifact@v2
+        with:
+          name: github-pages
+          path: ./docs-build
+
+  publish:
+    name: Publish
+    needs: [build]
+    runs-on: ubuntu-latest
+    timeout-minutes: 5
+
+    permissions:
+      pages: write
+      id-token: write
+
+    environment:
+      name: github-pages
+      url: ${{ steps.deployment.outputs.page_url }}
+
+    steps:
+      - name: Deploy to GitHub Pages
+        id: deployment
+        uses: actions/deploy-pages@v2
