@@ -20,7 +20,7 @@ jobs:
         node-version: [18]
 
     env:
-      tag: ${GITHUB_REF##*/}
+      tag: ${{ env.GITHUB_REF_NAME }}
       is_latest: ${{ github.ref == 'refs/heads/dist' }}
 
     outputs:
@@ -39,11 +39,11 @@ jobs:
         run: |
           npm publish --access public --tag ${{ env.tag }}
         env:
-          NODE_AUTH_TOKEN: ${{ secrets.NPM_AUTH_TOKEN }}
+          NPM_AUTH_TOKEN: ${{ secrets.NPM_AUTH_TOKEN }}
 
       - name: Publish latest to npm registry
         if: ${{ env.is_latest }}
         run: |
           npm publish --access public --tag latest
         env:
-          NODE_AUTH_TOKEN: ${{ secrets.NPM_AUTH_TOKEN }}
+          NPM_AUTH_TOKEN: ${{ secrets.NPM_AUTH_TOKEN }}
