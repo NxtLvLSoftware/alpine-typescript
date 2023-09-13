@@ -29,7 +29,7 @@
 		<!-- Alert component styles from https://flowbite.com/docs/components/alerts/ -->
 		<div
 			x-show="alertState"
-			class="flex items-center p-4 text-blue-800 rounded-lg bg-blue-50 dark:bg-gray-800 dark:text-blue-400"
+			class="flex items-center p-4 text-blue-800 rounded-lg bg-blue-50/80 dark:bg-gray-800/80 dark:text-blue-400"
 			role="alert"
 			x-transition
 			x-transition.duration.300ms
@@ -60,7 +60,7 @@
 	</div>
 </div>
 
-<div class="pt-16 flex justify-center">
+<div class="mt-24 mb-64 lg:mb-32 flex justify-center">
 	<div class="grid grid-cols-1 gap-4">
 		<!-- Checkbox component styles from https://flowbite.com/docs/forms/toggle/ -->
 		<label
@@ -155,5 +155,30 @@
 		</label>
 	</div>
 </div>
+<footer
+	class="fixed bottom-0 left-0 z-20 w-full p-4 bg-white/60 border-t border-gray-200 shadow text-center grid grid-cols-1 lg:flex lg:grid-cols-2 lg:items-center lg:justify-between lg:p-6 dark:bg-gray-800/60 dark:border-gray-600"
+>
+	<span class="order-2 lg:order-1 w-full lg:w-auto col-span-1 text-sm text-gray-500 dark:text-gray-400 mt-3 lg:mt-0">© 2023 <a href="https://github.com/NxtLvlSoftware"
+		class="hover:underline">NxtLvl Software</a>. Free to use under the <a href="https://github.com/NxtLvlSoftware/alpine-typescript/blob/dev/LICENSE"
+		class="hover:underline">MIT License</a>.
+	</span>
+	<ul class="order-1 lg:order-2 w-full lg:w-auto col-span-1 flex flex-wrap items-center mt-3 text-sm text-center font-medium text-gray-500 dark:text-gray-400 lg:mt-0">
+		<li class="w-full lg:w-auto">
+			<a href="https://github.com/NxtLvlSoftware/alpine-typescript" class="hover:underline lg:mr-4">
+				GitHub
+			</a>
+		</li>
+		<li class="w-full lg:w-auto">
+			<a href="https://nxtlvlsoftware.github.io/alpine-typescript/" class="hover:underline lg:mr-4">
+				Documentation
+			</a>
+		</li>
+		<li class="w-full lg:w-auto">
+			<a href="https://github.com/NxtLvLSoftware/alpine-typescript/tree/dev/examples/project" class="hover:underline">
+				Source Code
+			</a>
+		</li>
+	</ul>
+</footer>
 </body>
 </html>
