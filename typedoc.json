@@ -2,7 +2,7 @@
   "sidebarLinks": {
     "GitHub": "https://github.com/NxtLvlSoftware/alpine-typescript",
     "Twitter": "https://twitter.com/NxtLvlSoftware",
-    "Home": "/index.html",
+    "Home": "https://nxtlvlsoftware.github.io/alpine-typescript/",
     "Example": "https://nxtlvlsoftware.github.io/alpine-typescript/example/"
   }
 }
