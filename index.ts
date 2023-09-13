@@ -29,5 +29,5 @@ export {
 /**
  * Alpine plugin as default export.
  */
-import { componentsPlugin } from './src/Plugin';
+import {componentsPlugin} from './src/Plugin';
 export default componentsPlugin;

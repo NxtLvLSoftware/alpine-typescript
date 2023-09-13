@@ -1,8 +1,12 @@
 {
+  "favicon": "https://nxtlvlsoftware.github.io/alpine-typescript/favicon.ico",
+  "footerTypedocVersion": true,
+  "footerDate": true,
+  "footerTime": true,
   "sidebarLinks": {
     "GitHub": "https://github.com/NxtLvlSoftware/alpine-typescript",
     "Twitter": "https://twitter.com/NxtLvlSoftware",
-    "Home": "/index.html",
+    "Home": "https://nxtlvlsoftware.github.io/alpine-typescript/",
     "Example": "https://nxtlvlsoftware.github.io/alpine-typescript/example/"
   }
 }

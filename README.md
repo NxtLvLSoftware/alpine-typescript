@@ -48,7 +48,7 @@
 ## About
 This package provides support for writing reusable Alpine.js components in Typescript.
 Supporting Alpine's existing model of registering any generic object/type and user-defined
-classes inheriting from the [AlpineComponent class](./src/Component.ts) which provides type
+classes inheriting from the [AlpineComponent class](https://github.com/NxtLvLSoftware/alpine-typescript/blob/dev/src/Component.ts) which provides type
 definitions for Alpine's magics. This enables your IDE to give useful auto-completion without
 any extra plugins/extensions and gives Typescript a better understanding of your component
 code, producing useful compilation/transpilation errors before testing.
@@ -65,10 +65,27 @@ import Alpine from 'alpinejs';
 
 window.Alpine = Alpine;
 
-import { componentPlugin } from '@nxtlvlsoftware/alpine-typescript';
+import {componentPlugin} from '@nxtlvlsoftware/alpine-typescript';
 
-Alpine.plugin(componentPlugin);
-Alpine.start();
+window.addEventListener('alpine-components:init', () => {
+  // window.Alpine.Components.register();
+});
+
+window.Alpine.plugin(componentPlugin);
+window.Alpine.start();
+```
+Using the default export:
+```typescript
+import Alpine from 'alpinejs';
+
+window.Alpine = Alpine;
+
+window.addEventListener('alpine-components:init', () => {
+  // window.Alpine.Components.register();
+});
+
+window.Alpine.plugin(require('@nxtlvlsoftware/alpine-typescript'));
+window.Alpine.start();
 ```
 This is the easiest way to get started in existing projects but doesn't offer a way to modify the
 default options provided the package.
@@ -79,16 +96,22 @@ import Alpine from 'alpinejs';
 
 window.Alpine = Alpine;
 
-import { AlpineComponents } from '@nxtlvlsoftware/alpine-typescript';
+import {AlpineComponents} from '@nxtlvlsoftware/alpine-typescript';
 
-AlpineComponents.bootstrap();
+AlpineComponents.bootstrap({
+  components: {
+    //
+  }});
 ```
 The default options are best suited to new projects and automatically starts Alpine for you.
 To integrate into existing projects seamlessly, just pass in an options object:
 ```typescript
-import { AlpineComponents } from '@nxtlvlsoftware/alpine-typescript';
+import {AlpineComponents} from '@nxtlvlsoftware/alpine-typescript';
 
 AlpineComponents.bootstrap({
+  components: {
+    //
+  },
   startAlpine: false,
   logErrors: true // should only enable this in dev enviroments for debugging
 }); // pass the Alpine object explicity if you aren't following the default convention
@@ -102,10 +125,13 @@ import Alpine from 'alpinejs';
 
 let myAlpine = Alpine;
 
-import { AlpineComponents } from '@nxtlvlsoftware/alpine-typescript';
+import {AlpineComponents} from '@nxtlvlsoftware/alpine-typescript';
 
 const isProduction = () => false; // equivelent would be injected/definied server-side by your framework
 AlpineComponents.bootstrap({
+    components: {
+      //
+    },
     logErrors: !isProduction()
 }, myAlpine);
 
@@ -122,13 +148,13 @@ This package is designed to be easily integrated into existing projects. You can
 migrating complex, logic heavy components into classes without worrying about the simple stuff
 that makes Alpine so powerful.
 
-Take a look at the provided example project [here.](./examples/project)
+Take a look at the provided example project [here.](https://github.com/NxtLvLSoftware/alpine-typescript/blob/dev/examples/project)
 
 ##### Project Setup
-You'll want to start by [installing](#installation) the package then add these lines to your
+You'll want to start by [installing](https://github.com/NxtLvLSoftware/alpine-typescript/blob/dev/README.md#installation) the package then add these lines to your
 client script:
 ```typescript
-import { AlpineComponents } from '@nxtlvlsoftware/alpine-typescript';
+import {AlpineComponents} from '@nxtlvlsoftware/alpine-typescript';
 
 AlpineComponents.bootstrap({
   components: {
@@ -142,9 +168,9 @@ AlpineComponents.bootstrap({
 Now create a directory for your components, something like `components` and create a new
 Typescript file `components/MyComponent.ts` containing:
 ```typescript
-import { AlpineComponent } from "@nxtlvlsoftware/alpine-typescript";
+import {AlpineComponent} from "@nxtlvlsoftware/alpine-typescript";
 
-export class MyComponent extends AlpineComponent<MyComponent> {
+export class MyComponent extends AlpineComponent {
 
   constructor(
     public required: string,
@@ -161,7 +187,7 @@ export class MyComponent extends AlpineComponent<MyComponent> {
 ```
 Register your new component in the `AlpineComponents.bootstrap()` method call:
 ```typescript
-import { MyComponent } from './components/MyComponent';
+import {MyComponent} from './components/MyComponent';
 
 AlpineComponents.bootstrap({
   components: {
@@ -174,10 +200,10 @@ You can now use the component in your HTML with `x-data="myComponent('Hello Worl
 #### In Packages
 The main purpose of this package is to easily distribute components in their own package.
 
-Take a look at the provided example components package [here.](./examples/package)
+Take a look at the provided example components package [here.](https://github.com/NxtLvLSoftware/alpine-typescript/blob/dev/examples/package)
 
 ##### Package Setup
-The easiest way to start distributing your components is to copy everything from the [package example](./examples/package)
+The easiest way to start distributing your components is to copy everything from the [package example](https://github.com/NxtLvLSoftware/alpine-typescript/blob/dev/examples/package)
 directory and start writing your components.
 
 Manual setup requires a project with `typescript` installed to compile the code to javascript:
@@ -288,13 +314,12 @@ export namespace MyComponents {
 
 // Support loading our components with a standardized call to Alpine.plugin().
 export function myPlugin(alpine: Globals.Alpine): void {
-  MyComponents.bootstrap(
-    {
-      // can't assume we're the only ones using the component library
-      bootstrapComponents: false,
-      // definitely not the only ones using alpine if we're being used as a plugin here
-      startAlpine: false
-    }, alpine);
+  MyComponents.bootstrap({
+    // can't assume we're the only ones using the component library
+    bootstrapComponents: false,
+    // definitely not the only ones using alpine if we're being used as a plugin here
+    startAlpine: false
+  }, alpine);
 }
 ```
 Export the `MyComponent` namespace and `myPlugin()` function as default from `index.ts`:
@@ -307,7 +332,7 @@ export {
 /**
  * Alpine plugin as default export.
  */
-import { myPlugin } from './src/Plugin';
+import {myPlugin} from './src/Plugin';
 export default myPlugin;
 ```
 Now you can start writing your components. Remember to create the `src/components/MyComponent.ts`
@@ -325,7 +350,7 @@ Any function that satisfies this type requirement:
 ```typescript
 type KnownGenericConstructor<T> = (...args: any[]) => T;
 ```
-Will be accepted as a component constructor. The [signature](./src/Store.ts#L101) for registering components of this type is:
+Will be accepted as a component constructor. The [signature](https://github.com/NxtLvLSoftware/alpine-typescript/blob/dev/src/Store.ts#L101) for registering components of this type is:
 ```typescript
 /**
  * Register a generic object (alpine data) as a component.
@@ -364,16 +389,21 @@ Or by listening for the `alpine-components:init` on the `document` global:
 document.addEventListener('alpine-components:init', () => {
   window.Alpine.Components.register('noArgs', noArgsComponent);
   window.Alpine.Components.register('singleValue', singleValueComponent);
+  // or registerAll() when component names are hardcoded
+  window.Alpine.Components.registerAll({
+    noArgs: noArgsComponent,
+    singleValue: singleValueComponent
+  });
 });
 ```
 
 ##### Typescript Classes
 The main purpose of this package is to use class definitions as Alpine components. Any class
-inheriting from [AlpineComponent](./src/Component#L45) is accepted.
+inheriting from [AlpineComponent](https://github.com/NxtLvLSoftware/alpine-typescript/blob/dev/src/Component#L45) is accepted.
 
 Both register function definitions accept constructor functions for these classes.
 
-Explicit register class constructor [signature](src/Store.ts#L109):
+Explicit register class constructor [signature](https://github.com/NxtLvLSoftware/alpine-typescript/blob/dev/src/Store.ts#L109):
 ```typescript
 /**
  * Register a class inheriting from {@link Impl.AlpineComponent} as a component.
@@ -385,7 +415,7 @@ register<T extends Impl.AlpineComponent>(component: Impl.KnownClassConstructor<T
 ```
 If no name is provided it will fall back to the name of the class (prototype name.)
 
-You can also register classes with the generic [signature](./src/Store.ts#L101):
+You can also register classes with the generic [signature](https://github.com/NxtLvLSoftware/alpine-typescript/blob/dev/src/Store.ts#L101):
 ```typescript
 /**
  * Register a generic object (alpine data) as a component.
@@ -395,7 +425,7 @@ You can also register classes with the generic [signature](./src/Store.ts#L101):
  */
 register<T>(name: string, component: Impl.KnownConstructor<T>): void;
 ```
-The component parameters prototype is checked for inheritance from the [AlpineComponent](./src/Component#L45)
+The component parameters prototype is checked for inheritance from the [AlpineComponent](https://github.com/NxtLvLSoftware/alpine-typescript/blob/dev/src/Component#L45)
 class and handled accordingly.
 
 #### Using Components
@@ -417,21 +447,20 @@ Here's the contrived `dropdown` example re-written to use a class:
 
   window.Alpine = Alpine;
 
-  import { AlpineComponents, AlpineComponent } from '@nxtlvlsoftware/alpine-typescript';
+  import {AlpineComponents, AlpineComponent} from '@nxtlvlsoftware/alpine-typescript';
 
   class ToggleComponent extends AlpineComponent {
     constructor(
-      open: boolean = false
+      public open: boolean = false
     ) { super(); }
 
-    toggle() { this.open = !open; }
+    toggle(): void { this.open = !this.open; }
   }
 
-  window.addEventListener('alpine-components:init', () => {
-    window.Alpine.Components.register(ToggleComponent, 'toggle');
-  });
-
   AlpineComponents.bootstrap({
+    components: {
+      toggle: ToggleComponent
+    },
     logErrors: true
   });
 </script>

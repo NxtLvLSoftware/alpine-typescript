@@ -7,13 +7,13 @@ export declare interface AlpineDataContext {
     [stateKey: string]: any;
 }
 export declare type AlpineData = AlpineDataContext | string | number | boolean;
-export declare abstract class AlpineComponent<T = object> implements AlpineDataContext {
-    $data: T;
+export declare abstract class AlpineComponent implements AlpineDataContext {
+    $data: this;
     $el: HTMLElement;
     $refs: Record<string, HTMLElement>;
     $store: AlpineData;
     $dispatch: (event: string, data?: any) => void;
     $id: (name: string, key?: number | string) => string;
     $nextTick: (callback?: () => void) => Promise<void>;
-    $watch: <K extends keyof T | string, V extends (K extends keyof T ? T[K] : any)>(property: K, callback: (newValue: V, oldValue: V) => void) => void;
+    $watch: <K extends keyof this | string, V extends (K extends keyof this ? this[K] : any)>(property: K, callback: (newValue: V, oldValue: V) => void) => void;
 }

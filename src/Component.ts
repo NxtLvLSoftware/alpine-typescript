@@ -42,12 +42,12 @@ export declare type AlpineData = AlpineDataContext | string | number | boolean;
  *
  * Property declarations copied from @types/alpinejs.
  */
-export abstract class AlpineComponent<T = object> implements AlpineDataContext {
+export abstract class AlpineComponent implements AlpineDataContext {
 
 	/**
 	 * Access to current Alpine data.
 	 */
-	declare $data: T;
+	declare $data: this;
 
 	/**
 	 * Retrieve the current DOM node.
@@ -93,7 +93,7 @@ export abstract class AlpineComponent<T = object> implements AlpineDataContext {
 	 * @param property the component property
 	 * @param callback a callback that will fire when a given property is changed
 	 */
-	declare $watch: <K extends keyof T | string, V extends (K extends keyof T ? T[K] : any)>(
+	declare $watch: <K extends keyof this | string, V extends (K extends keyof this ? this[K] : any)>(
 		property: K,
 		callback: (newValue: V, oldValue: V) => void,
 	) => void;

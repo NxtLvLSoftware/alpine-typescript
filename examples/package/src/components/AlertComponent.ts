@@ -1,4 +1,4 @@
-import { AlpineComponent } from "@nxtlvlsoftware/alpine-typescript";
+import {AlpineComponent} from "@nxtlvlsoftware/alpine-typescript";
 
 export const DefaultAlertComponentName = 'alert';
 
@@ -8,7 +8,7 @@ export const DefaultAlertComponentName = 'alert';
  * All properties and events are prefixed with 'alert' to make
  * it clear which variables belong to the component in the HTML.
  */
-export class AlertComponent extends AlpineComponent<AlertComponent> {
+export class AlertComponent extends AlpineComponent {
 
 	constructor(
 		public alertState: boolean = false

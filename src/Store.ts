@@ -200,8 +200,22 @@ export class ComponentStore {
  * @param instance The object to copy functions and properties from
  */
 export function transformToAlpineData<T extends AlpineComponent>(instance: T): object {
+	let methodNames: string[] = [];
+	for (
+		let prototype = Object.getPrototypeOf(instance);
+		prototype.constructor.name !== 'Object';
+		prototype = Object.getPrototypeOf(prototype)
+	) {
+		Object.getOwnPropertyNames(prototype).forEach((name: string) => {
+			if (methodNames.includes(name)) {
+				return;
+			}
+			methodNames.push(name);
+		});
+	}
+
 	return [
-		...Object.getOwnPropertyNames(Object.getPrototypeOf(instance)), // methods
+		...methodNames, // methods
 		...Object.getOwnPropertyNames(instance) // properties
 	].reduce((obj, name) => {
 		// @ts-ignore

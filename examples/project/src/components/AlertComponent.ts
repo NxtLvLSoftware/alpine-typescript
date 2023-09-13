@@ -1,4 +1,4 @@
-import { AlpineComponent } from "@nxtlvlsoftware/alpine-typescript";
+import {AlpineComponent} from "@nxtlvlsoftware/alpine-typescript";
 
 /**
  * Simple alert component for closing the default alert.
@@ -6,7 +6,7 @@ import { AlpineComponent } from "@nxtlvlsoftware/alpine-typescript";
  * All properties and events are prefixed with 'alert' to make
  * it clear which variables belong to the component in the HTML.
  */
-export class AlertComponent extends AlpineComponent<AlertComponent> {
+export class AlertComponent extends AlpineComponent {
 
 	constructor(
 		public alertState: boolean = false
