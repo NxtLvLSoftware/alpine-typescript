@@ -11,7 +11,7 @@ env:
   GITHUB_ACTIONS: true
 
 jobs:
-  docs-build:
+  build-docs:
     name: Generate site
     runs-on: ubuntu-latest
     timeout-minutes: 5
@@ -108,7 +108,7 @@ jobs:
 
   package:
     name: Package
-    needs: [docs-build, example-build]
+    needs: [build-docs, build-example]
     runs-on: ubuntu-latest
     timeout-minutes: 5
 
