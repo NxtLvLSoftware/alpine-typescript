@@ -54,7 +54,19 @@ jobs:
           node-version: ${{ env.NODE_VERSION }}
           registry-url: 'https://registry.npmjs.org'
 
+      - name: Export tag env var
+        run: |
+          echo "NPM_TAG=`echo '0.0.0-dist.${GITHUB_SHA::7}' >> $GITHUB_ENV
+
+      - name: Publish ${{ NPM_TAG }} to npm registry
+        if: github.event_name == 'push'
+        run: |
+          npm publish --access public --tag ${{ NPM_TAG }}
+        env:
+          NODE_AUTH_TOKEN: ${{ secrets.NPM_AUTH_TOKEN }}
+
       - name: Publish ${{ github.ref_name }} to npm registry
+        if: github.event_name == 'tag'
         run: |
           npm publish --access public --tag ${{ github.ref_name }}
         env:
