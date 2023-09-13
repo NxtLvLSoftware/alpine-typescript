@@ -12,6 +12,7 @@ env:
 
 jobs:
   test:
+    name: Run tests
     runs-on: ubuntu-latest
     timeout-minutes: 5
 
@@ -51,6 +52,7 @@ jobs:
             ./src/*.js
 
   test-example-package:
+    name: Run example package tests
     needs: [test]
     runs-on: ubuntu-latest
     timeout-minutes: 5
@@ -99,6 +101,7 @@ jobs:
         run: npm run build-ci
 
   test-example-project:
+    name: Run example project tests
     needs: [test]
     runs-on: ubuntu-latest
     timeout-minutes: 5
@@ -152,10 +155,8 @@ jobs:
     runs-on: ubuntu-latest
     timeout-minutes: 5
 
-    strategy:
-      fail-fast: true
-      matrix:
-        node-version: [18]
+    env:
+      NODE_VERSION: 18
 
     if: github.ref == 'refs/heads/dev'
     steps:
@@ -169,16 +170,16 @@ jobs:
           git fetch origin dev:dev
           git reset --hard dev
 
-      - name: Use Node.js ${{ matrix.node-version }}
+      - name: Use Node.js ${{ env.NODE_VERSION }}
         uses: actions/setup-node@v3
         with:
-          node-version: ${{ matrix.node-version }}
+          node-version: ${{ env.NODE_VERSION }}
 
       - name: Cache node_modules
         uses: actions/cache@v3
         with:
           path: node_modules
-          key: ${{ runner.os }}}-${{ matrix.node-version }}-node_modules-${{ hashFiles('package.json') }}
+          key: ${{ runner.os }}}-${{ env.NODE_VERSION }}-node_modules-${{ hashFiles('package.json') }}
 
       - name: Install dependencies
         run: npm install
