@@ -82,7 +82,7 @@ jobs:
 
       - name: Update alpine-typescript version
         run: |
-          sed -i 's/file:..\/..\//\*/g' package.json
+          sed -i 's/file:..\/..\//rc/g' package.json
 
       - name: Use Node.js ${{ env.NODE_VERSION }}
         uses: actions/setup-node@v3
