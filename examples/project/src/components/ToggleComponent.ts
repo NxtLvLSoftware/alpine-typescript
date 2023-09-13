@@ -6,7 +6,7 @@ import {AlpineComponent} from "@nxtlvlsoftware/alpine-typescript";
  * All properties and events are prefixed with 'toggle' to make
  * it clear which variables belong to the component in the HTML.
  */
-export class ToggleComponent extends AlpineComponent<ToggleComponent> {
+export class ToggleComponent extends AlpineComponent {
 
 	constructor(
 		public toggleState: boolean = false
