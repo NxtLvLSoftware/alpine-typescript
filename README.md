@@ -48,7 +48,7 @@
 ## About
 This package provides support for writing reusable Alpine.js components in Typescript.
 Supporting Alpine's existing model of registering any generic object/type and user-defined
-classes inheriting from the [AlpineComponent class](./src/Component.ts) which provides type
+classes inheriting from the [AlpineComponent class](https://github.com/NxtLvLSoftware/alpine-typescript/blob/dev/src/Component.ts) which provides type
 definitions for Alpine's magics. This enables your IDE to give useful auto-completion without
 any extra plugins/extensions and gives Typescript a better understanding of your component
 code, producing useful compilation/transpilation errors before testing.
@@ -122,10 +122,10 @@ This package is designed to be easily integrated into existing projects. You can
 migrating complex, logic heavy components into classes without worrying about the simple stuff
 that makes Alpine so powerful.
 
-Take a look at the provided example project [here.](./examples/project)
+Take a look at the provided example project [here.](https://github.com/NxtLvLSoftware/alpine-typescript/blob/dev/examples/project)
 
 ##### Project Setup
-You'll want to start by [installing](#installation) the package then add these lines to your
+You'll want to start by [installing](https://github.com/NxtLvLSoftware/alpine-typescript/blob/dev/README.md#installation) the package then add these lines to your
 client script:
 ```typescript
 import { AlpineComponents } from '@nxtlvlsoftware/alpine-typescript';
@@ -174,10 +174,10 @@ You can now use the component in your HTML with `x-data="myComponent('Hello Worl
 #### In Packages
 The main purpose of this package is to easily distribute components in their own package.
 
-Take a look at the provided example components package [here.](./examples/package)
+Take a look at the provided example components package [here.](https://github.com/NxtLvLSoftware/alpine-typescript/blob/dev/examples/package)
 
 ##### Package Setup
-The easiest way to start distributing your components is to copy everything from the [package example](./examples/package)
+The easiest way to start distributing your components is to copy everything from the [package example](https://github.com/NxtLvLSoftware/alpine-typescript/blob/dev/examples/package)
 directory and start writing your components.
 
 Manual setup requires a project with `typescript` installed to compile the code to javascript:
@@ -325,7 +325,7 @@ Any function that satisfies this type requirement:
 ```typescript
 type KnownGenericConstructor<T> = (...args: any[]) => T;
 ```
-Will be accepted as a component constructor. The [signature](./src/Store.ts#L101) for registering components of this type is:
+Will be accepted as a component constructor. The [signature](https://github.com/NxtLvLSoftware/alpine-typescript/blob/dev/src/Store.ts#L101) for registering components of this type is:
 ```typescript
 /**
  * Register a generic object (alpine data) as a component.
@@ -369,11 +369,11 @@ document.addEventListener('alpine-components:init', () => {
 
 ##### Typescript Classes
 The main purpose of this package is to use class definitions as Alpine components. Any class
-inheriting from [AlpineComponent](./src/Component#L45) is accepted.
+inheriting from [AlpineComponent](https://github.com/NxtLvLSoftware/alpine-typescript/blob/dev/src/Component#L45) is accepted.
 
 Both register function definitions accept constructor functions for these classes.
 
-Explicit register class constructor [signature](src/Store.ts#L109):
+Explicit register class constructor [signature](https://github.com/NxtLvLSoftware/alpine-typescript/blob/dev/src/Store.ts#L109):
 ```typescript
 /**
  * Register a class inheriting from {@link Impl.AlpineComponent} as a component.
@@ -385,7 +385,7 @@ register<T extends Impl.AlpineComponent>(component: Impl.KnownClassConstructor<T
 ```
 If no name is provided it will fall back to the name of the class (prototype name.)
 
-You can also register classes with the generic [signature](./src/Store.ts#L101):
+You can also register classes with the generic [signature](https://github.com/NxtLvLSoftware/alpine-typescript/blob/dev/src/Store.ts#L101):
 ```typescript
 /**
  * Register a generic object (alpine data) as a component.
@@ -395,7 +395,7 @@ You can also register classes with the generic [signature](./src/Store.ts#L101):
  */
 register<T>(name: string, component: Impl.KnownConstructor<T>): void;
 ```
-The component parameters prototype is checked for inheritance from the [AlpineComponent](./src/Component#L45)
+The component parameters prototype is checked for inheritance from the [AlpineComponent](https://github.com/NxtLvLSoftware/alpine-typescript/blob/dev/src/Component#L45)
 class and handled accordingly.
 
 #### Using Components
