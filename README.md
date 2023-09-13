@@ -29,6 +29,7 @@
 <br /><hr /><br />
 
 * [Documentation](https://nxtlvlsoftware.github.io/alpine-typescript)
+* [Example](https://nxtlvlsoftware.github.io/alpine-typescript/example/)
 * [Installation](#installation)
 * [Usage](#usage)
   * [Projects](#in-projects)
