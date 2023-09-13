@@ -56,7 +56,7 @@ jobs:
 
       - name: Export tag env var
         run: |
-          echo "NPM_TAG=`echo '0.0.0-dist.${GITHUB_SHA::7}' >> $GITHUB_ENV
+          echo "NPM_TAG=`echo '0.0.0-dist.${GITHUB_SHA::7}'" >> $GITHUB_ENV
 
       - name: Publish ${{ NPM_TAG }} to npm registry
         if: github.event_name == 'push'
