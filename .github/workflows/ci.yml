@@ -40,9 +40,115 @@ jobs:
       - name: Build alpine-typescript
         run: npm run build-ci
 
+      - uses: actions/upload-artifact@v3
+        with:
+          name: test-build-output
+          path: |
+            ./package.json
+            ./index.d.ts
+            ./index.js
+            ./src/*.d.ts
+            ./src/*.js
+
+  test-example-package:
+    needs: [test]
+    runs-on: ubuntu-latest
+    timeout-minutes: 5
+
+    strategy:
+      fail-fast: true
+      matrix:
+        node-version: [18]
+
+    steps:
+      - uses: actions/checkout@v3
+        with:
+          sparse-checkout: |
+            examples/package
+          sparse-checkout-cone-mode: false
+
+      - name: Move example files
+        run: |
+          mv ./examples/package/* ./
+          rm -rf ./examples/package
+
+      - uses: actions/download-artifact@v3
+        with:
+          name: test-build-output
+          path: ./alpine-typescript
+
+      - name: Update alpine-typescript file path
+        run: |
+          sed -i 's/file:..\/..\//file:alpine-typescript/g' package.json
+
+      - name: Use Node.js ${{ matrix.node-version }}
+        uses: actions/setup-node@v3
+        with:
+          node-version: ${{ matrix.node-version }}
+
+      - name: Cache node_modules
+        uses: actions/cache@v3
+        with:
+          path: node_modules
+          key: ${{ runner.os }}}-${{ matrix.node-version }}-node_modules-${{ hashFiles('package.json') }}
+
+      - name: Install dependencies
+        run: npm install
+
+      - name: Build package example
+        run: npm run build-ci
+
+  test-example-project:
+    needs: [test]
+    runs-on: ubuntu-latest
+    timeout-minutes: 5
+
+    strategy:
+      fail-fast: true
+      matrix:
+        node-version: [18]
+
+    steps:
+      - uses: actions/checkout@v3
+        with:
+          sparse-checkout: |
+            examples/project
+          sparse-checkout-cone-mode: false
+
+      - name: Move example files
+        run: |
+          mv ./examples/project/* ./
+          rm -rf ./examples/project
+
+      - uses: actions/download-artifact@v3
+        with:
+          name: test-build-output
+          path: ./alpine-typescript
+
+      - name: Update alpine-typescript file path
+        run: |
+          sed -i 's/file:..\/..\//file:alpine-typescript/g' package.json
+
+      - name: Use Node.js ${{ matrix.node-version }}
+        uses: actions/setup-node@v3
+        with:
+          node-version: ${{ matrix.node-version }}
+
+      - name: Cache node_modules
+        uses: actions/cache@v3
+        with:
+          path: node_modules
+          key: ${{ runner.os }}}-${{ matrix.node-version }}-node_modules-${{ hashFiles('package.json') }}
+
+      - name: Install dependencies
+        run: npm install
+
+      - name: Build package example
+        run: npm run build-ci
+
   stage:
     name: Stage changes as pull request
-    needs: [test]
+    needs: [test, test-example-package, test-example-project]
     runs-on: ubuntu-latest
     timeout-minutes: 5
 
