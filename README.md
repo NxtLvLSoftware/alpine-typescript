@@ -1,8 +1,8 @@
 <p align="center">
   <a href="https://nxtlvlsoftware.github.io/alpine-typescript/"><picture>
-    <source media="(prefers-color-scheme: dark)" srcset="https://raw.githubusercontent.com/NxtLvLSoftware/alpine-typescript/dist/.github/banner-dark.svg">
-    <source media="(prefers-color-scheme: light)" srcset="https://raw.githubusercontent.com/NxtLvLSoftware/alpine-typescript/dist/.github/banner-light.svg">
-    <img alt="Project Banner (@nxtlvlsoftware/alpine-typescript)" src="https://raw.githubusercontent.com/NxtLvLSoftware/alpine-typescript/dist/.github/.github/banner-light.svg" width="350" height="160" style="max-width: 100%;">
+    <source media="(prefers-color-scheme: dark)" srcset="https://raw.githubusercontent.com/NxtLvLSoftware/alpine-typescript/dist/.github/banner-dark.png">
+    <source media="(prefers-color-scheme: light)" srcset="https://raw.githubusercontent.com/NxtLvLSoftware/alpine-typescript/dist/.github/banner-light.png">
+    <img alt="Project Banner (@nxtlvlsoftware/alpine-typescript)" src="https://raw.githubusercontent.com/NxtLvLSoftware/alpine-typescript/dist/.github/.github/banner-light.png" width="350" height="160" style="max-width: 100%;">
   </picture></a>
 </p>
 
