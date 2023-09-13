@@ -22,8 +22,7 @@
     <a href="https://github.com/NxtLvlSoftware/alpine-typescript/actions"><img src="https://img.shields.io/github/actions/workflow/status/NxtLvlSoftware/alpine-typescript/ci.yml?branch=dev" alt="Build Status"></a>
     <a href="https://www.npmjs.com/package/@nxtlvlsoftware/alpine-typescript"><img src="https://img.shields.io/npm/dt/%40nxtlvlsoftware/alpine-typescript" alt="Total Downloads"></a>
     <a href="https://github.com/NxtLvlSoftware/alpine-typescript/releases"><img src="https://img.shields.io/npm/v/%40nxtlvlsoftware/alpine-typescript" alt="Latest Release"></a>
-    <a href="https://github.com/NxtLvlSoftware/alpine-typescript/blob/dev/LICENSE"><img src="https://img.shields.io/npm/l/%40nxtlvlsoftware%2Falpine-typescript
-" alt="License"></a>
+    <a href="https://github.com/NxtLvlSoftware/alpine-typescript/blob/dev/LICENSE"><img src="https://img.shields.io/npm/l/%40nxtlvlsoftware%2Falpine-typescript" alt="License"></a>
 </p>
 
 <br /><hr /><br />
