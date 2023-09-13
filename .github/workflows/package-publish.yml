@@ -3,8 +3,8 @@ name: Publish Package
 on:
   push:
     branches: [dist]
-    tags:
-      - '*'
+  release:
+    types: [published]
 
 permissions:
   contents: read
@@ -69,7 +69,7 @@ jobs:
           NODE_AUTH_TOKEN: ${{ secrets.NPM_AUTH_TOKEN }}
 
       - name: Publish ${{ github.ref_name }} to npm registry
-        if: github.event_name == 'tag'
+        if: github.event_name == 'release'
         run: |
           npm config set allow-same-version true
           npm config set git-tag-version false
