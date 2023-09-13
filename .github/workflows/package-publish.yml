@@ -62,13 +62,15 @@ jobs:
       - name: Publish ${NPM_TAG} to npm registry
         if: github.event_name == 'push'
         run: |
-          npm publish --access public --tag ${NPM_TAG}
+          npm version ${NPM_TAG}
+          npm publish --access public --tag rc
         env:
           NODE_AUTH_TOKEN: ${{ secrets.NPM_AUTH_TOKEN }}
 
       - name: Publish ${{ github.ref_name }} to npm registry
         if: github.event_name == 'tag'
         run: |
-          npm publish --access public --tag ${{ github.ref_name }}
+          npm version ${{ github.ref_name }}
+          npm publish --access public --tag latest
         env:
           NODE_AUTH_TOKEN: ${{ secrets.NPM_AUTH_TOKEN }}
