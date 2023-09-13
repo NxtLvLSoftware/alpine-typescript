@@ -399,7 +399,48 @@ The component parameters prototype is checked for inheritance from the [AlpineCo
 class and handled accordingly.
 
 #### Using Components
-Guide
+Using components works the same way as registering with the normal [`alpine.data()`](https://alpinejs.dev/globals/alpine-data),
+just provide the component name to the `x-data` attribute in a HTML element. The name
+provided to the `AlpineComponents.register()` call is forwarded to Alpine and your
+component will work as if you were using in-line JavaScript objects.
+
+Here's the contrived `dropdown` example re-written to use a class:
+```html
+<div x-data="dropdown">
+  <button @click="toggle">...</button>
+
+  <div x-show="open">...</div>
+</div>
+
+<script>
+  import Alpine from 'alpinejs';
+
+  window.Alpine = Alpine;
+
+  import { AlpineComponents, AlpineComponent } from '@nxtlvlsoftware/alpine-typescript';
+
+  class ToggleComponent extends AlpineComponent {
+    constructor(
+      open: boolean = false
+    ) { super(); }
+
+    toggle() { this.open = !open; }
+  }
+
+  window.addEventListener('alpine-components:init', () => {
+    window.Alpine.Components.register(ToggleComponent, 'toggle');
+  });
+
+  AlpineComponents.bootstrap({
+    logErrors: true
+  });
+</script>
+```
+The main drawback of using this library is the added compilation step needed to use TypeScript.
+Alpine is an elegant library that provides a thin layer on-top of vanilla JavaScript. Using
+Alpine the way it was intended is the way to go until your list of components grows and you
+need a way to organise them. If you're not already using a bundler in your project (webpack,
+Vite, Rollup, etc) then this probably isn't for you.
 
 ## Contributing
 
@@ -424,6 +465,8 @@ __A full copy of the license is available [here](https://github.com/NxtLvlSoftwa
 > OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 > SOFTWARE.
 
-#
+<br>
+<hr>
+<br>
 
 __A [NxtLvL Software Solutions](https://github.com/NxtLvLSoftware) product.__
