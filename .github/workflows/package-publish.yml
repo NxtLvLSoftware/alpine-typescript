@@ -24,7 +24,7 @@ jobs:
         uses: lewagon/wait-on-check-action@v1.3.1
         with:
           ref: ${{ github.ref }}
-          check-name: Run tests
+          check-name: Run tests (${{ env.NODE_VERSION }})
           repo-token: ${{ secrets.GITHUB_TOKEN }}
           wait-interval: 10
 
@@ -33,7 +33,7 @@ jobs:
         uses: lewagon/wait-on-check-action@v1.3.1
         with:
           ref: ${{ github.ref }}
-          check-name: Run example package tests
+          check-name: Run example package tests (${{ env.NODE_VERSION }})
           repo-token: ${{ secrets.GITHUB_TOKEN }}
           wait-interval: 10
 
@@ -42,7 +42,7 @@ jobs:
         uses: lewagon/wait-on-check-action@v1.3.1
         with:
           ref: ${{ github.ref }}
-          check-name: Run example project tests
+          check-name: Run example project tests (${{ env.NODE_VERSION }})
           repo-token: ${{ secrets.GITHUB_TOKEN }}
           wait-interval: 10
 
