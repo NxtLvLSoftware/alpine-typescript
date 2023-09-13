@@ -2,8 +2,8 @@
  * Export functions and types.
  */
 
-export { AlertComponent } from './src/components/AlertComponent';
-export { ToggleComponent } from './src/components/ToggleComponent';
+export {AlertComponent} from './src/components/AlertComponent';
+export {ToggleComponent} from './src/components/ToggleComponent';
 
 export {
 	MyComponents,
@@ -14,5 +14,5 @@ export {
 /**
  * Alpine plugin as default export.
  */
-import { myPlugin } from './src/Plugin';
+import {myPlugin} from './src/Plugin';
 export default myPlugin;

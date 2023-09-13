@@ -1,4 +1,4 @@
-import { AlpineComponent } from "@nxtlvlsoftware/alpine-typescript";
+import {AlpineComponent} from "@nxtlvlsoftware/alpine-typescript";
 
 export const DefaultAlertComponentName = 'alert';
 

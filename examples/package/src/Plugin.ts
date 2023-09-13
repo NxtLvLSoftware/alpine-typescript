@@ -92,7 +92,7 @@ export namespace MyComponents {
 		if (opts.bootstrapComponents) {
 			AlpineComponents.bootstrap(opts, alpine);
 		}
-	};
+	}
 
 }
 
