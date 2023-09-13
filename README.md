@@ -65,10 +65,27 @@ import Alpine from 'alpinejs';
 
 window.Alpine = Alpine;
 
-import { componentPlugin } from '@nxtlvlsoftware/alpine-typescript';
+import {componentPlugin} from '@nxtlvlsoftware/alpine-typescript';
 
-Alpine.plugin(componentPlugin);
-Alpine.start();
+window.addEventListener('alpine-components:init', () => {
+  // window.Alpine.Components.register();
+});
+
+window.Alpine.plugin(componentPlugin);
+window.Alpine.start();
+```
+Using the default export:
+```typescript
+import Alpine from 'alpinejs';
+
+window.Alpine = Alpine;
+
+window.addEventListener('alpine-components:init', () => {
+  // window.Alpine.Components.register();
+});
+
+window.Alpine.plugin(require('@nxtlvlsoftware/alpine-typescript'));
+window.Alpine.start();
 ```
 This is the easiest way to get started in existing projects but doesn't offer a way to modify the
 default options provided the package.
@@ -79,16 +96,22 @@ import Alpine from 'alpinejs';
 
 window.Alpine = Alpine;
 
-import { AlpineComponents } from '@nxtlvlsoftware/alpine-typescript';
+import {AlpineComponents} from '@nxtlvlsoftware/alpine-typescript';
 
-AlpineComponents.bootstrap();
+AlpineComponents.bootstrap({
+  components: {
+    //
+  }});
 ```
 The default options are best suited to new projects and automatically starts Alpine for you.
 To integrate into existing projects seamlessly, just pass in an options object:
 ```typescript
-import { AlpineComponents } from '@nxtlvlsoftware/alpine-typescript';
+import {AlpineComponents} from '@nxtlvlsoftware/alpine-typescript';
 
 AlpineComponents.bootstrap({
+  components: {
+    //
+  },
   startAlpine: false,
   logErrors: true // should only enable this in dev enviroments for debugging
 }); // pass the Alpine object explicity if you aren't following the default convention
@@ -102,10 +125,13 @@ import Alpine from 'alpinejs';
 
 let myAlpine = Alpine;
 
-import { AlpineComponents } from '@nxtlvlsoftware/alpine-typescript';
+import {AlpineComponents} from '@nxtlvlsoftware/alpine-typescript';
 
 const isProduction = () => false; // equivelent would be injected/definied server-side by your framework
 AlpineComponents.bootstrap({
+    components: {
+      //
+    },
     logErrors: !isProduction()
 }, myAlpine);
 
@@ -128,7 +154,7 @@ Take a look at the provided example project [here.](https://github.com/NxtLvLSof
 You'll want to start by [installing](https://github.com/NxtLvLSoftware/alpine-typescript/blob/dev/README.md#installation) the package then add these lines to your
 client script:
 ```typescript
-import { AlpineComponents } from '@nxtlvlsoftware/alpine-typescript';
+import {AlpineComponents} from '@nxtlvlsoftware/alpine-typescript';
 
 AlpineComponents.bootstrap({
   components: {
@@ -142,9 +168,9 @@ AlpineComponents.bootstrap({
 Now create a directory for your components, something like `components` and create a new
 Typescript file `components/MyComponent.ts` containing:
 ```typescript
-import { AlpineComponent } from "@nxtlvlsoftware/alpine-typescript";
+import {AlpineComponent} from "@nxtlvlsoftware/alpine-typescript";
 
-export class MyComponent extends AlpineComponent<MyComponent> {
+export class MyComponent extends AlpineComponent {
 
   constructor(
     public required: string,
@@ -161,7 +187,7 @@ export class MyComponent extends AlpineComponent<MyComponent> {
 ```
 Register your new component in the `AlpineComponents.bootstrap()` method call:
 ```typescript
-import { MyComponent } from './components/MyComponent';
+import {MyComponent} from './components/MyComponent';
 
 AlpineComponents.bootstrap({
   components: {
@@ -288,13 +314,12 @@ export namespace MyComponents {
 
 // Support loading our components with a standardized call to Alpine.plugin().
 export function myPlugin(alpine: Globals.Alpine): void {
-  MyComponents.bootstrap(
-    {
-      // can't assume we're the only ones using the component library
-      bootstrapComponents: false,
-      // definitely not the only ones using alpine if we're being used as a plugin here
-      startAlpine: false
-    }, alpine);
+  MyComponents.bootstrap({
+    // can't assume we're the only ones using the component library
+    bootstrapComponents: false,
+    // definitely not the only ones using alpine if we're being used as a plugin here
+    startAlpine: false
+  }, alpine);
 }
 ```
 Export the `MyComponent` namespace and `myPlugin()` function as default from `index.ts`:
@@ -307,7 +332,7 @@ export {
 /**
  * Alpine plugin as default export.
  */
-import { myPlugin } from './src/Plugin';
+import {myPlugin} from './src/Plugin';
 export default myPlugin;
 ```
 Now you can start writing your components. Remember to create the `src/components/MyComponent.ts`
@@ -364,6 +389,11 @@ Or by listening for the `alpine-components:init` on the `document` global:
 document.addEventListener('alpine-components:init', () => {
   window.Alpine.Components.register('noArgs', noArgsComponent);
   window.Alpine.Components.register('singleValue', singleValueComponent);
+  // or registerAll() when component names are hardcoded
+  window.Alpine.Components.registerAll({
+    noArgs: noArgsComponent,
+    singleValue: singleValueComponent
+  });
 });
 ```
 
@@ -417,21 +447,20 @@ Here's the contrived `dropdown` example re-written to use a class:
 
   window.Alpine = Alpine;
 
-  import { AlpineComponents, AlpineComponent } from '@nxtlvlsoftware/alpine-typescript';
+  import {AlpineComponents, AlpineComponent} from '@nxtlvlsoftware/alpine-typescript';
 
   class ToggleComponent extends AlpineComponent {
     constructor(
-      open: boolean = false
+      public open: boolean = false
     ) { super(); }
 
-    toggle() { this.open = !open; }
+    toggle(): void { this.open = !this.open; }
   }
 
-  window.addEventListener('alpine-components:init', () => {
-    window.Alpine.Components.register(ToggleComponent, 'toggle');
-  });
-
   AlpineComponents.bootstrap({
+    components: {
+      toggle: ToggleComponent
+    },
     logErrors: true
   });
 </script>
