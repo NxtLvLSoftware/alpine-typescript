@@ -7,10 +7,11 @@
   "private": true,
   "scripts": {
     "build": "export NODE_ENV=production && webpack",
+    "build-ci": "export NODE_ENV=production && webpack --fail-on-warnings --no-color",
     "dev": "webpack serve --mode=development --open"
   },
   "dependencies": {
-    "@nxtlvlsoftware/alpine-typescript": "file:~/NxtLvlSoftware/Development/typescript/alpine-typescript",
+    "@nxtlvlsoftware/alpine-typescript": "file:../../",
     "alpinejs": "^3.13.0"
   },
   "devDependencies": {

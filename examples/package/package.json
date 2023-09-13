@@ -15,7 +15,8 @@
     "src/**/*.js"
   ],
   "scripts": {
-    "build": "tsc -p ./",
+    "build": "tsc --inlineSourceMap --removeComments -p ./",
+    "build-ci": "tsc --pretty false --inlineSourceMap --removeComments --listEmittedFiles -p ./",
     "dev": "tsc --watch -p ./"
   },
   "keywords": [
@@ -27,7 +28,7 @@
     "ts"
   ],
   "dependencies": {
-    "@nxtlvlsoftware/alpine-typescript": "file:~/NxtLvlSoftware/Development/typescript/alpine-typescript",
+    "@nxtlvlsoftware/alpine-typescript": "file:../../",
     "@types/alpinejs": "^3.7.2"
   },
   "devDependencies": {

@@ -11,24 +11,35 @@ env:
   GITHUB_ACTIONS: true
 
 jobs:
-  build:
+  docs-build:
     name: Generate site
     runs-on: ubuntu-latest
     timeout-minutes: 5
 
-    strategy:
-      fail-fast: true
-      matrix:
-        node-version: [18]
+    env:
+      NODE_VERSION: 18
 
     steps:
+      - name: Wait for publish success
+        uses: lewagon/wait-on-check-action@v1.3.1
+        with:
+          ref: ${{ github.ref }}
+          check-name: Publish to npm registry
+          repo-token: ${{ secrets.GITHUB_TOKEN }}
+          wait-interval: 10
+
       - uses: actions/checkout@v4
+
+      - name: Use Node.js ${{ env.NODE_VERSION }}
+        uses: actions/setup-node@v3
+        with:
+          node-version: ${{ env.NODE_VERSION }}
 
       - name: Cache node_modules
         uses: actions/cache@v3
         with:
           path: node_modules
-          key: ${{ runner.os }}}-${{ matrix.node-version }}-node_modules-${{ hashFiles('package.json') }}
+          key: ${{ runner.os }}}-${{ env.NODE_VERSION }}-node_modules-${{ hashFiles('package.json') }}
 
       - name: Install dependencies
         run: npm install
@@ -36,20 +47,96 @@ jobs:
       - name: Build alpine-typescript
         run: npm run docs-ci
 
+      - uses: actions/upload-artifact@v3
+        with:
+          name: pages-docs-html
+          path: ./docs-build
+
+  build-example:
+    name: Generate example site
+    runs-on: ubuntu-latest
+    timeout-minutes: 5
+
+    env:
+      NODE_VERSION: 18
+
+    steps:
+      - name: Wait for publish success
+        uses: lewagon/wait-on-check-action@v1.3.1
+        with:
+          ref: ${{ github.ref }}
+          check-name: Publish to npm registry
+          repo-token: ${{ secrets.GITHUB_TOKEN }}
+          wait-interval: 10
+
+      - uses: actions/checkout@v3
+        with:
+          sparse-checkout: |
+            examples/project
+          sparse-checkout-cone-mode: false
+
+      - name: Move example files
+        run: |
+          mv ./examples/project/* ./
+          rm -rf ./examples/project
+
+      - name: Update alpine-typescript version
+        run: |
+          sed -i 's/file:..\/..\//\*/g' package.json
+
+      - name: Use Node.js ${{ env.NODE_VERSION }}
+        uses: actions/setup-node@v3
+        with:
+          node-version: ${{ env.NODE_VERSION }}
+
+      - name: Cache node_modules
+        uses: actions/cache@v3
+        with:
+          path: node_modules
+          key: ${{ runner.os }}}-${{ env.NODE_VERSION }}-node_modules-${{ hashFiles('package.json') }}
+
+      - name: Install dependencies
+        run: npm install
+
+      - name: Build example project
+        run: npm run build-ci
+
+      - uses: actions/upload-artifact@v3
+        with:
+          name: pages-example-html
+          path: ./dist
+
+  package:
+    name: Package
+    needs: [docs-build, example-build]
+    runs-on: ubuntu-latest
+    timeout-minutes: 5
+
+    steps:
+      - uses: actions/download-artifact@v3
+        with:
+          name: pages-docs-html
+          path: ./
+
+      - uses: actions/download-artifact@v3
+        with:
+          name: pages-example-html
+          path: ./example
+
       - name: Fix permissions
         run: |
-          chmod -c -R +rX "./docs-build" | while read line; do
+          chmod -c -R +rX "./" | while read line; do
             echo "::warning title=Invalid file permissions automatically fixed::$line"
           done
 
       - uses: actions/upload-pages-artifact@v2
         with:
           name: github-pages
-          path: ./docs-build
+          path: ./
 
   publish:
     name: Publish
-    needs: [build]
+    needs: [package]
     runs-on: ubuntu-latest
     timeout-minutes: 5
 

@@ -1,8 +1,8 @@
 # Project specific files
 /dist
-package-lock.json
 /node_modules
 .github/**/node_modules
+!package-lock.json
 
 ## Make sure tsc output isn't included in development branches
 *.d.ts
