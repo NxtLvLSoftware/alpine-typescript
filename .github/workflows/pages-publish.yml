@@ -47,6 +47,10 @@ jobs:
       - name: Build alpine-typescript
         run: npm run docs-ci
 
+      - name: Copy favicon to /docs-build
+        run: |
+          cp ./.github/favicon.ico ./docs-build/favicon.ico
+
       - uses: actions/upload-artifact@v3
         with:
           name: pages-docs-html
