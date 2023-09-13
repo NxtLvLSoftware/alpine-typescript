@@ -62,6 +62,7 @@ jobs:
       - name: Publish ${NPM_TAG} to npm registry
         if: github.event_name == 'push'
         run: |
+          npm config set git-tag-version false
           npm version ${NPM_TAG}
           npm publish --access public --tag rc
         env:
@@ -70,6 +71,8 @@ jobs:
       - name: Publish ${{ github.ref_name }} to npm registry
         if: github.event_name == 'tag'
         run: |
+          npm config set allow-same-version true
+          npm config set git-tag-version false
           npm version ${{ github.ref_name }}
           npm publish --access public --tag latest
         env:
