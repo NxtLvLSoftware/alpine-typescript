@@ -58,10 +58,10 @@ jobs:
         run: |
           echo "NPM_TAG=`echo '0.0.0-dist.${GITHUB_SHA::7}'" >> $GITHUB_ENV
 
-      - name: Publish ${{ NPM_TAG }} to npm registry
+      - name: Publish ${NPM_TAG} to npm registry
         if: github.event_name == 'push'
         run: |
-          npm publish --access public --tag ${{ NPM_TAG }}
+          npm publish --access public --tag ${NPM_TAG}
         env:
           NODE_AUTH_TOKEN: ${{ secrets.NPM_AUTH_TOKEN }}
 
