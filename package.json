@@ -1,7 +1,10 @@
 {
   "name": "@nxtlvlsoftware/alpine-typescript",
-  "version": "0.0.1",
   "description": "Typescript definitions for Alpine.js.",
+  "version": "0.0.3",
+  "author": "Jack Noordhuis <me@jacknoordhuis.net>",
+  "license": "MIT",
+  "type": "module",
   "main": "index.js",
   "files": [
     "README.md",
@@ -11,6 +14,12 @@
     "index.d.ts",
     "index.js"
   ],
+  "keywords": [
+    "alpine",
+    "alpine.js",
+    "typescript",
+    "components"
+  ],
   "scripts": {
     "build": "tsc --inlineSourceMap --removeComments -p ./",
     "build-ci": "tsc --pretty false --inlineSourceMap --removeComments --listEmittedFiles -p ./",
@@ -18,14 +27,6 @@
     "docs": "npx typedoc --plugin typedoc-plugin-extras --out docs-build --cacheBust index.ts",
     "docs-ci": "npx typedoc --plugin typedoc-plugin-extras --gitRemote dist --out docs-build --cacheBust index.ts"
   },
-  "keywords": [
-    "alpine",
-    "alpine.js",
-    "typescript",
-    "components"
-  ],
-  "author": "Jack Noordhuis <me@jacknoordhuis.net>",
-  "license": "MIT",
   "dependencies": {
     "@types/alpinejs": "^3.7.2"
   },
