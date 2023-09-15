@@ -2,8 +2,8 @@
  * Type declarations for Alpine and browser window global.
  */
 import type {Alpine as AlpineType} from 'alpinejs';
-import type {ComponentStore} from "./Store";
-import type {AlpineComponentConstructor} from "./Component";
+import type {ComponentStore} from './Store';
+import type {AlpineComponentConstructor} from './Component';
 
 /**
  * Define the properties we add to the window.Alpine object.

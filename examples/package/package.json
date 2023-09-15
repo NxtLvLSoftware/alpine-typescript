@@ -1,23 +1,12 @@
 {
   "name": "alpine-typescript-package-example",
-  "type": "module",
-  "version": "0.0.1",
   "description": "Example Alpine.js components package.",
-  "author": "Jack Noordhuis <me@jacknoordhuis.net>",
+  "version": "0.0.1",
   "license": "MIT",
-  "main": "index.js",
-  "files": [
-    "index.ts",
-    "index.d.ts",
-    "index.js",
-    "src/**/*.ts",
-    "src/**/*.d.ts",
-    "src/**/*.js"
-  ],
-  "scripts": {
-    "build": "tsc --inlineSourceMap --removeComments -p ./",
-    "build-ci": "tsc --pretty false --inlineSourceMap --removeComments --listEmittedFiles -p ./",
-    "dev": "tsc --watch -p ./"
+  "author": {
+    "name": "Jack Noordhuis",
+    "email": "me@jacknoordhuis.net",
+    "url": "https://jacknoordhuis.net"
   },
   "keywords": [
     "component",
@@ -27,6 +16,24 @@
     "js",
     "ts"
   ],
+  "repository": "NxtLvlSoftware/alpine-typescript",
+  "homepage": "https://nxtlvlsoftware.github.io/alpine-typescript/",
+  "bugs": {
+    "url": "https://github.com/NxtLvlSoftware/alpine-typescript/issues"
+  },
+  "type": "module",
+  "main": "index.js",
+  "files": [
+    "index.d.ts",
+    "index.js",
+    "src/**/*.d.ts",
+    "src/**/*.js"
+  ],
+  "scripts": {
+    "build": "tsc --inlineSourceMap --removeComments -p ./",
+    "build-ci": "tsc --pretty false --inlineSourceMap --removeComments --listEmittedFiles -p ./",
+    "dev": "tsc --watch -p ./"
+  },
   "dependencies": {
     "@nxtlvlsoftware/alpine-typescript": "file:../../",
     "@types/alpinejs": "^3.7.2"

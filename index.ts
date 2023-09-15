@@ -9,14 +9,14 @@ export {
 	type AlpineDataContext,
 	type AlpineData,
 	AlpineComponent
-} from './src/Component'
+} from './src/Component';
 
 export {
 	type ComponentList,
 	ComponentStore,
 	transformToAlpineData,
 	makeAlpineConstructor
-} from './src/Store'
+} from './src/Store';
 
 export * as Globals from './src/Global';
 

@@ -1,6 +1,6 @@
 import type { Alpine as AlpineType } from 'alpinejs';
-import type { ComponentStore } from "./Store";
-import type { AlpineComponentConstructor } from "./Component";
+import type { ComponentStore } from './Store';
+import type { AlpineComponentConstructor } from './Component';
 export declare interface AlpineComponentMixins {
     Components: ComponentStore;
     component: (name: string) => AlpineComponentConstructor;

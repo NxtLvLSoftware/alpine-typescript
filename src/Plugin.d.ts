@@ -1,8 +1,9 @@
 import type * as Globals from './Global';
-import { type ComponentList } from "./Store";
+import { type ComponentList } from './Store';
 export declare namespace AlpineComponents {
     interface Options {
         components: ComponentList;
+        bootstrapAlpine: boolean;
         startAlpine: boolean;
         logErrors: boolean;
     }

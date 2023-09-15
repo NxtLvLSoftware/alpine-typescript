@@ -1,8 +1,27 @@
 {
   "name": "@nxtlvlsoftware/alpine-typescript",
-  "version": "0.0.1",
-  "description": "Typescript definitions for Alpine.js.",
+  "description": "Write your Alpine.js components in Typescript.",
+  "version": "0.0.3",
+  "license": "MIT",
+  "author": {
+    "name": "Jack Noordhuis",
+    "email": "me@jacknoordhuis.net",
+    "url": "https://jacknoordhuis.net"
+  },
+  "keywords": [
+    "alpine",
+    "alpine.js",
+    "typescript",
+    "components"
+  ],
+  "repository": "NxtLvlSoftware/alpine-typescript",
+  "homepage": "https://nxtlvlsoftware.github.io/alpine-typescript/",
+  "bugs": {
+    "url": "https://github.com/NxtLvlSoftware/alpine-typescript/issues"
+  },
+  "type": "module",
   "main": "index.js",
+  "types": "index.d.ts",
   "files": [
     "README.md",
     "LICENSE",
@@ -18,16 +37,9 @@
     "docs": "npx typedoc --plugin typedoc-plugin-extras --out docs-build --cacheBust index.ts",
     "docs-ci": "npx typedoc --plugin typedoc-plugin-extras --gitRemote dist --out docs-build --cacheBust index.ts"
   },
-  "keywords": [
-    "alpine",
-    "alpine.js",
-    "typescript",
-    "components"
-  ],
-  "author": "Jack Noordhuis <me@jacknoordhuis.net>",
-  "license": "MIT",
   "dependencies": {
-    "@types/alpinejs": "^3.7.2"
+    "@types/alpinejs": "^3.7.2",
+    "alpinejs": "^3.13.0"
   },
   "devDependencies": {
     "typedoc": "^0.25.1",

@@ -1,6 +1,6 @@
-import type * as Impl from "./Component";
+import type * as Impl from './Component';
 import type * as Globals from './Global';
-import { AlpineComponent } from "./Component";
+import { AlpineComponent } from './Component';
 export type ComponentList = {
     [name: string]: Impl.KnownConstructor<any>;
 };

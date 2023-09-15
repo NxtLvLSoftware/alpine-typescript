@@ -1,7 +1,7 @@
-import type * as Impl from "./Component"
-import type * as Globals from './Global'
+import type * as Impl from './Component';
+import type * as Globals from './Global';
 
-import {AlpineComponent, type AlpineComponentConstructor} from "./Component";
+import {AlpineComponent, type AlpineComponentConstructor} from './Component';
 
 /**
  * @see https://www.w3schools.com/js/js_reserved.asp
@@ -24,7 +24,10 @@ export type ComponentList = {
 /**
  * Internal type for component registration.
  */
-type ComponentConstructorData = { name: string, constructor: Impl.AlpineComponentConstructor };
+type ComponentConstructorData = {
+	name: string,
+	constructor: Impl.AlpineComponentConstructor
+};
 
 enum RegisterComponentFailure {
 	GenericMustHaveFunctionAsSecond,
@@ -43,11 +46,11 @@ export class ComponentStore {
 		components: ComponentList = {},
 		private logErrors: boolean = false
 	) {
-		Object.entries(components).forEach(([name, component]) => {
+		Object.entries(components).forEach(([name, component]): void => {
 			this.register(name, component);
 		});
 
-		window.addEventListener('alpine:init', () => {
+		window.addEventListener('alpine:init', (): void => {
 			this.init();
 		});
 	}
@@ -187,7 +190,7 @@ export class ComponentStore {
 				console.error(`Cannot register component with provided argument types. Check Typescript definitions for usage.`);
 				break;
 			case RegisterComponentFailure.ReservedName:
-				console.error(`Cannot register component with name matching a reserved keyword.`)
+				console.error(`Cannot register component with name matching a reserved keyword.`);
 				break;
 		}
 	}
@@ -206,7 +209,7 @@ export function transformToAlpineData<T extends AlpineComponent>(instance: T): o
 		prototype.constructor.name !== 'Object';
 		prototype = Object.getPrototypeOf(prototype)
 	) {
-		Object.getOwnPropertyNames(prototype).forEach((name: string) => {
+		Object.getOwnPropertyNames(prototype).forEach((name: string): void => {
 			if (methodNames.includes(name)) {
 				return;
 			}
@@ -217,7 +220,7 @@ export function transformToAlpineData<T extends AlpineComponent>(instance: T): o
 	return [
 		...methodNames, // methods
 		...Object.getOwnPropertyNames(instance) // properties
-	].reduce((obj, name) => {
+	].reduce((obj: {}, name: string) => {
 		// @ts-ignore
 		obj[name] = instance[name];
 
