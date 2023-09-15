@@ -1,8 +1,9 @@
-import type * as Globals from './Global'
+import Alpine from 'alpinejs';
+import type * as Globals from './Global';
 import {
 	type ComponentList,
 	ComponentStore
-} from "./Store";
+} from './Store';
 
 export namespace AlpineComponents {
 
