@@ -41,6 +41,7 @@
   * [Using Components](#using-components)
 * [Contributing](#contributing)
   * [Issues](#issues)
+  * [Pull Requests](#pull-requests)
 * [License](#license-information)
 
 <br /><hr /><br />
@@ -480,11 +481,19 @@ need a way to organise them. If you're not already using a bundler in your proje
 Vite, Rollup, etc.) then this probably isn't for you.
 
 ## Contributing
-
 #### Issues
-
 Found a problem with this project? Make sure to open an issue on the [issue tracker](https://github.com/NxtLvLSoftware/alpine-typescript/issues)
 and we'll do our best to get it sorted!
+
+#### Pull Requests
+Pull requests will be reviewed by maintainers when they are available.
+
+Depending on the changes, maintainers might ask you to make changes to the PR to fix problems
+or to improve the code. Do not delete your fork while your pull request remains open, otherwise
+you won't be able to make any requested changes and the PR will end up being declined.
+
+By proposing a pull request, you agree to your code being distributed under [this projects license](https://github.com/NxtLvlSoftware/alpine-typescript/blob/dev/LICENSE).
+
 
 ## License Information
 
