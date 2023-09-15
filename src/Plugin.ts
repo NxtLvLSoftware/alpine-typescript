@@ -9,13 +9,19 @@ export namespace AlpineComponents {
 
 	export interface Options {
 		components: ComponentList,
-		startAlpine: boolean
+
+		bootstrapAlpine: boolean;
+		startAlpine: boolean;
+
 		logErrors: boolean;
 	}
 
 	export const defaultOptions: Options = {
 		components: {},
+
+		bootstrapAlpine: false,
 		startAlpine: true,
+
 		logErrors: false
 	};
 
@@ -27,6 +33,10 @@ export namespace AlpineComponents {
 			...defaultOptions,
 			...options
 		};
+		if (opts.bootstrapAlpine) {
+			window.Alpine = <Globals.AlpineWithComponents>Alpine;
+			alpine = window.Alpine;
+		}
 
 		window.AlpineComponents = new ComponentStore(alpine, opts.components, opts.logErrors);
 
