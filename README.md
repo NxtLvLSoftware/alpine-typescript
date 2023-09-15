@@ -59,29 +59,34 @@ $ npm install --save @nxtlvlsoftware/alpine-typescript
 ```
 The package requires manual initialization in the browser as we don't assume a specific use-case:
 
-Using `Alpine.plugin()`:
+Using `Alpine.plugin()` (ESModule syntax):
 ```typescript
 import Alpine from 'alpinejs';
 
 window.Alpine = Alpine;
 
+// {default as componentPlugin} also works
 import {componentPlugin} from '@nxtlvlsoftware/alpine-typescript';
 
 window.addEventListener('alpine-components:init', () => {
-  // window.Alpine.Components.register();
+  window.Alpine.Components.registerAll({
+    //
+  });
 });
 
 window.Alpine.plugin(componentPlugin);
 window.Alpine.start();
 ```
-Using the default export:
+Using the default export (CommonJS syntax):
 ```typescript
 import Alpine from 'alpinejs';
 
 window.Alpine = Alpine;
 
 window.addEventListener('alpine-components:init', () => {
-  // window.Alpine.Components.register();
+  window.Alpine.Components.registerAll({
+    //
+  });
 });
 
 window.Alpine.plugin(require('@nxtlvlsoftware/alpine-typescript'));
@@ -90,7 +95,20 @@ window.Alpine.start();
 This is the easiest way to get started in existing projects but doesn't offer a way to modify the
 default options provided the package.
 
-Using `AlpineComponents.bootstrap()`:
+Using `AlpineComponents.bootstrap()` (all examples in ESModule syntax):
+```typescript
+import {AlpineComponents} from '@nxtlvlsoftware/alpine-typescript';
+
+AlpineComponents.bootstrap({
+  bootstrapAlpine: true,
+  components: {
+    //
+  }
+});
+```
+The default options are best suited to new projects as `Alpine.start()` will be called for you.
+To integrate into existing projects seamlessly, just set `startAlpine` to `false` on the options
+object:
 ```typescript
 import Alpine from 'alpinejs';
 
@@ -99,27 +117,17 @@ window.Alpine = Alpine;
 import {AlpineComponents} from '@nxtlvlsoftware/alpine-typescript';
 
 AlpineComponents.bootstrap({
-  components: {
-    //
-  }});
-```
-The default options are best suited to new projects and automatically starts Alpine for you.
-To integrate into existing projects seamlessly, just pass in an options object:
-```typescript
-import {AlpineComponents} from '@nxtlvlsoftware/alpine-typescript';
-
-AlpineComponents.bootstrap({
-  components: {
-    //
-  },
   startAlpine: false,
-  logErrors: true // should only enable this in dev enviroments for debugging
-}); // pass the Alpine object explicity if you aren't following the default convention
+  logErrors: true, // should only enable this in dev enviroments for debugging
+  components: {
+    //
+  }
+});
 
 window.Alpine.start();
 ```
-If you aren't following the default convention of defining `window.Alpine` after importing Alpine
-just pass it after your options object:
+If you aren't following the default convention of defining `window.Alpine` after importing Alpine,
+just pass it as the second argument to the `AlpineComponents.bootstrap()` call:
 ```typescript
 import Alpine from 'alpinejs';
 
@@ -129,10 +137,10 @@ import {AlpineComponents} from '@nxtlvlsoftware/alpine-typescript';
 
 const isProduction = () => false; // equivelent would be injected/definied server-side by your framework
 AlpineComponents.bootstrap({
-    components: {
-      //
-    },
-    logErrors: !isProduction()
+  components: {
+    //
+  },
+  logErrors: !isProduction()
 }, myAlpine);
 
 // might break alpine or other packages by defining after init but we support it ¯\_(ツ)_/¯
@@ -469,7 +477,7 @@ The main drawback of using this library is the added compilation step needed to 
 Alpine is an elegant library that provides a thin layer on-top of vanilla JavaScript. Using
 Alpine the way it was intended is the way to go until your list of components grows and you
 need a way to organise them. If you're not already using a bundler in your project (webpack,
-Vite, Rollup, etc) then this probably isn't for you.
+Vite, Rollup, etc.) then this probably isn't for you.
 
 ## Contributing
 
