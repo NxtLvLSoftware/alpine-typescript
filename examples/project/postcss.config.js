@@ -1,10 +1,12 @@
-const tailwind = require('tailwindcss');
+import postcssPresetEnv from 'postcss-preset-env';
+import tailwind from 'tailwindcss';
+import cssnano from 'cssnano';
 
-module.exports = {
-	plugins: [
-		'postcss-preset-env',
-		tailwind('tailwind.config.js'),
-		require('autoprefixer'),
-		require('cssnano')
-	]
-};
+import tailwindConfig from './tailwind.config.js';
+import cssnanoConfig from './cssnano.config.cjs';
+
+export const plugins = [
+	postcssPresetEnv(),
+	tailwind(tailwindConfig),
+	cssnano(cssnanoConfig)
+];

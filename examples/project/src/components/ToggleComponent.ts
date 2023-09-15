@@ -1,4 +1,4 @@
-import {AlpineComponent} from "@nxtlvlsoftware/alpine-typescript";
+import {AlpineComponent} from '@nxtlvlsoftware/alpine-typescript';
 
 /**
  * Simple toggle that switches between on/off values.

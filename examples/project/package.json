@@ -1,13 +1,23 @@
 {
   "name": "alpine-typescript-project-example",
-  "version": "0.0.1",
   "description": "Example Alpine.js components project.",
-  "author": "Jack Noordhuis <me@jacknoordhuis.net>",
+  "version": "0.0.1",
   "license": "MIT",
+  "author": {
+    "name": "Jack Noordhuis",
+    "email": "me@jacknoordhuis.net",
+    "url": "https://jacknoordhuis.net"
+  },
+  "repository": "NxtLvlSoftware/alpine-typescript",
+  "homepage": "https://nxtlvlsoftware.github.io/alpine-typescript/",
+  "bugs": {
+    "url": "https://github.com/NxtLvlSoftware/alpine-typescript/issues"
+  },
+  "type": "module",
   "private": true,
   "scripts": {
-    "build": "export NODE_ENV=production && webpack",
-    "build-ci": "export NODE_ENV=production && webpack --fail-on-warnings --no-color",
+    "build": "export NODE_ENV=development && webpack --stats-error-details",
+    "build-ci": "export NODE_ENV=production && webpack --stats-error-details --fail-on-warnings --no-color",
     "dev": "webpack serve --mode=development --open"
   },
   "dependencies": {
@@ -16,10 +26,10 @@
   },
   "devDependencies": {
     "@types/alpinejs": "^3.7.2",
-    "autoprefixer": "^10.4.15",
     "copy-webpack-plugin": "^11.0.0",
     "css-loader": "^6.8.1",
     "cssnano": "^6.0.1",
+    "cssnano-preset-advanced": "^6.0.1",
     "html-webpack-plugin": "^5.5.3",
     "mini-css-extract-plugin": "^2.7.6",
     "postcss": "^8.4.29",
@@ -27,9 +37,10 @@
     "postcss-loader": "^7.3.3",
     "postcss-preset-env": "^9.1.2",
     "tailwindcss": "^3.3.3",
-    "terser": "^5.19.3",
+    "terser-webpack-plugin": "^5.3.9",
     "ts-loader": "^9.4.4",
     "typescript": "^5.1.6",
+    "warnings-to-errors-webpack-plugin": "^2.3.0",
     "webpack": "^5.88.2",
     "webpack-cli": "^5.1.4",
     "webpack-dev-server": "^4.15.1"
