@@ -38,12 +38,12 @@
     "docs-ci": "npx typedoc --plugin typedoc-plugin-extras --gitRemote dist --out docs-build --cacheBust index.ts"
   },
   "dependencies": {
-    "@types/alpinejs": "^3.7.2",
+    "@types/alpinejs": "^3.13.0",
     "alpinejs": "^3.13.0"
   },
   "devDependencies": {
     "typedoc": "^0.25.1",
     "typedoc-plugin-extras": "^3.0.0",
-    "typescript": "^5.1.6"
+    "typescript": "^5.2.2"
   }
 }
