@@ -457,7 +457,7 @@ Here's the contrived `dropdown` example re-written to use a class:
 <script>
   import {AlpineComponents, AlpineComponent} from '@nxtlvlsoftware/alpine-typescript';
 
-  class ToggleComponent extends AlpineComponent {
+  class DropdownComponent extends AlpineComponent {
     constructor(
       public open: boolean = false
     ) { super(); }
@@ -468,7 +468,7 @@ Here's the contrived `dropdown` example re-written to use a class:
   AlpineComponents.bootstrap({
     bootstrapAlpine: true,
     components: {
-      toggle: ToggleComponent
+      dropdown: ToggleComponent
     },
     logErrors: true
   });
