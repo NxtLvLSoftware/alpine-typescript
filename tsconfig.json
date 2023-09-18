@@ -10,6 +10,7 @@
     "strict": true,
     "declaration": true,
     "noEmit": false,
+    "removeComments": false,
     "lib": [
       "es2017",
       "dom"

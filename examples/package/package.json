@@ -30,15 +30,15 @@
     "src/**/*.js"
   ],
   "scripts": {
-    "build": "tsc --inlineSourceMap --removeComments -p ./",
-    "build-ci": "tsc --pretty false --inlineSourceMap --removeComments --listEmittedFiles -p ./",
+    "build": "tsc --inlineSourceMap -p ./",
+    "build-ci": "tsc --pretty false --inlineSourceMap --listEmittedFiles -p ./",
     "dev": "tsc --watch -p ./"
   },
   "dependencies": {
-    "@nxtlvlsoftware/alpine-typescript": "file:../../",
-    "@types/alpinejs": "^3.7.2"
+    "@nxtlvlsoftware/alpine-typescript": "file:../../"
   },
   "devDependencies": {
-    "typescript": "^5.1.6"
+    "@types/alpinejs": "^3.0.0",
+    "typescript": "^5.2.2"
   }
 }

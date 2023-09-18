@@ -1,3 +1,4 @@
+import type Alpine from 'alpinejs';
 import type * as Impl from './Component';
 import type * as Globals from './Global';
 
@@ -39,13 +40,19 @@ enum RegisterComponentFailure {
 export class ComponentStore {
 	private initialized: boolean = false;
 
+	private alpine: Globals.AlpineWithComponents;
+
 	private components: Record<string, AlpineComponentConstructor> = {};
 
 	constructor(
-		private alpine: Globals.Alpine,
+		alpinejs: typeof Alpine,
 		components: ComponentList = {},
-		private logErrors: boolean = false
+		private readonly logErrors: boolean = false
 	) {
+		this.alpine = <Globals.AlpineWithComponents>alpinejs;
+		this.alpine.Components = this;
+		this.alpine.component = this.component;
+
 		Object.entries(components).forEach(([name, component]): void => {
 			this.register(name, component);
 		});
@@ -59,11 +66,6 @@ export class ComponentStore {
 		if (this.initialized) {
 			return;
 		}
-
-		// @ts-ignore
-		this.alpine.Components = this;
-		// @ts-ignore
-		this.alpine.component = this.component;
 
 		document.dispatchEvent(new CustomEvent('alpine-components:init'));
 
@@ -145,6 +147,11 @@ export class ComponentStore {
 		}
 	}
 
+	/**
+	 * Register a component to Alpine through Alpine.data().
+	 *
+	 * @param name The name of the component (must already be registered to the store.)
+	 */
 	private registerConstructorAsAlpineData(name: string): void {
 		this.alpine.data(name, this.component(name));
 	}

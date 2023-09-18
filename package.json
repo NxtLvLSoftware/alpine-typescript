@@ -31,19 +31,17 @@
     "index.js"
   ],
   "scripts": {
-    "build": "tsc --inlineSourceMap --removeComments -p ./",
-    "build-ci": "tsc --pretty false --inlineSourceMap --removeComments --listEmittedFiles -p ./",
+    "build": "tsc --inlineSourceMap -p ./",
+    "build-ci": "tsc --pretty false --inlineSourceMap --listEmittedFiles -p ./",
     "dev": "tsc --watch -p ./",
     "docs": "npx typedoc --plugin typedoc-plugin-extras --out docs-build --cacheBust index.ts",
     "docs-ci": "npx typedoc --plugin typedoc-plugin-extras --gitRemote dist --out docs-build --cacheBust index.ts"
   },
-  "dependencies": {
-    "@types/alpinejs": "^3.7.2",
-    "alpinejs": "^3.13.0"
-  },
   "devDependencies": {
+    "@types/alpinejs": "^3.0.0",
+    "alpinejs": "^3.0.0",
     "typedoc": "^0.25.1",
     "typedoc-plugin-extras": "^3.0.0",
-    "typescript": "^5.1.6"
+    "typescript": "^5.2.2"
   }
 }

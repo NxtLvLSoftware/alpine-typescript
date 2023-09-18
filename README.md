@@ -263,10 +263,12 @@ $ touch src/Plugin.ts
 ```
 Copy the following and change the namespace to the name of your package:
 ```typescript
+import type Alpine from 'alpinejs';
+
 import {
   AlpineComponents,
   makeAlpineConstructor,
-  type Globals
+  Globals
 } from '@nxtlvlsoftware/alpine-typescript';
 
 import {
@@ -292,21 +294,27 @@ export namespace MyComponents {
 
   export function bootstrap(
     options: Partial<Options> = defaultOptions,
-    alpinejs: Globals.Alpine = window.Alpine
+    alpinejs: typeof Alpine = window.Alpine
   ): void {
     const opts: Options = {
       ...defaultOptions,
       ...options
     };
 
-    // make typescript happy
-    let alpine = <Globals.AlpineWithComponents>alpinejs;
-
     document.addEventListener('alpine:init', () => {
       // Register any alpine stores your components rely on here.
     });
 
     document.addEventListener('alpine-components:init', () => {
+      // make typescript happy
+      let alpine = Globals.castToAlpineWithComponents(alpinejs);
+      if (alpine === null) {
+        if (opts.logErrors) {
+          console.error('Alpine object does not have Components properties injected. Did the Components package boot properly?');
+        }
+        return;
+      }
+
       // Basic registration with support for consumers to provide their own
       // name for use with x-data.
       alpine.Components.register(MyComponent, opts.myComponentName);
@@ -315,7 +323,7 @@ export namespace MyComponents {
 
     // Allow booting alpine and the components package.
     if (opts.bootstrapComponents) {
-      AlpineComponents.bootstrap(opts, alpine);
+      AlpineComponents.bootstrap(opts, alpinejs);
     }
   }
 
