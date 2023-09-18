@@ -1,7 +1,9 @@
+import type Alpine from 'alpinejs';
+
 import {
 	AlpineComponents,
 	makeAlpineConstructor,
-	type Globals
+	Globals
 } from '@nxtlvlsoftware/alpine-typescript';
 
 import {
@@ -35,15 +37,12 @@ export namespace MyComponents {
 
 	export function bootstrap (
 		options: Partial<Options> = defaultOptions,
-		alpinejs: Globals.Alpine = window.Alpine
+		alpinejs: typeof Alpine = window.Alpine
 	): void {
 		const opts: Options = {
 			...defaultOptions,
 			...options
 		};
-
-		// make typescript happy
-		let alpine = <Globals.AlpineWithComponents>alpinejs;
 
 		document.addEventListener('alpine:init', () => {
 			// Register any alpine stores your components rely on here.
@@ -52,6 +51,15 @@ export namespace MyComponents {
 		});
 
 		document.addEventListener('alpine-components:init', () => {
+			// make typescript happy
+			let alpine = Globals.castToAlpineWithComponents(alpinejs);
+			if (alpine === null) {
+				if (opts.logErrors) {
+					console.error('Alpine object does not have Components properties injected. Did the Components package boot properly?');
+				}
+				return;
+			}
+
 			// Basic registration by falling back to the prototype name when left undefined.
 			// Can be used in your HTML with: x-data="ToggleComponent([true|false])"
 			alpine.Components.register(AlertComponent);
@@ -90,7 +98,7 @@ export namespace MyComponents {
 		// Allow booting alpine and the components package with a single call to our
 		// bootstrap function. This makes the client script a bit simpler.
 		if (opts.bootstrapComponents) {
-			AlpineComponents.bootstrap(opts, alpine);
+			AlpineComponents.bootstrap(opts, alpinejs);
 		}
 	}
 

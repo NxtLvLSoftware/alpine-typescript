@@ -8,6 +8,8 @@ import CopyWebpackPlugin from 'copy-webpack-plugin';
 import TerserPlugin from 'terser-webpack-plugin';
 import WarningsToErrorsPlugin from 'warnings-to-errors-webpack-plugin';
 
+import webpack from 'webpack';
+
 const isProduction = process.env.NODE_ENV === 'production';
 
 const __filename = fileURLToPath(import.meta.url);
@@ -19,7 +21,10 @@ const outPath = path.resolve(rootPath, 'dist');
 
 const Mode = isProduction ? 'production' : 'development';
 const productionPlugins = [
-	new WarningsToErrorsPlugin()
+	new WarningsToErrorsPlugin(),
+	new webpack.optimize.LimitChunkCountPlugin({
+		maxChunks: 1
+	})
 ];
 const developmentPlugins = [
 	//
@@ -27,11 +32,13 @@ const developmentPlugins = [
 
 /** @type {Partial<import('webpack').Configuration>} */
 let Config = {
-	entry: './src/index.ts',
+	entry: {
+		index: './src/index.ts'
+	},
 	mode: Mode,
 	output: {
 		path: outPath,
-		filename: 'index.js',
+		filename: '[name].js',
 		clean: true,
 		strictModuleErrorHandling: true,
 		strictModuleExceptionHandling: true
