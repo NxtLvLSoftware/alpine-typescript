@@ -25,26 +25,109 @@
     <a href="https://github.com/NxtLvlSoftware/alpine-typescript/blob/dev/LICENSE"><img src="https://img.shields.io/npm/l/%40nxtlvlsoftware%2Falpine-typescript" alt="License"></a>
 </p>
 
-<br /><hr /><br />
+<br>
+<hr>
+<br>
 
-* [Documentation](https://nxtlvlsoftware.github.io/alpine-typescript)
-* [Example](https://nxtlvlsoftware.github.io/alpine-typescript/example/)
-* [Installation](#installation)
-* [Usage](#usage)
-  * [Projects](#in-projects)
-    * [Setup](#project-setup)
-  * [Packages](#in-packages)
-    * [Setup](#package-setup)
-  * [Defining Components](#defining-components)
-    * [Any Types](#generic-types)
-    * [Classes](#typescript-classes)
-  * [Using Components](#using-components)
-* [Contributing](#contributing)
-  * [Issues](#issues)
-  * [Pull Requests](#pull-requests)
-* [License](#license-information)
+<details>
+  <summary align="center">Table of Contents</summary>
+  <ul>
+    <li>
+      <a href="https://nxtlvlsoftware.github.io/alpine-typescript">
+        Documentation
+      </a>
+    </li>
+    <li>
+      <a href="https://nxtlvlsoftware.github.io/alpine-typescript/example/">
+        Example
+      </a>
+    </li>
+    <li>
+      <a href="#installation">
+        Installation
+      </a>
+    </li>
+    <li>
+      <a href="#usage">
+        Usage
+      </a>
+      <ul>
+        <li>
+          <a href="#in-projects">
+            Projects
+          </a>
+          <ul>
+            <li>
+              <a href="#project-setup">
+                Setup
+              </a>
+            </li>
+          </ul>
+        </li>
+        <li>
+          <a href="#in-packages">
+            Packages
+          </a>
+          <ul>
+            <li>
+              <a href="#packages-setup">
+                Setup
+              </a>
+            </li>
+          </ul>
+        </li>
+        <li>
+          <a href="#defining-components">
+            Defining Components
+          </a>
+          <ul>
+            <li>
+              <a href="#generic-types">
+                Any Types
+              </a>
+            </li>
+            <li>
+              <a href="#typescript-classes">
+                Classes
+              </a>
+            </li>
+          </ul>
+        </li>
+        <li>
+          <a href="#using-components">
+            Using Components
+          </a>
+        </li>
+      </ul>
+    </li>
+    <li>
+      <a href="#contributing">
+        Contributing
+      </a>
+      <ul>
+        <li>
+          <a href="#issues">
+            Issues
+          </a>
+        </li>
+        <li>
+          <a href="#pull-requests">
+            Pull Requests
+          </a>
+        </li>
+      </ul>
+    </li>
+    <li>
+      <a href="#license-information">
+        License
+      </a>
+    </li>
+  </ul>
+</details>
 
-<br /><hr /><br />
+<br>
+<hr>
+<br>
 
 ## About
 This package provides support for writing reusable Alpine.js components in Typescript.
@@ -516,3 +599,7 @@ __A full copy of the license is available [here](https://github.com/NxtLvlSoftwa
 <br>
 
 __A [NxtLvL Software Solutions](https://github.com/NxtLvLSoftware) product.__
+
+<br>
+<hr>
+<br>

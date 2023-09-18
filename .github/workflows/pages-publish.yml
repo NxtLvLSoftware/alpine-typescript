@@ -32,7 +32,7 @@ jobs:
 
       - name: Remove README.md index lines
         run: |
-          sed -i '28,46d' README.md
+          sed -i '28,127d' README.md
 
       - name: Use Node.js ${{ env.NODE_VERSION }}
         uses: actions/setup-node@v3
