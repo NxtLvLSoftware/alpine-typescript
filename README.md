@@ -294,7 +294,7 @@ export namespace MyComponents {
 
   export function bootstrap(
     options: Partial<Options> = defaultOptions,
-    alpinejs: typeof Alpine = window.Alpine
+    alpine: typeof Alpine = window.Alpine
   ): void {
     const opts: Options = {
       ...defaultOptions,
@@ -303,17 +303,12 @@ export namespace MyComponents {
 
     document.addEventListener('alpine:init', () => {
       // Register any alpine stores your components rely on here.
+      // const alpine = window.Alpine;
+      // alpine.store(opts.myStoreName, new MyStore(...));
     });
 
     document.addEventListener('alpine-components:init', () => {
-      // make typescript happy
-      let alpine = Globals.castToAlpineWithComponents(alpinejs);
-      if (alpine === null) {
-        if (opts.logErrors) {
-          console.error('Alpine object does not have Components properties injected. Did the Components package boot properly?');
-        }
-        return;
-      }
+      const alpine = window.Alpine;
 
       // Basic registration with support for consumers to provide their own
       // name for use with x-data.
@@ -323,14 +318,14 @@ export namespace MyComponents {
 
     // Allow booting alpine and the components package.
     if (opts.bootstrapComponents) {
-      AlpineComponents.bootstrap(opts, alpinejs);
+      AlpineComponents.bootstrap(opts, alpine);
     }
   }
 
 }
 
 // Support loading our components with a standardized call to Alpine.plugin().
-export function myPlugin(alpine: Globals.Alpine): void {
+export function myPlugin(alpine: typeof Alpine): void {
   MyComponents.bootstrap({
     // can't assume we're the only ones using the component library
     bootstrapComponents: false,
@@ -460,10 +455,6 @@ Here's the contrived `dropdown` example re-written to use a class:
 </div>
 
 <script>
-  import Alpine from 'alpinejs';
-
-  window.Alpine = Alpine;
-
   import {AlpineComponents, AlpineComponent} from '@nxtlvlsoftware/alpine-typescript';
 
   class ToggleComponent extends AlpineComponent {
@@ -475,6 +466,7 @@ Here's the contrived `dropdown` example re-written to use a class:
   }
 
   AlpineComponents.bootstrap({
+    bootstrapAlpine: true,
     components: {
       toggle: ToggleComponent
     },
