@@ -73,7 +73,7 @@ export namespace AlpineComponents {
 				import('alpinejs').then((imp) => imp.default) : alpine
 		).then((alpine: typeof Alpine): void => {
 			if (opts.bootstrapAlpine) {
-				window.Alpine = alpine;
+				window.Alpine = <Globals.AlpineWithComponents>alpine;
 			}
 
 			window.AlpineComponents = new ComponentStore(alpine, opts.components, opts.logErrors);

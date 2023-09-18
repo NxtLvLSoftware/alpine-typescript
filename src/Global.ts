@@ -54,7 +54,7 @@ declare global {
 	 * Expose window.Alpine and window.AlpineComponents globals.
 	 */
 	interface Window {
-		Alpine: Alpine;
+		Alpine: AlpineWithComponents;
 		AlpineComponents: ComponentStore;
 	}
 
