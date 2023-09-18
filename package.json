@@ -1,7 +1,7 @@
 {
   "name": "@nxtlvlsoftware/alpine-typescript",
   "description": "Write your Alpine.js components in Typescript.",
-  "version": "0.0.3",
+  "version": "0.0.4",
   "license": "MIT",
   "author": {
     "name": "Jack Noordhuis",
