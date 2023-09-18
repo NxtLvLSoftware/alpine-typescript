@@ -30,7 +30,9 @@
 <br>
 
 <details>
-  <summary align="center">Table of Contents</summary>
+  <summary align="center">
+    Table of Contents
+  </summary>
   <ul>
     <li>
       <a href="https://nxtlvlsoftware.github.io/alpine-typescript">
@@ -597,9 +599,9 @@ __A full copy of the license is available [here](https://github.com/NxtLvlSoftwa
 <br>
 <hr>
 <br>
-
-__A [NxtLvL Software Solutions](https://github.com/NxtLvLSoftware) product.__
-
+<h4 align="center">
+  A <a href="https://github.com/NxtLvlSoftware">NxtLvL Software Solutions</a> product.
+</h4>
 <br>
 <hr>
 <br>
