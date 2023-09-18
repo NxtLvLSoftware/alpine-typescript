@@ -1,4 +1,4 @@
-import Alpine from 'alpinejs';
+import type Alpine from 'alpinejs';
 import type * as Globals from './Global';
 import {
 	type ComponentList,
@@ -27,22 +27,34 @@ export namespace AlpineComponents {
 
 	export function bootstrap(
 		options: Partial<Options> = defaultOptions,
-		alpine: Globals.Alpine = window.Alpine
+		alpine: typeof Alpine = window.Alpine
 	): void {
 		const opts: Options = {
 			...defaultOptions,
 			...options
 		};
-		if (opts.bootstrapAlpine) {
-			window.Alpine = <Globals.AlpineWithComponents>Alpine;
-			alpine = window.Alpine;
+
+		if (opts.bootstrapAlpine && alpine !== undefined) {
+			if (opts.logErrors) {
+				console.error('Cannot bootstrap Alpine when window.Alpine is already defined.');
+			}
+			return;
 		}
 
-		window.AlpineComponents = new ComponentStore(alpine, opts.components, opts.logErrors);
+		Promise.resolve(
+			opts.bootstrapAlpine ?
+				import('alpinejs').then((imp) => imp.default) : alpine
+		).then((alpine: typeof Alpine): void => {
+			if (opts.bootstrapAlpine) {
+				window.Alpine = alpine;
+			}
 
-		if (opts.startAlpine) {
-			alpine.start();
-		}
+			window.AlpineComponents = new ComponentStore(alpine, opts.components, opts.logErrors);
+
+			if (opts.startAlpine) {
+				alpine.start();
+			}
+		});
 	}
 
 }
