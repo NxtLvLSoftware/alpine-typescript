@@ -20,22 +20,20 @@
     "url": "https://github.com/NxtLvlSoftware/alpine-typescript/issues"
   },
   "type": "module",
-  "main": "index.js",
-  "types": "index.d.ts",
+  "main": "dist/index.js",
+  "types": "types/index.d.ts",
   "files": [
     "README.md",
     "LICENSE",
-    "src/**/*.d.ts",
-    "src/**/*.js",
-    "index.d.ts",
-    "index.js"
+    "dist/**/*.js",
+    "types/**/*.d.ts"
   ],
   "scripts": {
     "build": "tsc --inlineSourceMap -p ./",
     "build-ci": "tsc --pretty false --inlineSourceMap --listEmittedFiles -p ./",
     "dev": "tsc --watch -p ./",
-    "docs": "npx typedoc --plugin typedoc-plugin-extras --out docs-build --cacheBust index.ts",
-    "docs-ci": "npx typedoc --plugin typedoc-plugin-extras --gitRemote dist --out docs-build --cacheBust index.ts"
+    "docs": "npx typedoc --plugin typedoc-plugin-extras --out docs-build --cacheBust src/index.ts",
+    "docs-ci": "npx typedoc --plugin typedoc-plugin-extras --gitRemote dist --out docs-build --cacheBust src/index.ts"
   },
   "devDependencies": {
     "@types/alpinejs": "^3.0.0",

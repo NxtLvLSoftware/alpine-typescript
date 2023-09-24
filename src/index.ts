@@ -9,25 +9,25 @@ export {
 	type AlpineDataContext,
 	type AlpineData,
 	AlpineComponent
-} from './src/Component';
+} from './Component';
 
 export {
 	type ComponentList,
 	ComponentStore,
 	transformToAlpineData,
 	makeAlpineConstructor
-} from './src/Store';
+} from './Store';
 
-export * as Globals from './src/Global';
+export * as Globals from './Global';
 
 export {
 	AlpineComponents,
 	componentsPlugin
-} from './src/Plugin';
+} from './Plugin';
 
 
 /**
  * Alpine plugin as default export.
  */
-import {componentsPlugin} from './src/Plugin';
+import {componentsPlugin} from './Plugin';
 export default componentsPlugin;

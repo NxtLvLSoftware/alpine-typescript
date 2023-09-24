@@ -1,13 +1,14 @@
 {
   "$schema": "https://json.schemastore.org/tsconfig",
   "include": [
-    "src/**/*.ts",
-    "index.ts"
+    "src/**/*.ts"
   ],
   "compilerOptions": {
-    "target": "es5",
+    "target": "ESNext",
     "module": "ESNext",
     "strict": true,
+    "outDir": "dist",
+    "declarationDir": "types",
     "declaration": true,
     "noEmit": false,
     "removeComments": false,

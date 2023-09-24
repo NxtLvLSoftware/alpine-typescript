@@ -19,7 +19,7 @@ jobs:
     strategy:
       fail-fast: true
       matrix:
-        node-version: [18]
+        node-version: [20]
 
     steps:
       - uses: actions/checkout@v3
@@ -189,10 +189,8 @@ jobs:
 
       - name: Add dist files
         run: |
-          git add --force ./*.d.ts
-          git add --force ./*.js
-          git add --force ./**/*.d.ts
-          git add --force ./**/*.js
+          git add --force ./types/*.d.ts
+          git add --force ./dist/*.j
 
       - name: Create Pull Request
         uses: peter-evans/create-pull-request@v5
