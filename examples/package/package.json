@@ -22,17 +22,21 @@
     "url": "https://github.com/NxtLvlSoftware/alpine-typescript/issues"
   },
   "type": "module",
-  "main": "index.js",
+  "main": "dist/index.js",
+  "types": "types/index.d.ts",
   "files": [
-    "index.d.ts",
-    "index.js",
-    "src/**/*.d.ts",
-    "src/**/*.js"
+    "README.md",
+    "LICENSE",
+    "dist/**/*.js",
+    "types/**/*.d.ts"
   ],
   "scripts": {
-    "build": "tsc --inlineSourceMap -p ./",
-    "build-ci": "tsc --pretty false --inlineSourceMap --listEmittedFiles -p ./",
-    "dev": "tsc --watch -p ./"
+    "clean-install": "rm -f ./package-lock.json && rm -rf ./node_modules && npm install",
+    "setup-dev": "npm run clean-install && npm run build",
+    "clean": "rm -rf ./dist && rm -rf ./types",
+    "build": "npm run clean && tsc --build tsconfig.json --inlineSourceMap",
+    "dev": "npm run build -- --watch",
+    "build-dist": "npm run build -- --inlineSourceMap --listEmittedFiles"
   },
   "dependencies": {
     "@nxtlvlsoftware/alpine-typescript": "file:../../"
