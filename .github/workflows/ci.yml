@@ -2,7 +2,9 @@ name: CI
 
 on:
   push:
-    branches: [dev, dist]
+    branches: [dev]
+  pull_request:
+    branches: [dev]
 
 permissions:
   contents: read
@@ -139,7 +141,7 @@ jobs:
     runs-on: ubuntu-latest
     timeout-minutes: 5
 
-    if: github.ref == 'refs/heads/dev'
+    if: github.event_name == 'push'
     steps:
       - run: 'echo "Staging dev changes"'
       - uses: actions/checkout@v3
