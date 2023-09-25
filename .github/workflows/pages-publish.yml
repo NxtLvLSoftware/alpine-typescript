@@ -7,17 +7,19 @@ on:
 permissions:
   contents: write
 
+concurrency:
+  group: ${{ github.workflow }}-${{ github.ref }}
+  cancel-in-progress: true
+
 env:
   GITHUB_ACTIONS: true
+  NODE_VERSION: 20
 
 jobs:
   build-docs:
     name: Generate site
     runs-on: ubuntu-latest
     timeout-minutes: 5
-
-    env:
-      NODE_VERSION: 18
 
     steps:
       - name: Wait for publish success
@@ -64,9 +66,6 @@ jobs:
     name: Generate example site
     runs-on: ubuntu-latest
     timeout-minutes: 5
-
-    env:
-      NODE_VERSION: 18
 
     steps:
       - name: Wait for publish success

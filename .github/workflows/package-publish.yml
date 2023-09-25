@@ -9,14 +9,19 @@ on:
 permissions:
   contents: read
 
+concurrency:
+  group: ${{ github.workflow }}-${{ github.ref }}
+  cancel-in-progress: true
+
+env:
+  GITHUB_ACTIONS: true
+  NODE_VERSION: 20
+
 jobs:
   publish:
     name: Publish to npm registry
     runs-on: ubuntu-latest
     timeout-minutes: 5
-
-    env:
-      NODE_VERSION: 18
 
     steps:
       - name: Wait for CI success
@@ -24,7 +29,7 @@ jobs:
         uses: lewagon/wait-on-check-action@v1.3.1
         with:
           ref: ${{ github.ref }}
-          check-name: Run tests (${{ env.NODE_VERSION }})
+          check-name: Run tests
           repo-token: ${{ secrets.GITHUB_TOKEN }}
           wait-interval: 10
 
@@ -33,7 +38,7 @@ jobs:
         uses: lewagon/wait-on-check-action@v1.3.1
         with:
           ref: ${{ github.ref }}
-          check-name: Run example package tests (${{ env.NODE_VERSION }})
+          check-name: Run example package tests
           repo-token: ${{ secrets.GITHUB_TOKEN }}
           wait-interval: 10
 
@@ -42,7 +47,7 @@ jobs:
         uses: lewagon/wait-on-check-action@v1.3.1
         with:
           ref: ${{ github.ref }}
-          check-name: Run example project tests (${{ env.NODE_VERSION }})
+          check-name: Run example project tests
           repo-token: ${{ secrets.GITHUB_TOKEN }}
           wait-interval: 10
 
