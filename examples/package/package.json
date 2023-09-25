@@ -38,8 +38,9 @@
     "dev": "npm run build -- --watch",
     "build-dist": "npm run build -- --inlineSourceMap --listEmittedFiles"
   },
-  "dependencies": {
-    "@nxtlvlsoftware/alpine-typescript": "file:../../"
+  "peerDependencies": {
+    "@nxtlvlsoftware/alpine-typescript": "file:../../",
+    "alpinejs": "^3.0.0"
   },
   "devDependencies": {
     "@types/alpinejs": "^3.0.0",
