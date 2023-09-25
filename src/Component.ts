@@ -29,7 +29,7 @@ export type AlpineComponentConstructor = (...args: any[]) => any;
 /**
  * Copied from @types/alpinejs because it isn't exported.
  *
- * {@see https://www.npmjs.com/package/@types/alpinejs}
+ * {@link https://www.npmjs.com/package/@types/alpinejs}
  *
  * @public
  */
@@ -44,7 +44,7 @@ export declare interface AlpineDataContext {
 /**
  * Copied from @types/alpinejs because it isn't exported.
  *
- * {@see https://www.npmjs.com/package/@types/alpinejs}
+ * {@link https://www.npmjs.com/package/@types/alpinejs}
  *
  * @public
  */
@@ -75,7 +75,7 @@ export type AlpineBindingContext<
  *
  * Property declarations copied from @types/alpinejs.
  *
- * {@see https://www.npmjs.com/package/@types/alpinejs}
+ * {@link https://www.npmjs.com/package/@types/alpinejs}
  *
  * @public
  */
