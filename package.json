@@ -36,7 +36,7 @@
     "dev": "npm run build -- --watch",
     "build-dist": "npm run build -- --inlineSourceMap --listEmittedFiles",
     "docs": "npx typedoc --plugin typedoc-plugin-extras --out docs-build --cacheBust src/index.ts",
-    "docs-dist": "npm run docs -- --gitRemote dev",
+    "docs-dist": "npm run docs -- --gitRevision dev",
     "setup-examples": "cd examples/package && npm run setup-dev && cd ../project && npm run setup-dev",
     "build-examples": "cd examples/package && npm run build && cd ../project && npm run build"
   },
