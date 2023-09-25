@@ -40,9 +40,11 @@
     "setup-examples": "cd examples/package && npm run setup-dev && cd ../project && npm run setup-dev",
     "build-examples": "cd examples/package && npm run build && cd ../project && npm run build"
   },
+  "peerDependencies": {
+    "alpinejs": "^3.0.0"
+  },
   "devDependencies": {
     "@types/alpinejs": "^3.0.0",
-    "alpinejs": "^3.0.0",
     "typedoc": "^0.25.1",
     "typedoc-plugin-extras": "^3.0.0",
     "typescript": "^5.2.2"
