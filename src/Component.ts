@@ -35,6 +35,17 @@ export declare interface AlpineDataContext {
 export declare type AlpineData = AlpineDataContext | string | number | boolean;
 
 /**
+ * Type used to define properties that will exist on an x-bind object at runtime.
+ */
+export type AlpineBindingContext<
+	T extends AlpineComponent,
+	Keys extends keyof T = keyof T,
+	HiddenKeys extends string = ''
+> = Record<string, any> | (Pick<T, Keys> & {
+	[K in HiddenKeys]: string | number | boolean;
+});
+
+/**
  * Light-weight interface for class based components.
  *
  * Provides property declarations for Alpine magics that will exist when
@@ -97,5 +108,21 @@ export abstract class AlpineComponent implements AlpineDataContext {
 		property: K,
 		callback: (newValue: V, oldValue: V) => void,
 	) => void;
+
+	/**
+	 * Declare an object as an x-bind property for this component.
+	 *
+	 * Use this method to define properties for use with x-bind:
+	 *    protected myBinding = this.binding({ ["@click.prevent"]() { console.log("click prevented!") } });
+	 *
+	 * @protected
+	 *
+	 * @param obj The object for use with x-bind
+	 *
+	 * @return The same object passed to {@link obj}
+	 */
+	protected binding<HiddenKeys extends string = ''>(obj: AlpineBindingContext<this, keyof this, HiddenKeys>) {
+		return obj;
+	}
 
 }
