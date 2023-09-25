@@ -36,6 +36,12 @@ export declare type AlpineData = AlpineDataContext | string | number | boolean;
 
 /**
  * Type used to define properties that will exist on an x-bind object at runtime.
+ *
+ * @template T The component type
+ * @template Keys The properties to expose to the context (defaults to everything
+ * accessible with `keyof`)
+ * @template HiddenKeys Define accessible properties (protected/private) that are
+ * not included by `keyof`
  */
 export type AlpineBindingContext<
 	T extends AlpineComponent,
@@ -113,9 +119,16 @@ export abstract class AlpineComponent implements AlpineDataContext {
 	 * Declare an object as an x-bind property for this component.
 	 *
 	 * Use this method to define properties for use with x-bind:
-	 *    protected myBinding = this.binding({ ["@click.prevent"]() { console.log("click prevented!") } });
+	 * ```typescript
+	 *   protected myBinding = this.binding({
+	 *     ["@click.prevent"]() { console.log("click prevented!") }
+	 *   });
+	 * ```
 	 *
 	 * @protected
+	 *
+	 * @template HiddenKeys Define accessible properties (protected/private)
+	 * that are not included by `keyof`
 	 *
 	 * @param obj The object for use with x-bind
 	 *

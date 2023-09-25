@@ -7,7 +7,6 @@ export {
 	type KnownConstructor,
 	type AlpineComponentConstructor,
 	type AlpineDataContext,
-	type AlpineData,
 	AlpineComponent
 } from './Component';
 
