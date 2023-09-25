@@ -25,26 +25,111 @@
     <a href="https://github.com/NxtLvlSoftware/alpine-typescript/blob/dev/LICENSE"><img src="https://img.shields.io/npm/l/%40nxtlvlsoftware%2Falpine-typescript" alt="License"></a>
 </p>
 
-<br /><hr /><br />
+<br>
+<hr>
+<br>
 
-* [Documentation](https://nxtlvlsoftware.github.io/alpine-typescript)
-* [Example](https://nxtlvlsoftware.github.io/alpine-typescript/example/)
-* [Installation](#installation)
-* [Usage](#usage)
-  * [Projects](#in-projects)
-    * [Setup](#project-setup)
-  * [Packages](#in-packages)
-    * [Setup](#package-setup)
-  * [Defining Components](#defining-components)
-    * [Any Types](#generic-types)
-    * [Classes](#typescript-classes)
-  * [Using Components](#using-components)
-* [Contributing](#contributing)
-  * [Issues](#issues)
-  * [Pull Requests](#pull-requests)
-* [License](#license-information)
+<details>
+  <summary align="center">
+    Table of Contents
+  </summary>
+  <ul>
+    <li>
+      <a href="https://nxtlvlsoftware.github.io/alpine-typescript">
+        Documentation
+      </a>
+    </li>
+    <li>
+      <a href="https://nxtlvlsoftware.github.io/alpine-typescript/example/">
+        Example
+      </a>
+    </li>
+    <li>
+      <a href="#installation">
+        Installation
+      </a>
+    </li>
+    <li>
+      <a href="#usage">
+        Usage
+      </a>
+      <ul>
+        <li>
+          <a href="#in-projects">
+            Projects
+          </a>
+          <ul>
+            <li>
+              <a href="#project-setup">
+                Setup
+              </a>
+            </li>
+          </ul>
+        </li>
+        <li>
+          <a href="#in-packages">
+            Packages
+          </a>
+          <ul>
+            <li>
+              <a href="#packages-setup">
+                Setup
+              </a>
+            </li>
+          </ul>
+        </li>
+        <li>
+          <a href="#defining-components">
+            Defining Components
+          </a>
+          <ul>
+            <li>
+              <a href="#generic-types">
+                Any Types
+              </a>
+            </li>
+            <li>
+              <a href="#typescript-classes">
+                Classes
+              </a>
+            </li>
+          </ul>
+        </li>
+        <li>
+          <a href="#using-components">
+            Using Components
+          </a>
+        </li>
+      </ul>
+    </li>
+    <li>
+      <a href="#contributing">
+        Contributing
+      </a>
+      <ul>
+        <li>
+          <a href="#issues">
+            Issues
+          </a>
+        </li>
+        <li>
+          <a href="#pull-requests">
+            Pull Requests
+          </a>
+        </li>
+      </ul>
+    </li>
+    <li>
+      <a href="#license-information">
+        License
+      </a>
+    </li>
+  </ul>
+</details>
 
-<br /><hr /><br />
+<br>
+<hr>
+<br>
 
 ## About
 This package provides support for writing reusable Alpine.js components in Typescript.
@@ -62,12 +147,12 @@ The package requires manual initialization in the browser as we don't assume a s
 
 Using `Alpine.plugin()` (ESModule syntax):
 ```typescript
-import Alpine from 'alpinejs';
+import Alpine from "alpinejs";
 
 window.Alpine = Alpine;
 
-// {default as componentPlugin} also works
-import {componentPlugin} from '@nxtlvlsoftware/alpine-typescript';
+// { default as componentPlugin } also works
+import { componentPlugin } from "@nxtlvlsoftware/alpine-typescript";
 
 window.addEventListener('alpine-components:init', () => {
   window.Alpine.Components.registerAll({
@@ -80,7 +165,7 @@ window.Alpine.start();
 ```
 Using the default export (CommonJS syntax):
 ```typescript
-import Alpine from 'alpinejs';
+const Alpine = require("alpinejs");
 
 window.Alpine = Alpine;
 
@@ -90,7 +175,7 @@ window.addEventListener('alpine-components:init', () => {
   });
 });
 
-window.Alpine.plugin(require('@nxtlvlsoftware/alpine-typescript'));
+window.Alpine.plugin(require("@nxtlvlsoftware/alpine-typescript"));
 window.Alpine.start();
 ```
 This is the easiest way to get started in existing projects but doesn't offer a way to modify the
@@ -98,7 +183,7 @@ default options provided the package.
 
 Using `AlpineComponents.bootstrap()` (all examples in ESModule syntax):
 ```typescript
-import {AlpineComponents} from '@nxtlvlsoftware/alpine-typescript';
+import { AlpineComponents } from "@nxtlvlsoftware/alpine-typescript";
 
 AlpineComponents.bootstrap({
   bootstrapAlpine: true,
@@ -111,11 +196,11 @@ The default options are best suited to new projects as `Alpine.start()` will be 
 To integrate into existing projects seamlessly, just set `startAlpine` to `false` on the options
 object:
 ```typescript
-import Alpine from 'alpinejs';
+import Alpine from "alpinejs";
 
 window.Alpine = Alpine;
 
-import {AlpineComponents} from '@nxtlvlsoftware/alpine-typescript';
+import { AlpineComponents } from "@nxtlvlsoftware/alpine-typescript";
 
 AlpineComponents.bootstrap({
   startAlpine: false,
@@ -130,11 +215,11 @@ window.Alpine.start();
 If you aren't following the default convention of defining `window.Alpine` after importing Alpine,
 just pass it as the second argument to the `AlpineComponents.bootstrap()` call:
 ```typescript
-import Alpine from 'alpinejs';
+import Alpine from "alpinejs";
 
 let myAlpine = Alpine;
 
-import {AlpineComponents} from '@nxtlvlsoftware/alpine-typescript';
+import { AlpineComponents } from "@nxtlvlsoftware/alpine-typescript";
 
 const isProduction = () => false; // equivelent would be injected/definied server-side by your framework
 AlpineComponents.bootstrap({
@@ -163,7 +248,7 @@ Take a look at the provided example project [here.](https://github.com/NxtLvLSof
 You'll want to start by [installing](https://github.com/NxtLvLSoftware/alpine-typescript/blob/dev/README.md#installation) the package then add these lines to your
 client script:
 ```typescript
-import {AlpineComponents} from '@nxtlvlsoftware/alpine-typescript';
+import { AlpineComponents } from "@nxtlvlsoftware/alpine-typescript";
 
 AlpineComponents.bootstrap({
   components: {
@@ -177,7 +262,7 @@ AlpineComponents.bootstrap({
 Now create a directory for your components, something like `components` and create a new
 Typescript file `components/MyComponent.ts` containing:
 ```typescript
-import {AlpineComponent} from "@nxtlvlsoftware/alpine-typescript";
+import { AlpineComponent } from "@nxtlvlsoftware/alpine-typescript";
 
 export class MyComponent extends AlpineComponent {
 
@@ -196,7 +281,7 @@ export class MyComponent extends AlpineComponent {
 ```
 Register your new component in the `AlpineComponents.bootstrap()` method call:
 ```typescript
-import {MyComponent} from './components/MyComponent';
+import { MyComponent } from "./components/MyComponent";
 
 AlpineComponents.bootstrap({
   components: {
@@ -222,8 +307,10 @@ $ npm i --save-dev typescript
 Then add the following scripts to `package.json` for running `tsc`:
 ```json
   "scripts": {
-    "build": "tsc -p ./",
-    "dev": "tsc --watch -p ./"
+    "clean": "rm -rf ./dist && rm -rf ./types",
+    "build": "npm run clean && tsc --build tsconfig.json --inlineSourceMap",
+    "dev": "npm run build -- --watch",
+    "build-dist": "npm run build -- --inlineSourceMap --listEmittedFiles",
   }
 ```
 You'll need to tell `tsc` about the target on which the javascript it produces will be
@@ -232,29 +319,28 @@ executed in a `tsconfig.json` file:
 {
   "$schema": "https://json.schemastore.org/tsconfig",
   "include": [
-    "src/**/*.ts",
-    "index.ts"
+    "src/**/*.ts"
   ],
   "compilerOptions": {
-    "target": "es5",
+    "target": "ESNext",
     "module": "ESNext",
+    "outDir": "dist",
+    "declarationDir": "types",
     "declaration": true,
     "noEmit": false,
     "lib": [
-        "es2017",
-        "dom"
+        "ESNext",
+        "DOM"
     ]
   }
 }
 ```
-Now create a `index.ts` file, `src` and `src/components` directories:
+Now create a `src` directory, `src/index.ts` file and `src/components` directory:
 ```
-$ touch index.ts && mkdir src && mkdir src/components
+$ mkdir src && touch src/index.ts && mkdir src/components
 ```
-The `index.ts` file doesn't have to be in the root of your package but doing so prevents
-any confusion/indirection caused by defining a custom index path in `package.json`. You'll
-want to export all types, classes and global variables from your `index.ts` file so
-they're available with a simple `import { Type, Type2, Var } from '@org/package-name';` call.
+You'll want to export all types, classes and global variables from your `index.ts` file so
+they're available with a simple `import { Type, Type2, Var } from "@org/package-name";` call.
 
 For convenient consumption of your components you'll want to define a bootstrap method similar
 to this package:
@@ -263,13 +349,13 @@ $ touch src/Plugin.ts
 ```
 Copy the following and change the namespace to the name of your package:
 ```typescript
-import type Alpine from 'alpinejs';
+import type Alpine from "alpinejs";
 
 import {
   AlpineComponents,
   makeAlpineConstructor,
   Globals
-} from '@nxtlvlsoftware/alpine-typescript';
+} from "@nxtlvlsoftware/alpine-typescript";
 
 import {
   MyComponent,
@@ -294,7 +380,7 @@ export namespace MyComponents {
 
   export function bootstrap(
     options: Partial<Options> = defaultOptions,
-    alpinejs: typeof Alpine = window.Alpine
+    alpine: typeof Alpine = window.Alpine
   ): void {
     const opts: Options = {
       ...defaultOptions,
@@ -303,17 +389,12 @@ export namespace MyComponents {
 
     document.addEventListener('alpine:init', () => {
       // Register any alpine stores your components rely on here.
+      // const alpine = window.Alpine;
+      // alpine.store(opts.myStoreName, new MyStore(...));
     });
 
     document.addEventListener('alpine-components:init', () => {
-      // make typescript happy
-      let alpine = Globals.castToAlpineWithComponents(alpinejs);
-      if (alpine === null) {
-        if (opts.logErrors) {
-          console.error('Alpine object does not have Components properties injected. Did the Components package boot properly?');
-        }
-        return;
-      }
+      const alpine = window.Alpine;
 
       // Basic registration with support for consumers to provide their own
       // name for use with x-data.
@@ -323,14 +404,14 @@ export namespace MyComponents {
 
     // Allow booting alpine and the components package.
     if (opts.bootstrapComponents) {
-      AlpineComponents.bootstrap(opts, alpinejs);
+      AlpineComponents.bootstrap(opts, alpine);
     }
   }
 
 }
 
 // Support loading our components with a standardized call to Alpine.plugin().
-export function myPlugin(alpine: Globals.Alpine): void {
+export function myPlugin(alpine: typeof Alpine): void {
   MyComponents.bootstrap({
     // can't assume we're the only ones using the component library
     bootstrapComponents: false,
@@ -460,13 +541,9 @@ Here's the contrived `dropdown` example re-written to use a class:
 </div>
 
 <script>
-  import Alpine from 'alpinejs';
+  import { AlpineComponents, AlpineComponent } from "@nxtlvlsoftware/alpine-typescript";
 
-  window.Alpine = Alpine;
-
-  import {AlpineComponents, AlpineComponent} from '@nxtlvlsoftware/alpine-typescript';
-
-  class ToggleComponent extends AlpineComponent {
+  class DropdownComponent extends AlpineComponent {
     constructor(
       public open: boolean = false
     ) { super(); }
@@ -475,8 +552,9 @@ Here's the contrived `dropdown` example re-written to use a class:
   }
 
   AlpineComponents.bootstrap({
+    bootstrapAlpine: true,
     components: {
-      toggle: ToggleComponent
+      dropdown: ToggleComponent
     },
     logErrors: true
   });
@@ -522,5 +600,9 @@ __A full copy of the license is available [here](https://github.com/NxtLvlSoftwa
 <br>
 <hr>
 <br>
-
-__A [NxtLvL Software Solutions](https://github.com/NxtLvLSoftware) product.__
+<h4 align="center">
+  A <a href="https://github.com/NxtLvlSoftware">NxtLvL Software Solutions</a> product.
+</h4>
+<br>
+<hr>
+<br>

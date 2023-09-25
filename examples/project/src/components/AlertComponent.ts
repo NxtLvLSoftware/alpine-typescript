@@ -9,7 +9,8 @@ import {AlpineComponent} from '@nxtlvlsoftware/alpine-typescript';
 export class AlertComponent extends AlpineComponent {
 
 	constructor(
-		public alertState: boolean = false
+		public alertState: boolean = false,
+		private transitionDelayMs = 300
 	) {
 		super();
 	}
@@ -19,14 +20,34 @@ export class AlertComponent extends AlpineComponent {
 			let el = this.$el;
 			if (val) {
 				el.classList.remove('hidden');
-				el.ariaHidden = 'true';
+				el.ariaHidden = 'false';
 			} else {
 				setTimeout(() => {
 					el.classList.add('hidden');
 					el.ariaHidden = 'true';
-				}, 300);
+				}, this.transitionDelayMs);
 			}
 		});
 	}
+
+	/**
+	 * Expose x-bind="alertContent" for toggling DOM elements when the alert
+	 * state changes.
+	 */
+	protected alertContent = this.binding({
+		['x-show']() {
+			return this.alertState;
+		}
+	})
+
+	/**
+	 * Expose x-bind="alertCloseTarget" for closing the alert when a DOM
+	 * element is clicked.
+	 */
+	protected alertCloseTarget = this.binding({
+		['@click.prevent']() {
+			this.alertState = false;
+		}
+	});
 
 }

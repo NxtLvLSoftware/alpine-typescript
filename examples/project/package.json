@@ -16,9 +16,12 @@
   "type": "module",
   "private": true,
   "scripts": {
-    "build": "export NODE_ENV=development && webpack --stats-error-details",
-    "build-ci": "export NODE_ENV=production && webpack --stats-error-details --fail-on-warnings --no-color",
-    "dev": "webpack serve --mode=development --open"
+    "clean-install": "rm -rf ./node_modules && npm install",
+    "setup-dev": "npm run clean-install && npm run build",
+    "clean": "rm -rf ./dist",
+    "build": "npm run clean && export NODE_ENV=development && webpack --stats-error-details",
+    "dev": "npm run clean && export NODE_ENV=development && webpack serve --mode=development --open",
+    "build-dist": "npm run clean && export NODE_ENV=production && webpack --stats-error-details --fail-on-warnings --no-color"
   },
   "dependencies": {
     "@nxtlvlsoftware/alpine-typescript": "file:../../",

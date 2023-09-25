@@ -4,15 +4,15 @@
     "src/**/*.ts"
   ],
   "compilerOptions": {
-    "target": "es5",
+    "target": "ES5",
     "module": "ESNext",
     "strict": true,
-    "declaration": true,
+    "outDir": "dist",
     "noEmit": false,
-    "sourceMap": true,
+    "declaration": false,
     "lib": [
-      "es2017",
-      "dom"
+      "ESNext",
+      "DOM"
     ],
     // Enable node-style module resolution, for things like npm package imports.
     "moduleResolution": "node",

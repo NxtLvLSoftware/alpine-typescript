@@ -9,6 +9,7 @@ permissions:
 
 env:
   GITHUB_ACTIONS: true
+  NODE_VERSION: 20
 
 jobs:
   test:
@@ -16,51 +17,39 @@ jobs:
     runs-on: ubuntu-latest
     timeout-minutes: 5
 
-    strategy:
-      fail-fast: true
-      matrix:
-        node-version: [18]
-
     steps:
       - uses: actions/checkout@v3
 
-      - name: Use Node.js ${{ matrix.node-version }}
+      - name: Use Node.js ${{ env.NODE_VERSION }}
         uses: actions/setup-node@v3
         with:
-          node-version: ${{ matrix.node-version }}
+          node-version: ${{ env.NODE_VERSION }}
 
       - name: Cache node_modules
         uses: actions/cache@v3
         with:
           path: node_modules
-          key: ${{ runner.os }}}-${{ matrix.node-version }}-node_modules-${{ hashFiles('package.json') }}
+          key: ${{ runner.os }}}-${{ env.NODE_VERSION }}-node_modules-${{ hashFiles('package.json') }}
 
       - name: Install dependencies
-        run: npm install
+        run: npm run clean-install
 
       - name: Build alpine-typescript
-        run: npm run build-ci
+        run: npm run build-dist
 
       - uses: actions/upload-artifact@v3
         with:
           name: test-build-output
           path: |
             ./package.json
-            ./index.d.ts
-            ./index.js
-            ./src/*.d.ts
-            ./src/*.js
+            ./dist/*.js
+            ./types/*.d.ts
 
   test-example-package:
     name: Run example package tests
     needs: [test]
     runs-on: ubuntu-latest
     timeout-minutes: 5
-
-    strategy:
-      fail-fast: true
-      matrix:
-        node-version: [18]
 
     steps:
       - uses: actions/checkout@v3
@@ -83,33 +72,28 @@ jobs:
         run: |
           sed -i 's/file:..\/..\//file:alpine-typescript/g' package.json
 
-      - name: Use Node.js ${{ matrix.node-version }}
+      - name: Use Node.js ${{ env.NODE_VERSION }}
         uses: actions/setup-node@v3
         with:
-          node-version: ${{ matrix.node-version }}
+          node-version: ${{ env.NODE_VERSION }}
 
       - name: Cache node_modules
         uses: actions/cache@v3
         with:
           path: node_modules
-          key: ${{ runner.os }}}-${{ matrix.node-version }}-node_modules-${{ hashFiles('package.json') }}
+          key: ${{ runner.os }}}-${{ env.NODE_VERSION }}-node_modules-${{ hashFiles('package.json') }}
 
       - name: Install dependencies
-        run: npm install
+        run: npm run clean-install
 
       - name: Build package example
-        run: npm run build-ci
+        run: npm run build-dist
 
   test-example-project:
     name: Run example project tests
     needs: [test]
     runs-on: ubuntu-latest
     timeout-minutes: 5
-
-    strategy:
-      fail-fast: true
-      matrix:
-        node-version: [18]
 
     steps:
       - uses: actions/checkout@v3
@@ -132,31 +116,28 @@ jobs:
         run: |
           sed -i 's/file:..\/..\//file:alpine-typescript/g' package.json
 
-      - name: Use Node.js ${{ matrix.node-version }}
+      - name: Use Node.js ${{ env.NODE_VERSION }}
         uses: actions/setup-node@v3
         with:
-          node-version: ${{ matrix.node-version }}
+          node-version: ${{ env.NODE_VERSION }}
 
       - name: Cache node_modules
         uses: actions/cache@v3
         with:
           path: node_modules
-          key: ${{ runner.os }}}-${{ matrix.node-version }}-node_modules-${{ hashFiles('package.json') }}
+          key: ${{ runner.os }}}-${{ env.NODE_VERSION }}-node_modules-${{ hashFiles('package.json') }}
 
       - name: Install dependencies
-        run: npm install
+        run: npm run clean-install
 
       - name: Build package example
-        run: npm run build-ci
+        run: npm run build-dist
 
   stage:
     name: Stage changes as pull request
     needs: [test, test-example-package, test-example-project]
     runs-on: ubuntu-latest
     timeout-minutes: 5
-
-    env:
-      NODE_VERSION: 18
 
     if: github.ref == 'refs/heads/dev'
     steps:
@@ -182,17 +163,16 @@ jobs:
           key: ${{ runner.os }}}-${{ env.NODE_VERSION }}-node_modules-${{ hashFiles('package.json') }}
 
       - name: Install dependencies
-        run: npm install
+        run: npm run clean-install
 
       - name: Build alpine-typescript
-        run: npm run build-ci
+        run: npm run build-dist
 
       - name: Add dist files
         run: |
-          git add --force ./*.d.ts
-          git add --force ./*.js
-          git add --force ./**/*.d.ts
-          git add --force ./**/*.js
+          git rm -r --force ./src
+          git add --force ./dist
+          git add --force ./types
 
       - name: Create Pull Request
         uses: peter-evans/create-pull-request@v5
