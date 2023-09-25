@@ -147,12 +147,12 @@ The package requires manual initialization in the browser as we don't assume a s
 
 Using `Alpine.plugin()` (ESModule syntax):
 ```typescript
-import Alpine from 'alpinejs';
+import Alpine from "alpinejs";
 
 window.Alpine = Alpine;
 
-// {default as componentPlugin} also works
-import {componentPlugin} from '@nxtlvlsoftware/alpine-typescript';
+// { default as componentPlugin } also works
+import { componentPlugin } from "@nxtlvlsoftware/alpine-typescript";
 
 window.addEventListener('alpine-components:init', () => {
   window.Alpine.Components.registerAll({
@@ -165,7 +165,7 @@ window.Alpine.start();
 ```
 Using the default export (CommonJS syntax):
 ```typescript
-import Alpine from 'alpinejs';
+const Alpine = require("alpinejs");
 
 window.Alpine = Alpine;
 
@@ -175,7 +175,7 @@ window.addEventListener('alpine-components:init', () => {
   });
 });
 
-window.Alpine.plugin(require('@nxtlvlsoftware/alpine-typescript'));
+window.Alpine.plugin(require("@nxtlvlsoftware/alpine-typescript"));
 window.Alpine.start();
 ```
 This is the easiest way to get started in existing projects but doesn't offer a way to modify the
@@ -183,7 +183,7 @@ default options provided the package.
 
 Using `AlpineComponents.bootstrap()` (all examples in ESModule syntax):
 ```typescript
-import {AlpineComponents} from '@nxtlvlsoftware/alpine-typescript';
+import { AlpineComponents } from "@nxtlvlsoftware/alpine-typescript";
 
 AlpineComponents.bootstrap({
   bootstrapAlpine: true,
@@ -196,11 +196,11 @@ The default options are best suited to new projects as `Alpine.start()` will be 
 To integrate into existing projects seamlessly, just set `startAlpine` to `false` on the options
 object:
 ```typescript
-import Alpine from 'alpinejs';
+import Alpine from "alpinejs";
 
 window.Alpine = Alpine;
 
-import {AlpineComponents} from '@nxtlvlsoftware/alpine-typescript';
+import { AlpineComponents } from "@nxtlvlsoftware/alpine-typescript";
 
 AlpineComponents.bootstrap({
   startAlpine: false,
@@ -215,11 +215,11 @@ window.Alpine.start();
 If you aren't following the default convention of defining `window.Alpine` after importing Alpine,
 just pass it as the second argument to the `AlpineComponents.bootstrap()` call:
 ```typescript
-import Alpine from 'alpinejs';
+import Alpine from "alpinejs";
 
 let myAlpine = Alpine;
 
-import {AlpineComponents} from '@nxtlvlsoftware/alpine-typescript';
+import { AlpineComponents } from "@nxtlvlsoftware/alpine-typescript";
 
 const isProduction = () => false; // equivelent would be injected/definied server-side by your framework
 AlpineComponents.bootstrap({
@@ -248,7 +248,7 @@ Take a look at the provided example project [here.](https://github.com/NxtLvLSof
 You'll want to start by [installing](https://github.com/NxtLvLSoftware/alpine-typescript/blob/dev/README.md#installation) the package then add these lines to your
 client script:
 ```typescript
-import {AlpineComponents} from '@nxtlvlsoftware/alpine-typescript';
+import { AlpineComponents } from "@nxtlvlsoftware/alpine-typescript";
 
 AlpineComponents.bootstrap({
   components: {
@@ -262,7 +262,7 @@ AlpineComponents.bootstrap({
 Now create a directory for your components, something like `components` and create a new
 Typescript file `components/MyComponent.ts` containing:
 ```typescript
-import {AlpineComponent} from "@nxtlvlsoftware/alpine-typescript";
+import { AlpineComponent } from "@nxtlvlsoftware/alpine-typescript";
 
 export class MyComponent extends AlpineComponent {
 
@@ -281,7 +281,7 @@ export class MyComponent extends AlpineComponent {
 ```
 Register your new component in the `AlpineComponents.bootstrap()` method call:
 ```typescript
-import {MyComponent} from './components/MyComponent';
+import { MyComponent } from "./components/MyComponent";
 
 AlpineComponents.bootstrap({
   components: {
@@ -307,8 +307,10 @@ $ npm i --save-dev typescript
 Then add the following scripts to `package.json` for running `tsc`:
 ```json
   "scripts": {
-    "build": "tsc -p ./",
-    "dev": "tsc --watch -p ./"
+    "clean": "rm -rf ./dist && rm -rf ./types",
+    "build": "npm run clean && tsc --build tsconfig.json --inlineSourceMap",
+    "dev": "npm run build -- --watch",
+    "build-dist": "npm run build -- --inlineSourceMap --listEmittedFiles",
   }
 ```
 You'll need to tell `tsc` about the target on which the javascript it produces will be
@@ -317,29 +319,28 @@ executed in a `tsconfig.json` file:
 {
   "$schema": "https://json.schemastore.org/tsconfig",
   "include": [
-    "src/**/*.ts",
-    "index.ts"
+    "src/**/*.ts"
   ],
   "compilerOptions": {
-    "target": "es5",
+    "target": "ESNext",
     "module": "ESNext",
+    "outDir": "dist",
+    "declarationDir": "types",
     "declaration": true,
     "noEmit": false,
     "lib": [
-        "es2017",
-        "dom"
+        "ESNext",
+        "DOM"
     ]
   }
 }
 ```
-Now create a `index.ts` file, `src` and `src/components` directories:
+Now create a `src` directory, `src/index.ts` file and `src/components` directory:
 ```
-$ touch index.ts && mkdir src && mkdir src/components
+$ mkdir src && touch src/index.ts && mkdir src/components
 ```
-The `index.ts` file doesn't have to be in the root of your package but doing so prevents
-any confusion/indirection caused by defining a custom index path in `package.json`. You'll
-want to export all types, classes and global variables from your `index.ts` file so
-they're available with a simple `import { Type, Type2, Var } from '@org/package-name';` call.
+You'll want to export all types, classes and global variables from your `index.ts` file so
+they're available with a simple `import { Type, Type2, Var } from "@org/package-name";` call.
 
 For convenient consumption of your components you'll want to define a bootstrap method similar
 to this package:
@@ -348,13 +349,13 @@ $ touch src/Plugin.ts
 ```
 Copy the following and change the namespace to the name of your package:
 ```typescript
-import type Alpine from 'alpinejs';
+import type Alpine from "alpinejs";
 
 import {
   AlpineComponents,
   makeAlpineConstructor,
   Globals
-} from '@nxtlvlsoftware/alpine-typescript';
+} from "@nxtlvlsoftware/alpine-typescript";
 
 import {
   MyComponent,
@@ -540,7 +541,7 @@ Here's the contrived `dropdown` example re-written to use a class:
 </div>
 
 <script>
-  import {AlpineComponents, AlpineComponent} from '@nxtlvlsoftware/alpine-typescript';
+  import { AlpineComponents, AlpineComponent } from "@nxtlvlsoftware/alpine-typescript";
 
   class DropdownComponent extends AlpineComponent {
     constructor(
