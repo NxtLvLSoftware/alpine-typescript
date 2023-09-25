@@ -29,11 +29,16 @@
     "types/**/*.d.ts"
   ],
   "scripts": {
-    "build": "tsc --inlineSourceMap -p ./",
-    "build-ci": "tsc --pretty false --inlineSourceMap --listEmittedFiles -p ./",
-    "dev": "tsc --watch -p ./",
+    "clean-install": "rm -f ./package-lock.json && rm -rf ./node_modules && npm install",
+    "setup-dev": "npm run clean-install && npm run build",
+    "clean": "rm -rf ./dist && rm -rf ./types && rm -rf ./docs-build",
+    "build": "npm run clean && tsc --build tsconfig.json --inlineSourceMap",
+    "dev": "npm run build -- --watch",
+    "build-dist": "npm run build -- --inlineSourceMap --listEmittedFiles",
     "docs": "npx typedoc --plugin typedoc-plugin-extras --out docs-build --cacheBust src/index.ts",
-    "docs-ci": "npx typedoc --plugin typedoc-plugin-extras --gitRemote dist --out docs-build --cacheBust src/index.ts"
+    "docs-dist": "npm run docs -- --gitRemote dev",
+    "setup-examples": "cd examples/package && npm run setup-dev && cd ../project && npm run setup-dev",
+    "build-examples": "cd examples/package && npm run build && cd ../project && npm run build"
   },
   "devDependencies": {
     "@types/alpinejs": "^3.0.0",
