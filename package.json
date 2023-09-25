@@ -35,8 +35,8 @@
     "build": "npm run clean && tsc --build tsconfig.json --inlineSourceMap",
     "dev": "npm run build -- --watch",
     "build-dist": "npm run build -- --inlineSourceMap --listEmittedFiles",
-    "docs": "npx typedoc --plugin typedoc-plugin-extras --out docs-build --cacheBust src/index.ts",
-    "docs-dist": "npm run docs -- --gitRevision dev",
+    "docs": "npx typedoc",
+    "docs-dist": "npm run docs -- --gitRevision dist",
     "setup-examples": "cd examples/package && npm run setup-dev && cd ../project && npm run setup-dev",
     "build-examples": "cd examples/package && npm run build && cd ../project && npm run build"
   },
