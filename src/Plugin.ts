@@ -9,6 +9,8 @@ export namespace AlpineComponents {
 
 	/**
 	 * Bootstrap options.
+	 *
+	 * @public
 	 */
 	export interface Options {
 		/**
@@ -35,6 +37,8 @@ export namespace AlpineComponents {
 	 * Default bootstrap options.
 	 *
 	 * Assumes production environment.
+	 *
+	 * @public
 	 */
 	export const defaultOptions: Options = {
 		components: {},
@@ -47,6 +51,8 @@ export namespace AlpineComponents {
 
 	/**
 	 * Bootstrap the components package.
+	 *
+	 * @public
 	 *
 	 * @param options Provided options (defaults applied to missing values {@link defaultOptions}.)
 	 * @param alpine The Alpine instance to use (defaults to window.Alpine or creates Alpine when
@@ -87,7 +93,9 @@ export namespace AlpineComponents {
 }
 
 /**
- * Export a function to be used with alpine.plugin().
+ * Export a function to be used with `Alpine.plugin()`.
+ *
+ * @public
  *
  * Calls {@link AlpineComponents.bootstrap} with sensible options.
  *

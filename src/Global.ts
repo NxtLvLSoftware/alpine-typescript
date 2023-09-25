@@ -6,7 +6,9 @@ import type {ComponentStore} from './Store';
 import type {AlpineComponentConstructor} from './Component';
 
 /**
- * Define the properties we add to the window.Alpine object.
+ * Define the properties we add to the `window.Alpine` object.
+ *
+ * @public
  */
 export declare interface AlpineComponentMixins {
 	Components: ComponentStore;
@@ -14,17 +16,23 @@ export declare interface AlpineComponentMixins {
 }
 
 /**
- * Expose the properties we add to the window.Alpine object.
+ * Expose the properties we add to the `window.Alpine` object.
+ *
+ * @public
  */
 export declare type AlpineWithComponents = AlpineType&AlpineComponentMixins;
 
 /**
- * Expose the properties we add to the window.Alpine object.
+ * Expose the properties we add to the `window.Alpine` object.
+ *
+ * @public
  */
 export declare type Alpine = AlpineType|AlpineWithComponents;
 
 /**
  * Check if an {@link Alpine} object has the components properties.
+ *
+ * @public
  *
  * @param obj The Alpine object to check
  *
@@ -39,6 +47,8 @@ export function satisfiesAlpineWithComponents(obj: Alpine): boolean {
  * Cast an {@link Alpine} object to {@link AlpineWithComponents} if it
  * has the injected properties.
  *
+ * @public
+ *
  * @param obj The Alpine object to cast
  *
  * @return The object cast to {@link AlpineWithComponents} if properties are
@@ -52,6 +62,8 @@ declare global {
 
 	/**
 	 * Expose window.Alpine and window.AlpineComponents globals.
+	 *
+	 * @public
 	 */
 	interface Window {
 		Alpine: AlpineWithComponents;

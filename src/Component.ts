@@ -1,13 +1,19 @@
 /**
  * Type definition for known class constructors.
+ *
+ * @public
  */
 export type KnownClassConstructor<T extends AlpineComponent> = new (...args: any[]) => T;
 /**
  * Type definition for known generic constructors.
+ *
+ * @public
  */
 export type KnownGenericConstructor<T> = (...args: any[]) => T;
 /**
  * Type definition for supported constructor functions.
+ *
+ * @public
  */
 export type KnownConstructor<T> = KnownGenericConstructor<T>|
 	// @ts-expect-error TS2344
@@ -15,11 +21,17 @@ export type KnownConstructor<T> = KnownGenericConstructor<T>|
 
 /**
  * Type definition for alpine component constructors.
+ *
+ * @public
  */
 export type AlpineComponentConstructor = (...args: any[]) => any;
 
 /**
  * Copied from @types/alpinejs because it isn't exported.
+ *
+ * {@see https://www.npmjs.com/package/@types/alpinejs}
+ *
+ * @public
  */
 export declare interface AlpineDataContext {
 	/**
@@ -31,6 +43,10 @@ export declare interface AlpineDataContext {
 
 /**
  * Copied from @types/alpinejs because it isn't exported.
+ *
+ * {@see https://www.npmjs.com/package/@types/alpinejs}
+ *
+ * @public
  */
 export declare type AlpineData = AlpineDataContext | string | number | boolean;
 
@@ -58,6 +74,10 @@ export type AlpineBindingContext<
  * used as an Alpine component.
  *
  * Property declarations copied from @types/alpinejs.
+ *
+ * {@see https://www.npmjs.com/package/@types/alpinejs}
+ *
+ * @public
  */
 export abstract class AlpineComponent implements AlpineDataContext {
 

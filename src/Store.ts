@@ -6,6 +6,8 @@ import {AlpineComponent, type AlpineComponentConstructor} from './Component';
 
 /**
  * @see https://www.w3schools.com/js/js_reserved.asp
+ *
+ * @internal
  */
 const ReservedNames = ['abstract', 'arguments', 'await', 'boolean', 'break', 'byte', 'case',
 	'catch', 'char', 'class', 'const', 'continue', 'debugger', 'default', 'delete', 'do', 'double', 'else',
@@ -17,6 +19,8 @@ const ReservedNames = ['abstract', 'arguments', 'await', 'boolean', 'break', 'by
 
 /**
  * Type definition for list of named component constructors.
+ *
+ * @public
  */
 export type ComponentList = {
 	[name: string]: Impl.KnownConstructor<any>
@@ -24,12 +28,19 @@ export type ComponentList = {
 
 /**
  * Internal type for component registration.
+ *
+ * @internal
  */
 type ComponentConstructorData = {
 	name: string,
 	constructor: Impl.AlpineComponentConstructor
 };
 
+/**
+ * Internal component registration failure reasons.
+ *
+ * @internal
+ */
 enum RegisterComponentFailure {
 	GenericMustHaveFunctionAsSecond,
 	NameMustBeProvidedForComponentWithNoDefault,
