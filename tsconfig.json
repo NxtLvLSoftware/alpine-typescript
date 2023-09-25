@@ -13,8 +13,8 @@
     "noEmit": false,
     "removeComments": false,
     "lib": [
-      "es2017",
-      "dom"
+      "ESNext",
+      "DOM"
     ],
     // Disallow JavaScript files from being imported.
     "allowJs": false,
