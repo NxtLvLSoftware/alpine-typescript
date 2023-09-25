@@ -3,10 +3,13 @@
  */
 
 export {
-	type KnownClassConstructor,
-	type KnownConstructor,
+	type AlpineBindingContext,
 	type AlpineComponentConstructor,
+	type AlpineData,
 	type AlpineDataContext,
+	type KnownConstructor,
+	type KnownClassConstructor,
+	type KnownGenericConstructor,
 	AlpineComponent
 } from './Component';
 
