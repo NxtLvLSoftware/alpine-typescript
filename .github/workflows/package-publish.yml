@@ -24,33 +24,6 @@ jobs:
     timeout-minutes: 5
 
     steps:
-      - name: Wait for CI success
-        if: github.event_name == 'push'
-        uses: lewagon/wait-on-check-action@v1.3.1
-        with:
-          ref: ${{ github.ref }}
-          check-name: Run tests
-          repo-token: ${{ secrets.GITHUB_TOKEN }}
-          wait-interval: 10
-
-      - name: Wait for example package CI success
-        if: github.event_name == 'push'
-        uses: lewagon/wait-on-check-action@v1.3.1
-        with:
-          ref: ${{ github.ref }}
-          check-name: Run example package tests
-          repo-token: ${{ secrets.GITHUB_TOKEN }}
-          wait-interval: 10
-
-      - name: Wait for example project CI success
-        if: github.event_name == 'push'
-        uses: lewagon/wait-on-check-action@v1.3.1
-        with:
-          ref: ${{ github.ref }}
-          check-name: Run example project tests
-          repo-token: ${{ secrets.GITHUB_TOKEN }}
-          wait-interval: 10
-
       - uses: actions/checkout@v4
 
       - name: Use Node.js ${{ env.NODE_VERSION }}
