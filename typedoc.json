@@ -1,4 +1,14 @@
 {
+  "entryPoints": [
+    "types/index.d.ts"
+  ],
+  "tsconfig": "tsconfig.docs.json",
+  "emit": "docs",
+  "out": "./docs-build",
+  "cacheBust": true,
+  "plugin": [
+    "typedoc-plugin-extras"
+  ],
   "favicon": "https://nxtlvlsoftware.github.io/alpine-typescript/favicon.ico",
   "footerTypedocVersion": true,
   "footerDate": true,

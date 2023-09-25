@@ -16,8 +16,8 @@ env:
   NODE_VERSION: 20
 
 jobs:
-  build-docs:
-    name: Generate site
+  wait-for-package-publish:
+    name: Wait for package publish workflow success
     runs-on: ubuntu-latest
     timeout-minutes: 5
 
@@ -30,6 +30,13 @@ jobs:
           repo-token: ${{ secrets.GITHUB_TOKEN }}
           wait-interval: 10
 
+  build-docs:
+    name: Generate site
+    needs: [wait-for-package-publish]
+    runs-on: ubuntu-latest
+    timeout-minutes: 5
+
+    steps:
       - uses: actions/checkout@v4
 
       - name: Remove README.md index lines
@@ -48,10 +55,10 @@ jobs:
           key: ${{ runner.os }}}-${{ env.NODE_VERSION }}-node_modules-${{ hashFiles('package.json') }}
 
       - name: Install dependencies
-        run: npm install
+        run: npm run clean-install
 
-      - name: Build alpine-typescript
-        run: npm run docs-ci
+      - name: Build alpine-typescript docs
+        run: npm run docs-dist
 
       - name: Copy favicon to /docs-build
         run: |
@@ -64,18 +71,11 @@ jobs:
 
   build-example:
     name: Generate example site
+    needs: [wait-for-package-publish]
     runs-on: ubuntu-latest
     timeout-minutes: 5
 
     steps:
-      - name: Wait for publish success
-        uses: lewagon/wait-on-check-action@v1.3.1
-        with:
-          ref: ${{ github.ref }}
-          check-name: Publish to npm registry
-          repo-token: ${{ secrets.GITHUB_TOKEN }}
-          wait-interval: 10
-
       - uses: actions/checkout@v3
         with:
           sparse-checkout: |
@@ -103,10 +103,10 @@ jobs:
           key: ${{ runner.os }}}-${{ env.NODE_VERSION }}-node_modules-${{ hashFiles('package.json') }}
 
       - name: Install dependencies
-        run: npm install
+        run: npm clean-install
 
       - name: Build example project
-        run: npm run build-ci
+        run: npm run build-dist
 
       - uses: actions/upload-artifact@v3
         with:
