@@ -11,8 +11,8 @@
     "noEmit": false,
     "declaration": false,
     "lib": [
-      "es2017",
-      "dom"
+      "ESNext",
+      "DOM"
     ],
     // Enable node-style module resolution, for things like npm package imports.
     "moduleResolution": "node",
