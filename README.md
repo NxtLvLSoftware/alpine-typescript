@@ -141,7 +141,7 @@ code, producing useful compilation/transpilation errors before testing.
 
 ### Installation
 ```
-$ npm install --save @nxtlvlsoftware/alpine-typescript
+$ pnpm install --save @nxtlvlsoftware/alpine-typescript
 ```
 The package requires manual initialization in the browser as we don't assume a specific use-case:
 
@@ -302,15 +302,15 @@ directory and start writing your components.
 
 Manual setup requires a project with `typescript` installed to compile the code to javascript:
 ```
-$ npm i --save-dev typescript
+$ pnpm i --save-dev typescript
 ```
 Then add the following scripts to `package.json` for running `tsc`:
 ```json
   "scripts": {
     "clean": "rm -rf ./dist && rm -rf ./types",
-    "build": "npm run clean && tsc --build tsconfig.json --inlineSourceMap",
-    "dev": "npm run build -- --watch",
-    "build-dist": "npm run build -- --inlineSourceMap --listEmittedFiles",
+    "build": "pnpm run clean && tsc --build tsconfig.json --inlineSourceMap",
+    "dev": "pnpm run build -- --watch",
+    "build-dist": "pnpm run build -- --inlineSourceMap --listEmittedFiles",
   }
 ```
 You'll need to tell `tsc` about the target on which the javascript it produces will be
@@ -434,7 +434,7 @@ import {myPlugin} from './src/Plugin';
 export default myPlugin;
 ```
 Now you can start writing your components. Remember to create the `src/components/MyComponent.ts`
-file before running `npm run dev` or `npm run build`.
+file before running `pnpm run dev` or `pnpm run build`.
 
 #### Defining Components
 Alpine itself is very flexible with what it considers a component so this package tries not to impose any

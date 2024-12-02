@@ -31,12 +31,12 @@
     "types/**/*.d.ts"
   ],
   "scripts": {
-    "clean-install": "rm -f ./package-lock.json && rm -rf ./node_modules && npm install",
-    "setup-dev": "npm run clean-install && npm run build",
+    "clean-install": "rm -f ./package-lock.json && rm -rf ./node_modules && pnpm install",
+    "setup-dev": "pnpm run clean-install && pnpm run build",
     "clean": "rm -rf ./dist && rm -rf ./types",
-    "build": "npm run clean && tsc --build tsconfig.json --inlineSourceMap",
-    "dev": "npm run build -- --watch",
-    "build-dist": "npm run build -- --inlineSourceMap --listEmittedFiles"
+    "build": "pnpm run clean && tsc --build tsconfig.json --inlineSourceMap",
+    "dev": "pnpm run build -- --watch",
+    "build-dist": "pnpm run build -- --inlineSourceMap --listEmittedFiles"
   },
   "peerDependencies": {
     "@nxtlvlsoftware/alpine-typescript": "file:../../",
