@@ -1,8 +1,10 @@
 name: Publish Pages
 
 on:
-  push:
+  workflow_run:
+    workflows: ['Publish Package']
     branches: [dist]
+    types: [completed]
 
 permissions:
   contents: write
@@ -13,43 +15,31 @@ concurrency:
 
 env:
   GITHUB_ACTIONS: true
-  NODE_VERSION: 20
+  NODE_VERSION: 22
+  PNPM_VERSION: 9
 
 jobs:
-  wait-for-package-publish:
-    name: Wait for package publish workflow success
-    runs-on: ubuntu-latest
-    timeout-minutes: 5
-
-    steps:
-      - name: Wait for publish success
-        uses: lewagon/wait-on-check-action@v1.3.1
-        with:
-          ref: ${{ github.ref }}
-          check-name: Publish to npm registry
-          repo-token: ${{ secrets.GITHUB_TOKEN }}
-          wait-interval: 10
-
   build-docs:
     name: Generate site
-    needs: [wait-for-package-publish]
     runs-on: ubuntu-latest
     timeout-minutes: 5
 
     steps:
       - uses: actions/checkout@v4
+        with:
+          ref: ${{ github.event.workflow_run.head_branch }}
 
       - name: Remove README.md index lines
         run: |
           sed -i '28,127d' README.md
 
       - name: Use Node.js ${{ env.NODE_VERSION }}
-        uses: actions/setup-node@v3
+        uses: actions/setup-node@v4
         with:
           node-version: ${{ env.NODE_VERSION }}
 
       - name: Cache node_modules
-        uses: actions/cache@v3
+        uses: actions/cache@v4
         with:
           path: node_modules
           key: ${{ runner.os }}}-${{ env.NODE_VERSION }}-node_modules-${{ hashFiles('package.json') }}
@@ -64,7 +54,7 @@ jobs:
         run: |
           cp ./.github/favicon.ico ./docs-build/favicon.ico
 
-      - uses: actions/upload-artifact@v3
+      - uses: actions/upload-artifact@v4
         with:
           name: pages-docs-html
           path: ./docs-build
@@ -76,7 +66,7 @@ jobs:
     timeout-minutes: 5
 
     steps:
-      - uses: actions/checkout@v3
+      - uses: actions/checkout@v4
         with:
           sparse-checkout: |
             examples/project
@@ -92,12 +82,12 @@ jobs:
           sed -i 's/file:..\/..\//rc/g' package.json
 
       - name: Use Node.js ${{ env.NODE_VERSION }}
-        uses: actions/setup-node@v3
+        uses: actions/setup-node@v4
         with:
           node-version: ${{ env.NODE_VERSION }}
 
       - name: Cache node_modules
-        uses: actions/cache@v3
+        uses: actions/cache@v4
         with:
           path: node_modules
           key: ${{ runner.os }}}-${{ env.NODE_VERSION }}-node_modules-${{ hashFiles('package.json') }}
@@ -108,7 +98,7 @@ jobs:
       - name: Build example project
         run: npm run build-dist
 
-      - uses: actions/upload-artifact@v3
+      - uses: actions/upload-artifact@v4
         with:
           name: pages-example-html
           path: ./dist
@@ -120,12 +110,12 @@ jobs:
     timeout-minutes: 5
 
     steps:
-      - uses: actions/download-artifact@v3
+      - uses: actions/download-artifact@v4
         with:
           name: pages-docs-html
           path: ./
 
-      - uses: actions/download-artifact@v3
+      - uses: actions/download-artifact@v4
         with:
           name: pages-example-html
           path: ./example
@@ -136,7 +126,7 @@ jobs:
             echo "::warning title=Invalid file permissions automatically fixed::$line"
           done
 
-      - uses: actions/upload-pages-artifact@v2
+      - uses: actions/upload-pages-artifact@v3
         with:
           name: github-pages
           path: ./
@@ -158,4 +148,4 @@ jobs:
     steps:
       - name: Deploy to GitHub Pages
         id: deployment
-        uses: actions/deploy-pages@v2
+        uses: actions/deploy-pages@v4
