@@ -181,8 +181,8 @@ jobs:
       - name: Add dist files
         run: |
           git rm -r --force ./src
-          git add --force ./dist/**/*.js
-          git add --force ./types/**/*.d.ts
+          git add --force ./dist/*.js
+          git add --force ./types/*.d.ts
 
       - name: Create Pull Request
         uses: peter-evans/create-pull-request@v7
