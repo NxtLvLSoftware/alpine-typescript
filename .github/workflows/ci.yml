@@ -121,7 +121,8 @@ jobs:
 
       - name: Update alpine-typescript file path
         run: |
-          sed -i 's/file:..\/..\//file:alpine-typescript/g' package.json
+          sed -i 's/file:..\/..\//file:alpine-typescript/g' package.json &&
+          sed -i 's/file:..\/..\//file:alpine-typescript/g' pnpm-lock.yaml
 
       - name: Use pnpm ${{ env.PNPM_VERSION }}
         uses: pnpm/action-setup@v4
