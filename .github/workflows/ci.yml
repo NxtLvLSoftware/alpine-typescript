@@ -37,7 +37,7 @@ jobs:
           cache-dependency-path: 'package.json'
 
       - name: Install dependencies
-        run: npm run clean-install
+        run: npm run clean
 
       - name: Build alpine-typescript
         run: npm run build-dist
