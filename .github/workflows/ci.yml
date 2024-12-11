@@ -37,10 +37,10 @@ jobs:
           cache-dependency-path: 'package.json'
 
       - name: Install dependencies
-        run: npm run clean-install
+        run: pnpm run clean-install
 
       - name: Build alpine-typescript
-        run: npm run build-dist
+        run: pnpm run build-dist
 
       - uses: actions/upload-artifact@v4
         with:
@@ -91,10 +91,10 @@ jobs:
           cache-dependency-path: 'package.json'
 
       - name: Install dependencies
-        run: npm run clean-install
+        run: pnpm run clean-install
 
       - name: Build package example
-        run: npm run build-dist
+        run: pnpm run build-dist
 
   test-example-project:
     name: Run example project tests
@@ -137,10 +137,10 @@ jobs:
           cache: pnpm
 
       - name: Install dependencies
-        run: npm run clean-install
+        run: pnpm run clean
 
       - name: Build package example
-        run: npm run build-dist
+        run: pnpm run build-dist
 
   stage:
     name: Stage changes as pull request
