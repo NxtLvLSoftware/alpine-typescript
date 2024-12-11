@@ -61,7 +61,6 @@ jobs:
 
   build-example:
     name: Generate example site
-    needs: [wait-for-package-publish]
     runs-on: ubuntu-latest
     timeout-minutes: 5
 
