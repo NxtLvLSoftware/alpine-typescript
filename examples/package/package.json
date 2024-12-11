@@ -35,8 +35,8 @@
     "setup-dev": "pnpm run clean-install && pnpm run build",
     "clean": "rm -rf ./dist && rm -rf ./types",
     "build": "pnpm run clean && tsc --build tsconfig.json --inlineSourceMap",
-    "dev": "pnpm run build -- --watch",
-    "build-dist": "pnpm run build -- --inlineSourceMap --listEmittedFiles"
+    "dev": "pnpm run build --watch",
+    "build-dist": "pnpm run build --listEmittedFiles"
   },
   "peerDependencies": {
     "@nxtlvlsoftware/alpine-typescript": "file:../../",

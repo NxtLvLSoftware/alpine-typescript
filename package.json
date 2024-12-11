@@ -33,10 +33,10 @@
     "setup-dev": "pnpm run clean-install && pnpm run build",
     "clean": "rm -rf ./dist && rm -rf ./types && rm -rf ./docs-build",
     "build": "pnpm run clean && tsc --build tsconfig.json --inlineSourceMap",
-    "dev": "pnpm run build -- --watch",
-    "build-dist": "pnpm run build -- --inlineSourceMap --listEmittedFiles",
+    "dev": "pnpm run build --watch",
+    "build-dist": "pnpm run build --listEmittedFiles",
     "docs": "npx typedoc",
-    "docs-dist": "pnpm run docs -- --gitRevision dist",
+    "docs-dist": "pnpm run docs --gitRevision dist",
     "setup-examples": "cd examples/package && pnpm run setup-dev && cd ../project && pnpm run setup-dev",
     "build-examples": "cd examples/package && pnpm run build && cd ../project && pnpm run build"
   },
