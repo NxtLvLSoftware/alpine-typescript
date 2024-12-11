@@ -45,8 +45,8 @@
   },
   "devDependencies": {
     "@types/alpinejs": "^3.0.0",
-    "typedoc": "^0.25.1",
-    "typedoc-plugin-extras": "^3.0.0",
-    "typescript": "^5.2.2"
+    "typedoc": "^0.25.13",
+    "typedoc-plugin-extras": "^3.1.0",
+    "typescript": "^5.7.2"
   }
 }

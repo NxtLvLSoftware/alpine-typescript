@@ -43,7 +43,7 @@
     "alpinejs": "^3.0.0"
   },
   "devDependencies": {
-    "@types/alpinejs": "^3.0.0",
-    "typescript": "^5.2.2"
+    "@types/alpinejs": "^3.13.11",
+    "typescript": "^5.7.2"
   }
 }
