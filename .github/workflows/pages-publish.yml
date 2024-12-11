@@ -95,7 +95,7 @@ jobs:
           cache: pnpm
 
       - name: Install dependencies
-        run: pnpm run clean && pnpm add ./alpine-typescript
+        run: pnpm run clean && pnpm add @nxtlvlsoftware/alpine-typescript@rc
 
       - name: Install dependencies
         run: npm run clean-install
