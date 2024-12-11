@@ -33,16 +33,18 @@ jobs:
         run: |
           sed -i '28,127d' README.md
 
+      - name: Use pnpm ${{ env.PNPM_VERSION }}
+        uses: pnpm/action-setup@v4
+        with:
+          version: ${{ env.PNPM_VERSION }}
+          run_install: false
+
       - name: Use Node.js ${{ env.NODE_VERSION }}
         uses: actions/setup-node@v4
         with:
           node-version: ${{ env.NODE_VERSION }}
-
-      - name: Cache node_modules
-        uses: actions/cache@v4
-        with:
-          path: node_modules
-          key: ${{ runner.os }}}-${{ env.NODE_VERSION }}-node_modules-${{ hashFiles('package.json') }}
+          cache: pnpm
+          cache-dependency-path: 'package.json'
 
       - name: Install dependencies
         run: npm run clean-install
@@ -80,16 +82,20 @@ jobs:
         run: |
           sed -i 's/file:..\/..\//rc/g' package.json
 
+      - name: Use pnpm ${{ env.PNPM_VERSION }}
+        uses: pnpm/action-setup@v4
+        with:
+          version: ${{ env.PNPM_VERSION }}
+          run_install: false
+
       - name: Use Node.js ${{ env.NODE_VERSION }}
         uses: actions/setup-node@v4
         with:
           node-version: ${{ env.NODE_VERSION }}
+          cache: pnpm
 
-      - name: Cache node_modules
-        uses: actions/cache@v4
-        with:
-          path: node_modules
-          key: ${{ runner.os }}}-${{ env.NODE_VERSION }}-node_modules-${{ hashFiles('package.json') }}
+      - name: Install dependencies
+        run: pnpm run clean && pnpm add ./alpine-typescript
 
       - name: Install dependencies
         run: npm run clean-install
