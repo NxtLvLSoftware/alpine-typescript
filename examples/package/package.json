@@ -1,7 +1,7 @@
 {
   "name": "alpine-typescript-package-example",
   "description": "Example Alpine.js components package.",
-  "version": "0.0.1",
+  "version": "0.0.2",
   "license": "MIT",
   "author": {
     "name": "Jack Noordhuis",
@@ -16,7 +16,7 @@
     "js",
     "ts"
   ],
-  "repository": "NxtLvlSoftware/alpine-typescript",
+  "repository": "github:NxtLvlSoftware/alpine-typescript",
   "homepage": "https://nxtlvlsoftware.github.io/alpine-typescript/",
   "bugs": {
     "url": "https://github.com/NxtLvlSoftware/alpine-typescript/issues"
