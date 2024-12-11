@@ -1,7 +1,7 @@
 {
   "name": "@nxtlvlsoftware/alpine-typescript",
   "description": "Write your Alpine.js components in Typescript.",
-  "version": "0.0.4",
+  "version": "0.0.5",
   "license": "MIT",
   "author": {
     "name": "Jack Noordhuis",
@@ -14,7 +14,7 @@
     "typescript",
     "components"
   ],
-  "repository": "NxtLvlSoftware/alpine-typescript",
+  "repository": "github:NxtLvlSoftware/alpine-typescript",
   "homepage": "https://nxtlvlsoftware.github.io/alpine-typescript/",
   "bugs": {
     "url": "https://github.com/NxtLvlSoftware/alpine-typescript/issues"
@@ -29,24 +29,24 @@
     "types/**/*.d.ts"
   ],
   "scripts": {
-    "clean-install": "rm -f ./package-lock.json && rm -rf ./node_modules && npm install",
-    "setup-dev": "npm run clean-install && npm run build",
+    "clean-install": "rm -f ./package-lock.json && rm -rf ./node_modules && pnpm install",
+    "setup-dev": "pnpm run clean-install && pnpm run build",
     "clean": "rm -rf ./dist && rm -rf ./types && rm -rf ./docs-build",
-    "build": "npm run clean && tsc --build tsconfig.json --inlineSourceMap",
-    "dev": "npm run build -- --watch",
-    "build-dist": "npm run build -- --inlineSourceMap --listEmittedFiles",
+    "build": "pnpm run clean && tsc --build tsconfig.json --inlineSourceMap",
+    "dev": "pnpm run build --watch",
+    "build-dist": "pnpm run build --listEmittedFiles",
     "docs": "npx typedoc",
-    "docs-dist": "npm run docs -- --gitRevision dist",
-    "setup-examples": "cd examples/package && npm run setup-dev && cd ../project && npm run setup-dev",
-    "build-examples": "cd examples/package && npm run build && cd ../project && npm run build"
+    "docs-dist": "pnpm run docs --gitRevision dist",
+    "setup-examples": "cd examples/package && pnpm run setup-dev && cd ../project && pnpm run setup-dev",
+    "build-examples": "cd examples/package && pnpm run build && cd ../project && pnpm run build"
   },
   "peerDependencies": {
     "alpinejs": "^3.0.0"
   },
   "devDependencies": {
     "@types/alpinejs": "^3.0.0",
-    "typedoc": "^0.25.1",
-    "typedoc-plugin-extras": "^3.0.0",
-    "typescript": "^5.2.2"
+    "typedoc": "^0.25.13",
+    "typedoc-plugin-extras": "^3.1.0",
+    "typescript": "^5.7.2"
   }
 }

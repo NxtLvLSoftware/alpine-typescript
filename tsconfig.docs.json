@@ -4,6 +4,9 @@
   "include": [
     "types/**/*.d.ts"
   ],
+  "exclude": [
+    "dist"
+  ],
   "compilerOptions": {
     "noEmit": true
   }

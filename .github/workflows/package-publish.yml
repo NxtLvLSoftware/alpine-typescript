@@ -15,7 +15,8 @@ concurrency:
 
 env:
   GITHUB_ACTIONS: true
-  NODE_VERSION: 20
+  NODE_VERSION: 22
+  PNPM_VERSION: 9
 
 jobs:
   publish:
@@ -27,7 +28,7 @@ jobs:
       - uses: actions/checkout@v4
 
       - name: Use Node.js ${{ env.NODE_VERSION }}
-        uses: actions/setup-node@v3
+        uses: actions/setup-node@v4
         with:
           node-version: ${{ env.NODE_VERSION }}
           registry-url: 'https://registry.npmjs.org'

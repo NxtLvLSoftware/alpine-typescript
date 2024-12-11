@@ -11,7 +11,8 @@ permissions:
 
 env:
   GITHUB_ACTIONS: true
-  NODE_VERSION: 20
+  NODE_VERSION: 22
+  PNPM_VERSION: 9
 
 jobs:
   test:
@@ -20,26 +21,28 @@ jobs:
     timeout-minutes: 5
 
     steps:
-      - uses: actions/checkout@v3
+      - uses: actions/checkout@v4
+
+      - name: Use pnpm ${{ env.PNPM_VERSION }}
+        uses: pnpm/action-setup@v4
+        with:
+          version: ${{ env.PNPM_VERSION }}
+          run_install: false
 
       - name: Use Node.js ${{ env.NODE_VERSION }}
-        uses: actions/setup-node@v3
+        uses: actions/setup-node@v4
         with:
           node-version: ${{ env.NODE_VERSION }}
-
-      - name: Cache node_modules
-        uses: actions/cache@v3
-        with:
-          path: node_modules
-          key: ${{ runner.os }}}-${{ env.NODE_VERSION }}-node_modules-${{ hashFiles('package.json') }}
+          cache: pnpm
+          cache-dependency-path: 'package.json'
 
       - name: Install dependencies
-        run: npm run clean-install
+        run: pnpm run clean-install
 
       - name: Build alpine-typescript
-        run: npm run build-dist
+        run: pnpm run build-dist
 
-      - uses: actions/upload-artifact@v3
+      - uses: actions/upload-artifact@v4
         with:
           name: test-build-output
           path: |
@@ -54,7 +57,7 @@ jobs:
     timeout-minutes: 5
 
     steps:
-      - uses: actions/checkout@v3
+      - uses: actions/checkout@v4
         with:
           sparse-checkout: |
             examples/package
@@ -65,7 +68,7 @@ jobs:
           mv ./examples/package/* ./
           rm -rf ./examples/package
 
-      - uses: actions/download-artifact@v3
+      - uses: actions/download-artifact@v4
         with:
           name: test-build-output
           path: ./alpine-typescript
@@ -74,22 +77,24 @@ jobs:
         run: |
           sed -i 's/file:..\/..\//file:alpine-typescript/g' package.json
 
+      - name: Use pnpm ${{ env.PNPM_VERSION }}
+        uses: pnpm/action-setup@v4
+        with:
+          version: ${{ env.PNPM_VERSION }}
+          run_install: false
+
       - name: Use Node.js ${{ env.NODE_VERSION }}
-        uses: actions/setup-node@v3
+        uses: actions/setup-node@v4
         with:
           node-version: ${{ env.NODE_VERSION }}
-
-      - name: Cache node_modules
-        uses: actions/cache@v3
-        with:
-          path: node_modules
-          key: ${{ runner.os }}}-${{ env.NODE_VERSION }}-node_modules-${{ hashFiles('package.json') }}
+          cache: pnpm
+          cache-dependency-path: 'package.json'
 
       - name: Install dependencies
-        run: npm run clean-install
+        run: pnpm run clean-install
 
       - name: Build package example
-        run: npm run build-dist
+        run: pnpm run build-dist
 
   test-example-project:
     name: Run example project tests
@@ -98,7 +103,7 @@ jobs:
     timeout-minutes: 5
 
     steps:
-      - uses: actions/checkout@v3
+      - uses: actions/checkout@v4
         with:
           sparse-checkout: |
             examples/project
@@ -109,7 +114,7 @@ jobs:
           mv ./examples/project/* ./
           rm -rf ./examples/project
 
-      - uses: actions/download-artifact@v3
+      - uses: actions/download-artifact@v4
         with:
           name: test-build-output
           path: ./alpine-typescript
@@ -118,22 +123,23 @@ jobs:
         run: |
           sed -i 's/file:..\/..\//file:alpine-typescript/g' package.json
 
+      - name: Use pnpm ${{ env.PNPM_VERSION }}
+        uses: pnpm/action-setup@v4
+        with:
+          version: ${{ env.PNPM_VERSION }}
+          run_install: false
+
       - name: Use Node.js ${{ env.NODE_VERSION }}
-        uses: actions/setup-node@v3
+        uses: actions/setup-node@v4
         with:
           node-version: ${{ env.NODE_VERSION }}
-
-      - name: Cache node_modules
-        uses: actions/cache@v3
-        with:
-          path: node_modules
-          key: ${{ runner.os }}}-${{ env.NODE_VERSION }}-node_modules-${{ hashFiles('package.json') }}
+          cache: pnpm
 
       - name: Install dependencies
-        run: npm run clean-install
+        run: pnpm run clean && pnpm add ./alpine-typescript
 
       - name: Build package example
-        run: npm run build-dist
+        run: pnpm run build-dist
 
   stage:
     name: Stage changes as pull request
@@ -144,7 +150,7 @@ jobs:
     if: github.event_name == 'push'
     steps:
       - run: 'echo "Staging dev changes"'
-      - uses: actions/checkout@v3
+      - uses: actions/checkout@v4
         with:
           ref: dist
 
@@ -153,31 +159,33 @@ jobs:
           git fetch origin dev:dev
           git reset --hard dev
 
+      - name: Use pnpm ${{ env.PNPM_VERSION }}
+        uses: pnpm/action-setup@v4
+        with:
+          version: ${{ env.PNPM_VERSION }}
+          run_install: false
+
       - name: Use Node.js ${{ env.NODE_VERSION }}
-        uses: actions/setup-node@v3
+        uses: actions/setup-node@v4
         with:
           node-version: ${{ env.NODE_VERSION }}
-
-      - name: Cache node_modules
-        uses: actions/cache@v3
-        with:
-          path: node_modules
-          key: ${{ runner.os }}}-${{ env.NODE_VERSION }}-node_modules-${{ hashFiles('package.json') }}
+          cache: pnpm
+          cache-dependency-path: 'package.json'
 
       - name: Install dependencies
-        run: npm run clean-install
+        run: pnpm run clean-install
 
       - name: Build alpine-typescript
-        run: npm run build-dist
+        run: pnpm run build-dist
 
       - name: Add dist files
         run: |
           git rm -r --force ./src
-          git add --force ./dist
-          git add --force ./types
+          git add --force ./dist/*.js
+          git add --force ./types/*.d.ts
 
       - name: Create Pull Request
-        uses: peter-evans/create-pull-request@v5
+        uses: peter-evans/create-pull-request@v7
         with:
           token: ${{ secrets.STAGE_DEPLOY_KEY }}
           title: Merge dev changes to dist

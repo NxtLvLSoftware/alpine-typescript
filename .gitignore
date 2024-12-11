@@ -1,5 +1,5 @@
 # Project specific files
-package-lock.json
+pnpm-lock.yaml
 /node_modules
 .github/**/node_modules
 dist/
