@@ -134,7 +134,6 @@ jobs:
         with:
           node-version: ${{ env.NODE_VERSION }}
           cache: pnpm
-          cache-dependency-path: 'package.json'
 
       - name: Install dependencies
         run: npm run clean-install
